@@ -23,7 +23,11 @@ export interface SignOutAction {
 export type KnownAction = SignUpAction | SignOutAction;
 
 export const actionCreators = {
-	increment: () => ({ type: "SIGN_UP" } as SignUpAction)
+	signUp: (callSign: string, firstName: string, lastName: string) =>
+		({
+			type: "SIGN_UP",
+			payload: { callSign, firstName, lastName }
+		} as SignUpAction)
 };
 
 const defaultState: AuthState = {};
