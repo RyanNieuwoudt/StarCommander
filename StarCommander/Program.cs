@@ -14,7 +14,15 @@ namespace StarCommander
 		public static IHostBuilder CreateHostBuilder(string[] args)
 		{
 			return Host.CreateDefaultBuilder(args)
-				.ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+				.ConfigureWebHostDefaults(webBuilder =>
+				{
+					webBuilder.UseDefaultServiceProvider((context, options) =>
+						{
+							options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
+							options.ValidateOnBuild = true;
+						})
+						.UseStartup<Startup>();
+				});
 		}
 	}
 }
