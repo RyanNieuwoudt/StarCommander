@@ -1,7 +1,6 @@
-import Counter from "./Counter";
-import FetchData from "./FetchData";
-import Home from "./Home";
+import Counter from "../routes/CounterPage";
+import FetchData from "../routes/FetchDataPage";
 import Layout from "./Layout";
 import NavMenu from "./NavMenu";
 
-export { Counter, FetchData, Home, Layout, NavMenu };
+export { Counter, FetchData, Layout, NavMenu };
