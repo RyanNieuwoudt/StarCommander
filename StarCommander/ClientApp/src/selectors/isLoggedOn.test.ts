@@ -1,5 +1,5 @@
 import { isLoggedOn } from ".";
-import { ApplicationState } from "../store";
+import { ApplicationState } from "store";
 
 describe("isLoggedOn", () => {
 	it("returns false if no auth state", () => {
