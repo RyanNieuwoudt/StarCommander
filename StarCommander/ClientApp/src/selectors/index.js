@@ -1,3 +1,3 @@
-import isLoggedOn from "./isLoggedOn";
+import isLoggedIn from "./isLoggedIn";
 
-export { isLoggedOn };
+export { isLoggedIn };
