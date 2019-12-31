@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
+import { Layout } from "components";
 import { ApplicationState } from "store";
 import * as WeatherForecastsStore from "store/WeatherForecasts";
 
@@ -23,7 +24,7 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
 
 	public render() {
 		return (
-			<React.Fragment>
+			<Layout>
 				<h1 id="tabelLabel">Weather forecast</h1>
 				<p>
 					This component demonstrates fetching data from the server
@@ -31,7 +32,7 @@ class FetchData extends React.PureComponent<WeatherForecastProps> {
 				</p>
 				{this.renderForecastsTable()}
 				{this.renderPagination()}
-			</React.Fragment>
+			</Layout>
 		);
 	}
 
