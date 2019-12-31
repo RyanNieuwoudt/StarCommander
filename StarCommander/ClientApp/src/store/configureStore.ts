@@ -1,8 +1,21 @@
+import throttle from "lodash.throttle";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { History } from "history";
 import { ApplicationState, reducers } from "./";
+
+const getStateFromSessionStore = () => {
+	try {
+		const retrievedState = sessionStorage.getItem("reduxStore");
+		if (retrievedState === null) {
+			return null;
+		}
+		return JSON.parse(retrievedState);
+	} catch (err) {
+		return null;
+	}
+};
 
 export default function configureStore(
 	history: History,
@@ -22,9 +35,34 @@ export default function configureStore(
 		enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
 	}
 
-	return createStore(
+	const isDevelopment = process.env.NODE_ENV === "development";
+
+	if (isDevelopment) {
+		var savedState = getStateFromSessionStore();
+		if (savedState !== null) {
+			initialState = savedState;
+		}
+	}
+
+	const store = createStore(
 		rootReducer,
 		initialState,
 		compose(applyMiddleware(...middleware), ...enhancers)
 	);
+
+	if (isDevelopment) {
+		store.subscribe(
+			throttle(() => {
+				try {
+					sessionStorage["reduxStore"] = JSON.stringify(
+						store.getState()
+					);
+				} catch {
+					// ignore write errors
+				}
+			}, 1000)
+		);
+	}
+
+	return store;
 }
