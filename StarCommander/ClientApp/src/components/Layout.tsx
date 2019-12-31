@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, ResponsiveContext } from "grommet";
-import NavMenu from "./NavMenu";
+import { NavMenu } from ".";
 
 export default (props: { children?: React.ReactNode }) => {
 	const size = React.useContext(ResponsiveContext);
