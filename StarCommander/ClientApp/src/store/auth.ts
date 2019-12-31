@@ -16,7 +16,11 @@ export interface SignUpAction {
 	};
 }
 
-export type KnownAction = SignUpAction;
+export interface SignOutAction {
+	type: "SIGN_OUT";
+}
+
+export type KnownAction = SignUpAction | SignOutAction;
 
 export const actionCreators = {
 	increment: () => ({ type: "SIGN_UP" } as SignUpAction)
@@ -35,6 +39,8 @@ export const reducer: Reducer<AuthState> = (
 			const { callSign, firstName, lastName } = action.payload;
 			return { callSign, firstName, lastName, token };
 		}
+		case "SIGN_OUT":
+			return defaultState;
 		default:
 			return state;
 	}
