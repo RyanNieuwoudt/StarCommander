@@ -44,7 +44,7 @@ namespace StarCommander.Domain
 			return !Equals(left, right);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is null)
 			{
