@@ -10,12 +10,6 @@ export default function NavMenu() {
 				<Text>StarCommander</Text>
 			</Link>
 			<Box direction="row" gap="medium">
-				<Link to="/counter">
-					<Text>Counter</Text>
-				</Link>
-				<Link to="/fetch-data">
-					<Text>Fetch Data</Text>
-				</Link>
 				<SignOutLink />
 			</Box>
 		</Header>
