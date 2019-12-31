@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Box, Header, Text } from "grommet";
+import { SignOutLink } from ".";
 
 export default function NavMenu() {
 	return (
@@ -15,6 +16,7 @@ export default function NavMenu() {
 				<Link to="/fetch-data">
 					<Text>Fetch Data</Text>
 				</Link>
+				<SignOutLink />
 			</Box>
 		</Header>
 	);

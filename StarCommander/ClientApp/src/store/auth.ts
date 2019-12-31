@@ -7,6 +7,10 @@ export interface AuthState {
 	token?: string;
 }
 
+export interface SignOutAction {
+	type: "SIGN_OUT";
+}
+
 export interface SignUpAction {
 	type: "SIGN_UP";
 	payload: {
@@ -16,13 +20,10 @@ export interface SignUpAction {
 	};
 }
 
-export interface SignOutAction {
-	type: "SIGN_OUT";
-}
-
-export type KnownAction = SignUpAction | SignOutAction;
+export type KnownAction = SignOutAction | SignUpAction;
 
 export const actionCreators = {
+	signOut: () => ({ type: "SIGN_OUT" }),
 	signUp: (callSign: string, firstName: string, lastName: string) =>
 		({
 			type: "SIGN_UP",
