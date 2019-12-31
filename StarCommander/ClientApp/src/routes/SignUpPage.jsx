@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { Box, Button, Form, FormField, Text } from "grommet";
+import { Box, Button, Form, FormField, Heading, Text } from "grommet";
 import { actionCreators } from "store/auth";
 
 const FormFieldLabel = props => {
@@ -36,6 +36,7 @@ export default function SignUpPage() {
 
 	return (
 		<Box align="center" pad="large">
+			<Heading>Star Commander</Heading>
 			<Form onSubmit={onSubmit}>
 				<FormFieldLabel name="callSign" label="CallSign" required />
 				<FormFieldLabel name="firstName" label="FirstName" required />
