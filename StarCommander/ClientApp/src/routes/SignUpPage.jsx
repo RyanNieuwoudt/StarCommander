@@ -40,7 +40,7 @@ export default function SignUpPage() {
 			<Form onSubmit={onSubmit}>
 				<FormFieldLabel name="callSign" label="CallSign" required />
 				<FormFieldLabel name="firstName" label="FirstName" required />
-				<FormFieldLabel name="LastName" label="LastName" required />
+				<FormFieldLabel name="lastName" label="LastName" required />
 				<Button type="submit" label="Sign up" primary />
 				<Text
 					margin={{ left: "small" }}
