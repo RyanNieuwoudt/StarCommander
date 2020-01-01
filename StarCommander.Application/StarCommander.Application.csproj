@@ -3,4 +3,11 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj" />
+	</ItemGroup>
 </Project>

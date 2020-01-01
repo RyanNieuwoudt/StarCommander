@@ -3,4 +3,7 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\StarCommander.Application\StarCommander.Application.csproj" />
+	</ItemGroup>
 </Project>
