@@ -18,7 +18,7 @@ namespace StarCommander.Domain.Players
 
 		public Guid Id { get; }
 
-		public static Player Create(Reference<Player> id, string callSign, string firstName, string lastName)
+		public static Player SignUp(Reference<Player> id, string callSign, string firstName, string lastName)
 		{
 			return new Player(id, callSign, firstName, lastName);
 		}

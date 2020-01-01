@@ -14,14 +14,14 @@ namespace StarCommander.Domain.Tests.Players
 		readonly IFixture fixture;
 
 		[Fact]
-		public void CreateWithCorrectValues()
+		public void SignUpWithCorrectValues()
 		{
 			var id = fixture.Create<Reference<Player>>();
 			var callSign = fixture.Create<string>();
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var player = Player.Create(id, callSign, firstName, lastName);
+			var player = Player.SignUp(id, callSign, firstName, lastName);
 
 			Assert.Equal(id, player.Id);
 			Assert.Equal(callSign, player.CallSign);

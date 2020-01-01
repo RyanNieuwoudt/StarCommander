@@ -26,7 +26,7 @@ namespace StarCommander.Application.Services
 			using var dbContextScope = dbContextScopeFactory.Create();
 
 			//TODO Service to generate ID
-			var player = Player.Create(new Reference<Player>(Guid.NewGuid()), callSign, firstName, lastName);
+			var player = Player.SignUp(new Reference<Player>(Guid.NewGuid()), callSign, firstName, lastName);
 
 			//TODO Do not overwrite existing player
 			await playerRepository.Save(player);
