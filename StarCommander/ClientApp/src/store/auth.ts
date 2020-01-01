@@ -4,9 +4,7 @@ import { signUp } from "client/player";
 import { querySaga } from "store/saga/templates";
 
 export interface AuthState {
-	callSign?: string;
-	firstName?: string;
-	lastName?: string;
+	player?: { callSign?: string; firstName?: string; lastName?: string };
 	token?: string;
 }
 
