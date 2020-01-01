@@ -1,7 +1,10 @@
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using StarCommander.Application.Services;
+using StarCommander.Domain.Players;
 using StarCommander.Infrastructure.Persistence;
+using StarCommander.Infrastructure.Persistence.Aggregate.Players;
 
 namespace StarCommander.Application
 {
@@ -21,6 +24,10 @@ namespace StarCommander.Application
 			services.AddScoped<IAmbientDbContextConfigurator, AmbientDbContextConfigurator>();
 			services.AddScoped<IAmbientDbContextLocator, AmbientDbContextLocator>();
 			services.AddScoped<IDbContextScopeFactory, DbContextScopeFactory>();
+
+			services.AddScoped<IPlayerRepository, PlayerRepository>();
+
+			services.AddScoped<IPlayerService, PlayerService>();
 		}
 
 		protected abstract void ConfigureContextualServices(IServiceCollection services);

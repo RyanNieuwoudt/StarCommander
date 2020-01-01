@@ -8,6 +8,7 @@
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence.Aggregate\StarCommander.Infrastructure.Persistence.Aggregate.csproj" />
 	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj" />
 	  <ProjectReference Include="..\StarCommander.Shared\StarCommander.Shared.csproj" />
 	</ItemGroup>
