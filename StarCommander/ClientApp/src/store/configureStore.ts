@@ -1,9 +1,10 @@
-import throttle from "lodash.throttle";
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import thunk from "redux-thunk";
+import * as R from "ramda";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { History } from "history";
-import { ApplicationState, reducers } from "./";
+import throttle from "lodash.throttle";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
+import { ApplicationState, reducers, sagas } from ".";
 
 const getStateFromSessionStore = () => {
 	try {
@@ -21,7 +22,8 @@ export default function configureStore(
 	history: History,
 	initialState?: ApplicationState
 ) {
-	const middleware = [thunk, routerMiddleware(history)];
+	const sagaMiddleware = createSagaMiddleware();
+	const middleware = [sagaMiddleware, routerMiddleware(history)];
 
 	const rootReducer = combineReducers({
 		...reducers,
@@ -63,6 +65,8 @@ export default function configureStore(
 			}, 1000)
 		);
 	}
+
+	R.forEach(saga => sagaMiddleware.run(saga), R.values(sagas));
 
 	return store;
 }

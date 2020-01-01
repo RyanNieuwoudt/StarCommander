@@ -1,4 +1,5 @@
 import { Action, Reducer } from "redux";
+import { all } from "redux-saga/effects";
 
 export interface AuthState {
 	callSign?: string;
@@ -29,6 +30,10 @@ export const actionCreators = {
 			type: "SIGN_UP",
 			payload: { callSign, firstName, lastName }
 		} as SignUpAction)
+};
+
+export const rootSaga = function* root() {
+	yield all([]);
 };
 
 const defaultState: AuthState = {};
