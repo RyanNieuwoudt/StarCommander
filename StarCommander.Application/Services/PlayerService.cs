@@ -1,8 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using EntityFramework.DbContextScope.Interfaces;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using StarCommander.Domain.Players;
 using StarCommander.Shared.Model;
 using Player = StarCommander.Domain.Players.Player;
@@ -11,14 +17,16 @@ namespace StarCommander.Application.Services
 {
 	public class PlayerService : IPlayerService
 	{
+		readonly AppSettings appSettings;
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IReferenceGenerator generate;
 		readonly IMapper mapper;
 		readonly IPlayerRepository playerRepository;
 
-		public PlayerService(IDbContextScopeFactory dbContextScopeFactory, IReferenceGenerator generate, IMapper mapper,
-			IPlayerRepository playerRepository)
+		public PlayerService(IOptions<AppSettings> appSettings, IDbContextScopeFactory dbContextScopeFactory,
+			IReferenceGenerator generate, IMapper mapper, IPlayerRepository playerRepository)
 		{
+			this.appSettings = appSettings.Value;
 			this.dbContextScopeFactory = dbContextScopeFactory;
 			this.generate = generate;
 			this.mapper = mapper;
@@ -38,11 +46,7 @@ namespace StarCommander.Application.Services
 					throw new Exception();
 				}
 
-				return new Session
-				{
-					Token = Guid.NewGuid().ToString(),
-					Player = mapper.Map<Shared.Model.Player>(player)
-				};
+				return GetSession(player);
 			}
 			catch
 			{
@@ -70,11 +74,32 @@ namespace StarCommander.Application.Services
 
 			await dbContextScope.SaveChangesAsync();
 
-			return new Session
+			return GetSession(player);
+		}
+
+		Session GetSession(Player player)
+		{
+			return new Session { Token = GetToken(player), Player = mapper.Map<Shared.Model.Player>(player) };
+		}
+
+		string GetToken(Player player)
+		{
+			var tokenHandler = new JwtSecurityTokenHandler();
+			var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+			var tokenDescriptor = new SecurityTokenDescriptor
 			{
-				Token = Guid.NewGuid().ToString(),
-				Player = mapper.Map<Shared.Model.Player>(player)
+				Subject = new ClaimsIdentity(GetClaims(player)),
+				Expires = DateTime.UtcNow.AddDays(2),
+				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+					SecurityAlgorithms.HmacSha256Signature)
 			};
+			var token = tokenHandler.CreateToken(tokenDescriptor);
+			return tokenHandler.WriteToken(token);
+		}
+
+		static IEnumerable<Claim> GetClaims(Player player)
+		{
+			yield return new Claim(ClaimTypes.Name, player.CallSign);
 		}
 	}
 }
