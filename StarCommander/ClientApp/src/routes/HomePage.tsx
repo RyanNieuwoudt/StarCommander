@@ -1,11 +1,15 @@
 import * as React from "react";
-import { Heading } from "grommet";
+import { Box, Heading } from "grommet";
 import { Layout } from "components";
+import { UpdateNameForm } from "components/player";
 
 export default function Home() {
 	return (
 		<Layout>
-			<Heading>Welcome, Commander.</Heading>
+			<Box align="center" pad="large">
+				<Heading>Welcome, Commander.</Heading>
+				<UpdateNameForm />
+			</Box>
 		</Layout>
 	);
 }
