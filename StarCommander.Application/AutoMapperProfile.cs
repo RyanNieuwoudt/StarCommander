@@ -1,4 +1,5 @@
 using AutoMapper;
+using StarCommander.Domain.Players;
 
 namespace StarCommander.Application
 {
@@ -6,7 +7,7 @@ namespace StarCommander.Application
 	{
 		public AutoMapperProfile()
 		{
-			CreateMap<Domain.Players.Player, Shared.Model.Player>();
+			CreateMap<Player, Shared.Model.Player>();
 		}
 	}
 }
