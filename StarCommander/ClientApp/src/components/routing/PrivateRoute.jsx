@@ -12,7 +12,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 			Component && loggedIn ? (
 				<Component {...props} />
 			) : (
-				<RedirectOnce to="/sign-up" />
+				<RedirectOnce to="/welcome" />
 			),
 		[Component, loggedIn]
 	);

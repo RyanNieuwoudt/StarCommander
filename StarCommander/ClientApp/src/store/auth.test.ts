@@ -5,11 +5,22 @@ const expectedDefaultState = {};
 const callSign = "callSign";
 const firstName = "firstName";
 const lastName = "lastName";
+const password = "password";
 const token = "token";
 
 describe("auth reducer", () => {
 	it("should return the initial state", () => {
 		expect(reducer(undefined, { type: "" })).toEqual(expectedDefaultState);
+	});
+
+	it("should sign in as requested", () => {
+		expect(
+			reducer(expectedDefaultState, {
+				type: "SIGN_IN_SUCCESS",
+				payload: { callSign, password },
+				data: { player: { callSign, firstName, lastName }, token }
+			})
+		).toEqual({ player: { callSign, firstName, lastName }, token });
 	});
 
 	it("should sign up as requested", () => {

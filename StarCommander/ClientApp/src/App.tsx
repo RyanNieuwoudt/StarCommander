@@ -5,13 +5,13 @@ import { grommet } from "grommet/themes";
 import { PrivateRoute, PublicRoute } from "components/routing";
 
 const HomePage = lazy(() => import("./routes/HomePage"));
-const SignUpPage = lazy(() => import("./routes/SignUpPage"));
+const WelcomePage = lazy(() => import("./routes/WelcomePage"));
 
 export default () => (
 	<Grommet theme={grommet}>
 		<Suspense fallback={<div />}>
 			<Switch>
-				<PublicRoute path="/sign-up" exact component={SignUpPage} />
+				<PublicRoute path="/welcome" exact component={WelcomePage} />
 				<PrivateRoute exact path="/" component={HomePage} />
 			</Switch>
 		</Suspense>
