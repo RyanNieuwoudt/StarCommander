@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace StarCommander.Application.Tests
 {
+	// ReSharper disable once ClassNeverInstantiated.Global
 	public sealed class ServicesFixture
 	{
 		public ServicesFixture()
