@@ -8,6 +8,8 @@ namespace StarCommander.Application.Tests
 	{
 		protected override void ConfigureContextualServices(IServiceCollection services)
 		{
+			services.Configure<AppSettings>(settings => settings.Secret = new string('1', 64));
+
 			services.AddSingleton<IDbContextConfiguration>(new InMemoryConfiguration(Guid.NewGuid().ToString()));
 		}
 
