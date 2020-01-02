@@ -1,3 +1,4 @@
+import Name from "./Name";
 import UpdateNameForm from "./UpdateNameForm";
 
-export { UpdateNameForm };
+export { Name, UpdateNameForm };

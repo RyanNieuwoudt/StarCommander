@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Box, Header, Text } from "grommet";
-import { Name, SignOutLink } from ".";
+import { SignOutLink } from ".";
+import { Name } from "components/player";
 
 export default function NavMenu() {
 	return (
