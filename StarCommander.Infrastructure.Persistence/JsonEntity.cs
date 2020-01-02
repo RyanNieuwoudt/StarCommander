@@ -4,7 +4,7 @@ using StarCommander.Domain;
 
 namespace StarCommander.Infrastructure.Persistence
 {
-	public abstract class JsonEntity<T> where T : class, IAggregate
+	public abstract class JsonEntity<T, TU> where T : class, IAggregate where TU : class, T
 	{
 		public Guid Id { get; set; }
 
@@ -23,7 +23,7 @@ namespace StarCommander.Infrastructure.Persistence
 
 		public T ToDomain()
 		{
-			return (T)JsonSerializer.Deserialize(Json, typeof(T));
+			return JsonSerializer.Deserialize<TU>(Json);
 		}
 	}
 }

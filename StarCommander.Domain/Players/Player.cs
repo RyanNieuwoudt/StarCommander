@@ -4,6 +4,10 @@ namespace StarCommander.Domain.Players
 {
 	public class Player : IAggregate
 	{
+		protected Player()
+		{
+		}
+
 		Player(Reference<Player> id, string callSign, string firstName, string lastName, byte[] passwordHash,
 			byte[] passwordSalt)
 		{
@@ -15,11 +19,11 @@ namespace StarCommander.Domain.Players
 			PasswordSalt = passwordSalt;
 		}
 
-		public string CallSign { get; }
-		public string FirstName { get; }
-		public string LastName { get; }
-		public byte[] PasswordHash { get; }
-		public byte[] PasswordSalt { get; }
+		public string CallSign { get; protected set; }
+		public string FirstName { get; protected set; }
+		public string LastName { get; protected set; }
+		public byte[] PasswordHash { get; protected set; }
+		public byte[] PasswordSalt { get; protected set; }
 
 		public Guid Id { get; }
 
