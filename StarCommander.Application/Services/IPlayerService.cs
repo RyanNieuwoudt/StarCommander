@@ -5,6 +5,7 @@ namespace StarCommander.Application.Services
 {
 	public interface IPlayerService
 	{
+		Task<Session> SignIn(string callSign, string password);
 		Task<Session> SignUp(string callSign, string firstName, string lastName, string password);
 	}
 }
