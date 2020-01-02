@@ -1,8 +1,7 @@
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Button, Form } from "grommet";
-import { RequiredFieldLabel } from ".";
-import { FormFieldLabel } from "components/forms";
+import { FormFieldLabel, RequiredFieldLabel } from "components/forms";
 import { actionCreators } from "store/auth";
 
 export default function SignInForm() {
