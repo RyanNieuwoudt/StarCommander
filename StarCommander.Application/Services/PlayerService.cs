@@ -3,7 +3,6 @@ using System.Security;
 using System.Threading.Tasks;
 using AutoMapper;
 using EntityFramework.DbContextScope.Interfaces;
-using StarCommander.Domain;
 using StarCommander.Domain.Players;
 using StarCommander.Shared.Model;
 using Player = StarCommander.Domain.Players.Player;
@@ -13,13 +12,15 @@ namespace StarCommander.Application.Services
 	public class PlayerService : IPlayerService
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
+		readonly IReferenceGenerator generate;
 		readonly IMapper mapper;
 		readonly IPlayerRepository playerRepository;
 
-		public PlayerService(IDbContextScopeFactory dbContextScopeFactory, IMapper mapper,
+		public PlayerService(IDbContextScopeFactory dbContextScopeFactory, IReferenceGenerator generate, IMapper mapper,
 			IPlayerRepository playerRepository)
 		{
 			this.dbContextScopeFactory = dbContextScopeFactory;
+			this.generate = generate;
 			this.mapper = mapper;
 			this.playerRepository = playerRepository;
 		}
@@ -62,9 +63,8 @@ namespace StarCommander.Application.Services
 
 			var (passwordHash, passwordSalt) = Password.CreatePasswordHashWithSalt(password);
 
-			//TODO Service to generate ID
-			var player = Player.SignUp(new Reference<Player>(Guid.NewGuid()), callSign, firstName, lastName,
-				passwordHash, passwordSalt);
+			var player = Player.SignUp(generate.Reference<Player>(), callSign, firstName, lastName, passwordHash,
+				passwordSalt);
 
 			await playerRepository.Save(player);
 

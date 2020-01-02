@@ -1,0 +1,13 @@
+using System;
+using StarCommander.Domain;
+
+namespace StarCommander.Application.Services
+{
+	public class RandomIdGenerator : IReferenceGenerator
+	{
+		public Reference<T> Reference<T>() where T : IAggregate
+		{
+			return new Reference<T>(Guid.NewGuid());
+		}
+	}
+}

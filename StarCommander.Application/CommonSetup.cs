@@ -30,6 +30,7 @@ namespace StarCommander.Application
 
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
 
+			services.AddScoped<IReferenceGenerator, RandomIdGenerator>();
 			services.AddScoped<IPlayerService, PlayerService>();
 		}
 
