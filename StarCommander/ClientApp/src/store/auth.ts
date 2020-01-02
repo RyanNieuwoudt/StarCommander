@@ -3,9 +3,15 @@ import { all, takeLeading } from "redux-saga/effects";
 import { signIn, signUp } from "client/player";
 import { querySaga } from "store/saga/templates";
 
+export interface Player {
+	callSign?: string;
+	firstName?: string;
+	lastName?: string;
+}
+
 export interface AuthState {
 	message?: string;
-	player?: { callSign?: string; firstName?: string; lastName?: string };
+	player?: Player;
 	token?: string;
 }
 
