@@ -1,6 +1,7 @@
 using System;
 using System.Security;
 using System.Threading.Tasks;
+using AutoMapper;
 using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Domain;
 using StarCommander.Domain.Players;
@@ -12,11 +13,14 @@ namespace StarCommander.Application.Services
 	public class PlayerService : IPlayerService
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
+		readonly IMapper mapper;
 		readonly IPlayerRepository playerRepository;
 
-		public PlayerService(IDbContextScopeFactory dbContextScopeFactory, IPlayerRepository playerRepository)
+		public PlayerService(IDbContextScopeFactory dbContextScopeFactory, IMapper mapper,
+			IPlayerRepository playerRepository)
 		{
 			this.dbContextScopeFactory = dbContextScopeFactory;
+			this.mapper = mapper;
 			this.playerRepository = playerRepository;
 		}
 
@@ -37,8 +41,7 @@ namespace StarCommander.Application.Services
 				return new Session
 				{
 					Token = Guid.NewGuid().ToString(),
-					Player = new Shared.Model.Player
-						{ CallSign = player.CallSign, FirstName = player.FirstName, LastName = player.LastName }
+					Player = mapper.Map<Shared.Model.Player>(player)
 				};
 			}
 			catch
@@ -72,7 +75,7 @@ namespace StarCommander.Application.Services
 			return new Session
 			{
 				Token = Guid.NewGuid().ToString(),
-				Player = new Shared.Model.Player { CallSign = callSign, FirstName = firstName, LastName = lastName }
+				Player = mapper.Map<Shared.Model.Player>(player)
 			};
 		}
 	}
