@@ -1,3 +1,4 @@
+using AutoMapper;
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,8 @@ namespace StarCommander.Application
 
 		static void ConfigureCommonServices(IServiceCollection services)
 		{
+			services.AddAutoMapper(typeof(AutoMapperProfile));
+
 			services.AddScoped<IAmbientDbContextConfigurator, AmbientDbContextConfigurator>();
 			services.AddScoped<IAmbientDbContextLocator, AmbientDbContextLocator>();
 			services.AddScoped<IDbContextScopeFactory, DbContextScopeFactory>();
