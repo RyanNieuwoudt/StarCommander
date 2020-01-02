@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using StarCommander.Application;
+using StarCommander.Hubs;
 using StarCommander.Middleware.ExceptionHandling;
+using static StarCommander.Shared.Communication.Hubs;
 
 namespace StarCommander
 {
@@ -26,6 +29,7 @@ namespace StarCommander
 			new ApplicationSetup(Configuration).ConfigureServices(services);
 
 			services.AddControllers();
+			services.AddSignalR().AddMessagePackProtocol();
 
 			// In production, the React files will be served from this directory
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
@@ -50,6 +54,21 @@ namespace StarCommander
 						IssuerSigningKey = new SymmetricSecurityKey(key),
 						ValidateIssuer = false,
 						ValidateAudience = false
+					};
+
+					x.Events = new JwtBearerEvents
+					{
+						OnMessageReceived = context =>
+						{
+							var accessToken = context.Request.Query["access_token"];
+							if (!string.IsNullOrEmpty(accessToken) &&
+							    context.HttpContext.Request.Path.StartsWithSegments(HubRoot))
+							{
+								context.Token = accessToken;
+							}
+
+							return Task.CompletedTask;
+						}
 					};
 				});
 		}
@@ -77,6 +96,7 @@ namespace StarCommander
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapHub<ChannelHub>(ChannelHubPath).RequireAuthorization();
 				endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}").RequireAuthorization();
 			});
 
