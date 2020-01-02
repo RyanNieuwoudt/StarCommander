@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using StarCommander.Application;
+using StarCommander.Middleware.ExceptionHandling;
 
 namespace StarCommander
 {
@@ -57,10 +58,11 @@ namespace StarCommander
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				app.UseDeveloperExceptionHandlerMiddleware();
 			}
 			else
 			{
+				app.UseExceptionHandlerMiddleware();
 				app.UseHsts();
 			}
 
