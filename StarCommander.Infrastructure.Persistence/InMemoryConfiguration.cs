@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StarCommander.Infrastructure.Persistence
 {
-	public sealed class InMemoryConfiguration : IDbContextConfiguration
+	public class InMemoryConfiguration : IDbContextConfiguration
 	{
 		readonly string databaseName;
 

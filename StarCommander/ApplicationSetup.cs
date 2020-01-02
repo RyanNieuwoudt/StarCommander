@@ -5,7 +5,7 @@ using StarCommander.Infrastructure.Persistence;
 
 namespace StarCommander
 {
-	public sealed class ApplicationSetup : CommonSetup
+	public class ApplicationSetup : CommonSetup
 	{
 		public ApplicationSetup(IConfiguration configuration)
 		{

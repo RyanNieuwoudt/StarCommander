@@ -3,7 +3,7 @@ using EntityFramework.DbContextScope.Interfaces;
 
 namespace StarCommander.Infrastructure.Persistence
 {
-	public sealed class AmbientDbContextConfigurator : IAmbientDbContextConfigurator
+	public class AmbientDbContextConfigurator : IAmbientDbContextConfigurator
 	{
 		[ThreadStatic]
 		public static IDbContextConfiguration? Current;

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 {
-	public sealed class PlayerDataContext : DataContextBase
+	public class PlayerDataContext : DataContextBase
 	{
 		public PlayerDataContext()
 		{

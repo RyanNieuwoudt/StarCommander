@@ -1,6 +1,6 @@
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 {
-	public sealed class Player : JsonEntity<Domain.Players.Player>
+	public class Player : JsonEntity<Domain.Players.Player>
 	{
 		public string CallSign { get; set; } = string.Empty;
 

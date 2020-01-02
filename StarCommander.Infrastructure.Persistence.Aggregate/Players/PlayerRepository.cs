@@ -4,7 +4,7 @@ using StarCommander.Domain.Players;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 {
-	public sealed class PlayerRepository : JsonRepositoryBase<Domain.Players.Player, Player, PlayerDataContext>,
+	public class PlayerRepository : JsonRepositoryBase<Domain.Players.Player, Player, PlayerDataContext>,
 		IPlayerRepository
 	{
 		public PlayerRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator) : base(

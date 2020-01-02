@@ -8,7 +8,7 @@ using Player = StarCommander.Domain.Players.Player;
 
 namespace StarCommander.Application.Services
 {
-	public sealed class PlayerService : IPlayerService
+	public class PlayerService : IPlayerService
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IPlayerRepository playerRepository;

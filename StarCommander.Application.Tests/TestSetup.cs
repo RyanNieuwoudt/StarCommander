@@ -4,7 +4,7 @@ using StarCommander.Infrastructure.Persistence;
 
 namespace StarCommander.Application.Tests
 {
-	public sealed class TestSetup : CommonSetup
+	public class TestSetup : CommonSetup
 	{
 		protected override void ConfigureContextualServices(IServiceCollection services)
 		{
