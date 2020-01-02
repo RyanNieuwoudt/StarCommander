@@ -18,3 +18,10 @@ export const signUp = ({
 	password?: string;
 } = {}) =>
 	http.post("api/player/player", { callSign, firstName, lastName, password });
+
+export const updateName = ({
+	firstName,
+	lastName,
+	token
+}: { firstName?: string; lastName?: string; token?: string } = {}) =>
+	http.post("api/player/name", { firstName, lastName }, token);

@@ -1,8 +1,8 @@
 import * as R from "ramda";
 import { Action, Reducer } from "redux";
 import { all, takeLeading } from "redux-saga/effects";
-import { signIn, signUp } from "client/player";
-import { querySaga } from "store/saga/templates";
+import { signIn, signUp, updateName } from "client/player";
+import { commandSaga, querySaga } from "store/saga/templates";
 
 export interface Player {
 	callSign?: string;
@@ -150,7 +150,8 @@ export const actionCreators = {
 export const rootSaga = function* root() {
 	yield all([
 		yield takeLeading("SIGN_IN", querySaga, signIn),
-		yield takeLeading("SIGN_UP", querySaga, signUp)
+		yield takeLeading("SIGN_UP", querySaga, signUp),
+		yield takeLeading("UPDATE_NAME", commandSaga, updateName)
 	]);
 };
 
