@@ -25,10 +25,14 @@ namespace StarCommander.Application.Services
 
 			using var dbContextScope = dbContextScopeFactory.Create();
 
+			if (await playerRepository.Exists(callSign))
+			{
+				throw new InvalidOperationException();
+			}
+
 			//TODO Service to generate ID
 			var player = Player.SignUp(new Reference<Player>(Guid.NewGuid()), callSign, firstName, lastName);
 
-			//TODO Do not overwrite existing player
 			await playerRepository.Save(player);
 
 			await dbContextScope.SaveChangesAsync();
