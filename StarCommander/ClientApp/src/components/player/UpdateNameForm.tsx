@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form } from "grommet";
 import { FormFieldLabel, RequiredFieldLabel } from "components/forms";
+import { player } from "selectors";
 import { actionCreators } from "store/auth";
 
 export default function UpdateNameForm() {
@@ -9,16 +10,28 @@ export default function UpdateNameForm() {
 
 	const onSubmit = useCallback(
 		event => {
-			const { callSign, password } = event.value;
-			dispatch(actionCreators.updateName(callSign, password));
+			const { firstName, lastName } = event.value;
+			dispatch(actionCreators.updateName(firstName, lastName));
 		},
 		[dispatch]
 	);
 
+	const { firstName, lastName } = useSelector(player);
+
 	return (
 		<Form onSubmit={onSubmit}>
-			<FormFieldLabel name="firstName" label="FirstName" required />
-			<FormFieldLabel name="lastName" label="FastName" required />
+			<FormFieldLabel
+				name="firstName"
+				label="FirstName"
+				value={firstName}
+				required
+			/>
+			<FormFieldLabel
+				name="lastName"
+				label="FastName"
+				value={lastName}
+				required
+			/>
 			<Button type="submit" label="Update" primary />
 			<RequiredFieldLabel />
 		</Form>
