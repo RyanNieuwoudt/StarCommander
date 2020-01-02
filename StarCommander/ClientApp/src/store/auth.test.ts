@@ -6,6 +6,8 @@ const callSign = "callSign";
 const firstName = "firstName";
 const lastName = "lastName";
 const password = "password";
+
+const message = "message";
 const token = "token";
 
 describe("auth reducer", () => {
@@ -40,5 +42,35 @@ describe("auth reducer", () => {
 				{ type: "SIGN_OUT" }
 			)
 		).toEqual(expectedDefaultState);
+	});
+
+	it("should clear message when signing in", () => {
+		expect(reducer({ message }, { type: "SIGN_IN" })).toEqual(
+			expectedDefaultState
+		);
+	});
+
+	it("should clear message when signing up", () => {
+		expect(reducer({ message }, { type: "SIGN_UP" })).toEqual(
+			expectedDefaultState
+		);
+	});
+
+	it("should set message on sign in failure", () => {
+		expect(
+			reducer(expectedDefaultState, {
+				type: "SIGN_IN_FAILURE",
+				error: message
+			})
+		).toEqual({ message });
+	});
+
+	it("should set message on sign up failure", () => {
+		expect(
+			reducer(expectedDefaultState, {
+				type: "SIGN_UP_FAILURE",
+				error: message
+			})
+		).toEqual({ message });
 	});
 });

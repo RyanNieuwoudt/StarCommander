@@ -4,6 +4,7 @@ import { signIn, signUp } from "client/player";
 import { querySaga } from "store/saga/templates";
 
 export interface AuthState {
+	message?: string;
 	player?: { callSign?: string; firstName?: string; lastName?: string };
 	token?: string;
 }
@@ -32,6 +33,15 @@ export interface SignInSuccessAction {
 	};
 }
 
+export interface SignInFailureAction {
+	type: "SIGN_IN_FAILURE";
+	payload: {
+		callSign: string;
+		password: string;
+	};
+	error: string;
+}
+
 export interface SignOutAction {
 	type: "SIGN_OUT";
 }
@@ -43,6 +53,16 @@ export interface SignUpAction {
 		firstName: string;
 		lastName: string;
 	};
+}
+
+export interface SignUpFailureAction {
+	type: "SIGN_UP_FAILURE";
+	payload: {
+		callSign: string;
+		firstName: string;
+		lastName: string;
+	};
+	error: string;
 }
 
 export interface SignUpSuccessAction {
@@ -64,9 +84,11 @@ export interface SignUpSuccessAction {
 
 export type KnownAction =
 	| SignInAction
+	| SignInFailureAction
 	| SignInSuccessAction
 	| SignOutAction
 	| SignUpAction
+	| SignUpFailureAction
 	| SignUpSuccessAction;
 
 export const actionCreators = {
@@ -100,10 +122,15 @@ export const reducer: Reducer<AuthState> = (
 ): AuthState => {
 	const action = incomingAction as KnownAction;
 	switch (action.type) {
+		case "SIGN_IN_FAILURE":
+		case "SIGN_UP_FAILURE":
+			return { ...state, message: action.error };
 		case "SIGN_IN_SUCCESS":
 		case "SIGN_UP_SUCCESS":
 			return action.data;
+		case "SIGN_IN":
 		case "SIGN_OUT":
+		case "SIGN_UP":
 			return defaultState;
 		default:
 			return state;
