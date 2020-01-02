@@ -19,11 +19,11 @@ namespace StarCommander.Domain.Players
 			PasswordSalt = passwordSalt;
 		}
 
-		public string CallSign { get; protected set; }
-		public string FirstName { get; protected set; }
-		public string LastName { get; protected set; }
-		public byte[] PasswordHash { get; protected set; }
-		public byte[] PasswordSalt { get; protected set; }
+		public string CallSign { get; protected set; } = string.Empty;
+		public string FirstName { get; protected set; } = string.Empty;
+		public string LastName { get; protected set; } = string.Empty;
+		public byte[] PasswordHash { get; protected set; } = new byte[0];
+		public byte[] PasswordSalt { get; protected set; } = new byte[0];
 
 		public Guid Id { get; }
 
