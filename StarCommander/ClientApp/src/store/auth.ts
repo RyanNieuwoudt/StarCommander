@@ -1,3 +1,4 @@
+import * as R from "ramda";
 import { Action, Reducer } from "redux";
 import { all, takeLeading } from "redux-saga/effects";
 import { signIn, signUp } from "client/player";
@@ -88,6 +89,31 @@ export interface SignUpSuccessAction {
 	};
 }
 
+export interface UpdateNameAction {
+	type: "UPDATE_NAME";
+	payload: {
+		firstName: string;
+		lastName: string;
+	};
+}
+
+export interface UpdateNameFailureAction {
+	type: "UPDATE_NAME_FAILURE";
+	payload: {
+		firstName: string;
+		lastName: string;
+	};
+	error: string;
+}
+
+export interface UpdateNameSuccessAction {
+	type: "UPDATE_NAME_SUCCESS";
+	payload: {
+		firstName: string;
+		lastName: string;
+	};
+}
+
 export type KnownAction =
 	| SignInAction
 	| SignInFailureAction
@@ -95,7 +121,10 @@ export type KnownAction =
 	| SignOutAction
 	| SignUpAction
 	| SignUpFailureAction
-	| SignUpSuccessAction;
+	| SignUpSuccessAction
+	| UpdateNameAction
+	| UpdateNameFailureAction
+	| UpdateNameSuccessAction;
 
 export const actionCreators = {
 	signIn: (callSign: string, password: string) =>
@@ -110,7 +139,12 @@ export const actionCreators = {
 		({
 			type: "SIGN_UP",
 			payload: { callSign, firstName, lastName, password }
-		} as SignUpAction)
+		} as SignUpAction),
+	updateName: (firstName: string, lastName: string) =>
+		({
+			type: "UPDATE_NAME",
+			payload: { firstName, lastName }
+		} as UpdateNameAction)
 };
 
 export const rootSaga = function* root() {
@@ -138,6 +172,15 @@ export const reducer: Reducer<AuthState> = (
 		case "SIGN_OUT":
 		case "SIGN_UP":
 			return defaultState;
+		case "UPDATE_NAME_SUCCESS": {
+			const lens = R.lensPath(["player"]);
+			return R.set(
+				lens,
+				R.merge(R.view(lens, state), action.payload),
+				state
+			);
+		}
+
 		default:
 			return state;
 	}

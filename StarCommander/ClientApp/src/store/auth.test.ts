@@ -1,6 +1,6 @@
 import { reducer } from "./auth";
 
-const expectedDefaultState = {};
+const emptyState = {};
 
 const callSign = "callSign";
 const firstName = "firstName";
@@ -12,12 +12,12 @@ const token = "token";
 
 describe("auth reducer", () => {
 	it("should return the initial state", () => {
-		expect(reducer(undefined, { type: "" })).toEqual(expectedDefaultState);
+		expect(reducer(undefined, { type: "" })).toEqual(emptyState);
 	});
 
 	it("should sign in as requested", () => {
 		expect(
-			reducer(expectedDefaultState, {
+			reducer(emptyState, {
 				type: "SIGN_IN_SUCCESS",
 				payload: { callSign, password },
 				data: { player: { callSign, firstName, lastName }, token }
@@ -27,7 +27,7 @@ describe("auth reducer", () => {
 
 	it("should sign up as requested", () => {
 		expect(
-			reducer(expectedDefaultState, {
+			reducer(emptyState, {
 				type: "SIGN_UP_SUCCESS",
 				payload: { callSign, firstName, lastName },
 				data: { player: { callSign, firstName, lastName }, token }
@@ -41,24 +41,20 @@ describe("auth reducer", () => {
 				{ player: { callSign, firstName, lastName }, token },
 				{ type: "SIGN_OUT" }
 			)
-		).toEqual(expectedDefaultState);
+		).toEqual(emptyState);
 	});
 
 	it("should clear message when signing in", () => {
-		expect(reducer({ message }, { type: "SIGN_IN" })).toEqual(
-			expectedDefaultState
-		);
+		expect(reducer({ message }, { type: "SIGN_IN" })).toEqual(emptyState);
 	});
 
 	it("should clear message when signing up", () => {
-		expect(reducer({ message }, { type: "SIGN_UP" })).toEqual(
-			expectedDefaultState
-		);
+		expect(reducer({ message }, { type: "SIGN_UP" })).toEqual(emptyState);
 	});
 
 	it("should set message on sign in failure", () => {
 		expect(
-			reducer(expectedDefaultState, {
+			reducer(emptyState, {
 				type: "SIGN_IN_FAILURE",
 				error: message
 			})
@@ -67,10 +63,22 @@ describe("auth reducer", () => {
 
 	it("should set message on sign up failure", () => {
 		expect(
-			reducer(expectedDefaultState, {
+			reducer(emptyState, {
 				type: "SIGN_UP_FAILURE",
 				error: message
 			})
 		).toEqual({ message });
+	});
+
+	it("should update name on success, preserving callSign", () => {
+		expect(
+			reducer(
+				{ player: { callSign } },
+				{
+					type: "UPDATE_NAME_SUCCESS",
+					payload: { firstName, lastName }
+				}
+			)
+		).toEqual({ player: { callSign, firstName, lastName } });
 	});
 });
