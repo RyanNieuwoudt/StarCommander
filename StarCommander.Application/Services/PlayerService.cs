@@ -19,7 +19,7 @@ namespace StarCommander.Application.Services
 			this.playerRepository = playerRepository;
 		}
 
-		public async Task<Session> SignUp(string callSign, string firstName, string lastName)
+		public async Task<Session> SignUp(string callSign, string firstName, string lastName, string password)
 		{
 			//TODO Validation
 
@@ -30,8 +30,11 @@ namespace StarCommander.Application.Services
 				throw new InvalidOperationException();
 			}
 
+			var (passwordHash, passwordSalt) = Password.CreatePasswordHashWithSalt(password);
+
 			//TODO Service to generate ID
-			var player = Player.SignUp(new Reference<Player>(Guid.NewGuid()), callSign, firstName, lastName);
+			var player = Player.SignUp(new Reference<Player>(Guid.NewGuid()), callSign, firstName, lastName,
+				passwordHash, passwordSalt);
 
 			await playerRepository.Save(player);
 

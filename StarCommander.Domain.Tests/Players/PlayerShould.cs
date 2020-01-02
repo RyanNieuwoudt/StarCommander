@@ -21,7 +21,7 @@ namespace StarCommander.Domain.Tests.Players
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var player = Player.SignUp(id, callSign, firstName, lastName);
+			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
 
 			Assert.Equal(id, player.Id);
 			Assert.Equal(callSign, player.CallSign);

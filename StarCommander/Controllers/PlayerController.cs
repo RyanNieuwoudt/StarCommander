@@ -20,9 +20,9 @@ namespace StarCommander.Controllers
 
 		[AllowAnonymous]
 		[HttpPost("player")]
-		public async Task<IActionResult> SignUp([FromBody] Player player)
+		public async Task<IActionResult> SignUp([FromBody] SignUp signUp)
 		{
-			return Ok(await playerService.SignUp(player.CallSign, player.FirstName, player.LastName));
+			return Ok(await playerService.SignUp(signUp.CallSign, signUp.FirstName, signUp.LastName, signUp.Password));
 		}
 	}
 }

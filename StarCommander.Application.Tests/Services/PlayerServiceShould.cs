@@ -28,7 +28,7 @@ namespace StarCommander.Application.Tests.Services
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var session = await playerService.SignUp(callSign, firstName, lastName);
+			var session = await playerService.SignUp(callSign, firstName, lastName, fixture.Create<string>());
 
 			Assert.False(string.IsNullOrWhiteSpace(session.Token));
 			Assert.Equal(callSign, session.Player.CallSign);
@@ -44,10 +44,12 @@ namespace StarCommander.Application.Tests.Services
 
 			var callSign = fixture.Create<string>();
 
-			await playerService.SignUp(callSign, fixture.Create<string>(), fixture.Create<string>());
+			await playerService.SignUp(callSign, fixture.Create<string>(), fixture.Create<string>(),
+				fixture.Create<string>());
 
 			await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-				await playerService.SignUp(callSign, fixture.Create<string>(), fixture.Create<string>()));
+				await playerService.SignUp(callSign, fixture.Create<string>(), fixture.Create<string>(),
+					fixture.Create<string>()));
 		}
 	}
 }
