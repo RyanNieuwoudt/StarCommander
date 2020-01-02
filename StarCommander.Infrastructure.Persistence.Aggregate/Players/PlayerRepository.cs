@@ -17,6 +17,11 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 			return await GetDbSet().SingleOrDefaultAsync(u => u.CallSign == callSign) != null;
 		}
 
+		public async Task<Domain.Players.Player> Fetch(string callSign)
+		{
+			return (await GetDbSet().SingleAsync(u => u.CallSign == callSign)).ToDomain();
+		}
+
 		protected override Player AddEntity()
 		{
 			var entity = new Player();
