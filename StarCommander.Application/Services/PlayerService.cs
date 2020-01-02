@@ -62,7 +62,7 @@ namespace StarCommander.Application.Services
 
 			if (await playerRepository.Exists(callSign))
 			{
-				throw new InvalidOperationException();
+				throw new InvalidOperationException("Call sign in use.");
 			}
 
 			var (passwordHash, passwordSalt) = Password.CreatePasswordHashWithSalt(password);
