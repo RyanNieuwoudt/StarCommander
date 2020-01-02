@@ -37,7 +37,6 @@ namespace StarCommander.Application.Services
 					throw new Exception();
 				}
 
-				//TODO Mapper
 				return new Session
 				{
 					Token = Guid.NewGuid().ToString(),
@@ -71,7 +70,6 @@ namespace StarCommander.Application.Services
 
 			await dbContextScope.SaveChangesAsync();
 
-			//TODO Mapper
 			return new Session
 			{
 				Token = Guid.NewGuid().ToString(),
