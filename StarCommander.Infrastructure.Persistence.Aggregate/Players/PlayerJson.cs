@@ -1,8 +1,16 @@
+using System;
+
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 {
 	// ReSharper disable once ClassNeverInstantiated.Global
 	public class PlayerJson : Domain.Players.Player
 	{
+		public new Guid Id
+		{
+			get => base.Id;
+			set => base.Id = value;
+		}
+
 		public new string CallSign
 		{
 			get => base.CallSign;

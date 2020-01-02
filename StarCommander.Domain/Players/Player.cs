@@ -25,12 +25,18 @@ namespace StarCommander.Domain.Players
 		public byte[] PasswordHash { get; protected set; } = new byte[0];
 		public byte[] PasswordSalt { get; protected set; } = new byte[0];
 
-		public Guid Id { get; }
+		public Guid Id { get; protected set;}
 
 		public static Player SignUp(Reference<Player> id, string callSign, string firstName, string lastName,
 			byte[] passwordHash, byte[] passwordSalt)
 		{
 			return new Player(id, callSign, firstName, lastName, passwordHash, passwordSalt);
+		}
+
+		public void UpdateName(string firstName, string lastName)
+		{
+			FirstName = firstName;
+			LastName = lastName;
 		}
 	}
 }

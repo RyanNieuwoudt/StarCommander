@@ -7,5 +7,6 @@ namespace StarCommander.Application.Services
 	{
 		Task<Session> SignIn(string callSign, string password);
 		Task<Session> SignUp(string callSign, string firstName, string lastName, string password);
+		Task UpdateName(string callSign, string firstName, string lastName);
 	}
 }

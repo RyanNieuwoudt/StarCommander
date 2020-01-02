@@ -57,24 +57,41 @@ namespace StarCommander.Application.Services
 		public async Task<Session> SignUp(string callSign, string firstName, string lastName, string password)
 		{
 			//TODO Validation
+			try
+			{
+				using var dbContextScope = dbContextScopeFactory.Create();
 
-			using var dbContextScope = dbContextScopeFactory.Create();
+				if (await playerRepository.Exists(callSign))
+				{
+					throw new Exception();
+				}
 
-			if (await playerRepository.Exists(callSign))
+				var (passwordHash, passwordSalt) = Password.CreatePasswordHashWithSalt(password);
+
+				var player = Player.SignUp(generate.Reference<Player>(), callSign, firstName, lastName, passwordHash,
+					passwordSalt);
+
+				await playerRepository.Save(player);
+				await dbContextScope.SaveChangesAsync();
+
+				return GetSession(player);
+			}
+			catch
 			{
 				throw new InvalidOperationException("Call sign in use.");
 			}
+		}
 
-			var (passwordHash, passwordSalt) = Password.CreatePasswordHashWithSalt(password);
+		public async Task UpdateName(string callSign, string firstName, string lastName)
+		{
+			using var dbContextScope = dbContextScopeFactory.Create();
 
-			var player = Player.SignUp(generate.Reference<Player>(), callSign, firstName, lastName, passwordHash,
-				passwordSalt);
+			var player = await playerRepository.Fetch(callSign);
+
+			player.UpdateName(firstName, lastName);
 
 			await playerRepository.Save(player);
-
 			await dbContextScope.SaveChangesAsync();
-
-			return GetSession(player);
 		}
 
 		Session GetSession(Player player)
