@@ -28,8 +28,10 @@ export default function SignUpPage() {
 
 	const onSubmit = useCallback(
 		event => {
-			const { callSign, firstName, lastName } = event.value;
-			dispatch(actionCreators.signUp(callSign, firstName, lastName));
+			const { callSign, firstName, lastName, password } = event.value;
+			dispatch(
+				actionCreators.signUp(callSign, firstName, lastName, password)
+			);
 		},
 		[dispatch]
 	);
@@ -39,6 +41,7 @@ export default function SignUpPage() {
 			<Heading>Star Commander</Heading>
 			<Form onSubmit={onSubmit}>
 				<FormFieldLabel name="callSign" label="CallSign" required />
+				<FormFieldLabel name="password" label="Password" required />
 				<FormFieldLabel name="firstName" label="FirstName" required />
 				<FormFieldLabel name="lastName" label="LastName" required />
 				<Button type="submit" label="Sign up" primary />

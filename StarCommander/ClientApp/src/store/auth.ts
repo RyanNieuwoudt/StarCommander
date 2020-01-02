@@ -42,10 +42,15 @@ export type KnownAction = SignOutAction | SignUpAction | SignUpSuccessAction;
 
 export const actionCreators = {
 	signOut: () => ({ type: "SIGN_OUT" }),
-	signUp: (callSign: string, firstName: string, lastName: string) =>
+	signUp: (
+		callSign: string,
+		firstName: string,
+		lastName: string,
+		password: string
+	) =>
 		({
 			type: "SIGN_UP",
-			payload: { callSign, firstName, lastName }
+			payload: { callSign, firstName, lastName, password }
 		} as SignUpAction)
 };
 
