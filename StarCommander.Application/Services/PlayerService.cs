@@ -1,4 +1,5 @@
 using System;
+using System.Security;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Domain;
@@ -17,6 +18,33 @@ namespace StarCommander.Application.Services
 		{
 			this.dbContextScopeFactory = dbContextScopeFactory;
 			this.playerRepository = playerRepository;
+		}
+
+		public async Task<Session> SignIn(string callSign, string password)
+		{
+			try
+			{
+				using var dbContextScope = dbContextScopeFactory.Create();
+
+				var player = await playerRepository.Fetch(callSign);
+
+				if (!Password.VerifyPasswordHash(password, player.PasswordHash, player.PasswordSalt))
+				{
+					throw new Exception();
+				}
+
+				//TODO Mapper
+				return new Session
+				{
+					Token = Guid.NewGuid().ToString(),
+					Player = new Shared.Model.Player
+						{ CallSign = player.CallSign, FirstName = player.FirstName, LastName = player.LastName }
+				};
+			}
+			catch
+			{
+				throw new SecurityException("Invalid call sign or password.");
+			}
 		}
 
 		public async Task<Session> SignUp(string callSign, string firstName, string lastName, string password)
