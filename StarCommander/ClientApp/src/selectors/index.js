@@ -1,3 +1,4 @@
 import isLoggedIn from "./isLoggedIn";
+import player from "./player";
 
-export { isLoggedIn };
+export { isLoggedIn, player };

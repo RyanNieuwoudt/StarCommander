@@ -1,13 +1,10 @@
-import * as R from "ramda";
 import React from "react";
 import { Text } from "grommet";
 import { useSelector } from "react-redux";
-import { Player } from "store/auth";
+import { player } from "selectors";
 
 export default function Name() {
-	const { firstName, lastName } = useSelector(
-		R.path(["auth", "player"])
-	) as Player;
+	const { firstName, lastName } = useSelector(player);
 
 	return (
 		<Text>
