@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Heading, Tab, Tabs } from "grommet";
-import { SignInForm, SignUpForm } from "components/signin";
+import { Message, SignInForm, SignUpForm } from "components/signin";
 
 export default function WelcomePage() {
 	return (
@@ -18,6 +18,7 @@ export default function WelcomePage() {
 					</Box>
 				</Tab>
 			</Tabs>
+			<Message />
 		</Box>
 	);
 }
