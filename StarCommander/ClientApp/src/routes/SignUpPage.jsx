@@ -1,27 +1,8 @@
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { Box, Button, Form, FormField, Heading, Text } from "grommet";
+import { Box, Button, Form, Heading, Text } from "grommet";
+import { FormFieldLabel } from "components/forms";
 import { actionCreators } from "store/auth";
-
-const FormFieldLabel = props => {
-	const { required, label, ...rest } = props;
-	return (
-		<FormField
-			label={
-				required ? (
-					<Box direction="row">
-						<Text>{label}</Text>
-						<Text color="status-critical">*</Text>
-					</Box>
-				) : (
-					label
-				)
-			}
-			required={required}
-			{...rest}
-		/>
-	);
-};
 
 export default function SignUpPage() {
 	const dispatch = useDispatch();
