@@ -19,6 +19,13 @@ namespace StarCommander.Controllers
 		}
 
 		[AllowAnonymous]
+		[HttpPost("session")]
+		public async Task<IActionResult> SignIn([FromBody] SignIn signIn)
+		{
+			return Ok(await playerService.SignIn(signIn.CallSign, signIn.Password));
+		}
+
+		[AllowAnonymous]
 		[HttpPost("player")]
 		public async Task<IActionResult> SignUp([FromBody] SignUp signUp)
 		{
