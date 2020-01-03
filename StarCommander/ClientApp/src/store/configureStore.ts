@@ -4,7 +4,11 @@ import { History } from "history";
 import throttle from "lodash.throttle";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
-import { ApplicationState, reducers, sagas } from ".";
+import { ApplicationState, reducers, sagas } from "store";
+import {
+	createChannelConnection,
+	createSignalRMiddleware
+} from "store/middleware";
 
 const getStateFromSessionStore = () => {
 	try {
@@ -22,8 +26,20 @@ export default function configureStore(
 	history: History,
 	initialState?: ApplicationState
 ) {
+	const isDevelopment = process.env.NODE_ENV === "development";
+
 	const sagaMiddleware = createSagaMiddleware();
-	const middleware = [sagaMiddleware, routerMiddleware(history)];
+
+	const { connection, connect, disconnect } = createChannelConnection(
+		isDevelopment,
+		null
+	);
+
+	const middleware = [
+		sagaMiddleware,
+		createSignalRMiddleware(connect, disconnect),
+		routerMiddleware(history)
+	];
 
 	const rootReducer = combineReducers({
 		...reducers,
@@ -37,13 +53,17 @@ export default function configureStore(
 		enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
 	}
 
-	const isDevelopment = process.env.NODE_ENV === "development";
-
 	if (isDevelopment) {
 		var savedState = getStateFromSessionStore();
 		if (savedState !== null) {
 			initialState = savedState;
 		}
+	}
+
+	if (connection) {
+		connection.on("Message", message => {
+			store.dispatch(JSON.parse(message));
+		});
 	}
 
 	const store = createStore(
