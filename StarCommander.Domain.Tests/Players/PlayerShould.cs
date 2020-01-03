@@ -28,5 +28,29 @@ namespace StarCommander.Domain.Tests.Players
 			Assert.Equal(firstName, player.FirstName);
 			Assert.Equal(lastName, player.LastName);
 		}
+
+		[Fact]
+		public void UpdateName()
+		{
+			var firstName = fixture.Create<string>();
+			var lastName = fixture.Create<string>();
+
+			var player = Player.SignUp(fixture.Create<Reference<Player>>(), fixture.Create<string>(), firstName,
+				lastName, new byte[0], new byte[0]);
+
+			Assert.Equal(firstName, player.FirstName);
+			Assert.Equal(lastName, player.LastName);
+
+			var newFirstName = fixture.Create<string>();
+			var newLastName = fixture.Create<string>();
+
+			Assert.NotEqual(firstName, newFirstName);
+			Assert.NotEqual(lastName, newLastName);
+
+			player.UpdateName(newFirstName, newLastName);
+
+			Assert.Equal(newFirstName, player.FirstName);
+			Assert.Equal(newLastName, player.LastName);
+		}
 	}
 }
