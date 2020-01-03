@@ -2,9 +2,12 @@ using AutoMapper;
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using StarCommander.Application.Events;
 using StarCommander.Application.Services;
+using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
 using StarCommander.Infrastructure.Persistence;
+using StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 using StarCommander.Infrastructure.Persistence.Aggregate.Players;
 
 namespace StarCommander.Application
@@ -28,7 +31,10 @@ namespace StarCommander.Application
 			services.AddScoped<IAmbientDbContextLocator, AmbientDbContextLocator>();
 			services.AddScoped<IDbContextScopeFactory, DbContextScopeFactory>();
 
+			services.AddScoped<IEventRepository, EventRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
+
+			services.AddScoped<IEventPublisher, EventPublisher>();
 
 			services.AddScoped<IReferenceGenerator, RandomIdGenerator>();
 			services.AddScoped<IPlayerService, PlayerService>();

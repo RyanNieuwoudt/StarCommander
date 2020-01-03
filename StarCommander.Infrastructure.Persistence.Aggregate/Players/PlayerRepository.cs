@@ -1,14 +1,15 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 {
-	public class PlayerRepository : JsonRepositoryBase<Domain.Players.Player, PlayerJson, Player, PlayerDataContext>,
-		IPlayerRepository
+	public class PlayerRepository :
+		EventPublishingRepositoryBase<Domain.Players.Player, PlayerJson, Player, PlayerDataContext>, IPlayerRepository
 	{
-		public PlayerRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator) : base(
-			ambientDbContextConfigurator)
+		public PlayerRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator,
+			IEventPublisher eventPublisher) : base(ambientDbContextConfigurator, eventPublisher)
 		{
 		}
 
