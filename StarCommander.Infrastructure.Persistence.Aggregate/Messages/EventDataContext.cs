@@ -12,7 +12,7 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 		{
 		}
 
-		public DbSet<Event> Events { get; set; }
+		public DbSet<Event> Events { get; set; } = default!;
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

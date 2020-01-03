@@ -16,18 +16,23 @@ namespace StarCommander.Infrastructure.Serialization
 			return objectType == typeof(IDomainEvent);
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
 			JsonSerializer serializer)
 		{
 			var token = JToken.Load(reader);
 			var name = token.Value<string>("Type") ?? token.Value<string>("type");
 			var type = typeof(IDomainEvent).Assembly.GetType(name);
-			var domainEvent = FormatterServices.GetUninitializedObject(type) as IDomainEvent;
+
+			if (!(FormatterServices.GetUninitializedObject(type) is IDomainEvent domainEvent))
+			{
+				throw new InvalidOperationException("Invalid domain event.");
+			}
+
 			serializer.Populate(token.CreateReader(), domainEvent);
 			return domainEvent;
 		}
 
-		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		{
 			throw new InvalidOperationException("Use default serialization.");
 		}

@@ -8,6 +8,6 @@ namespace StarCommander.Domain
 	public abstract class DomainEvent : IDomainEvent
 	{
 		[JsonProperty]
-		public string Type => GetType().FullName;
+		public string Type => GetType().FullName!;
 	}
 }
