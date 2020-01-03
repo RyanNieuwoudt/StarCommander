@@ -19,16 +19,16 @@ namespace StarCommander.Application.Services
 	{
 		readonly AppSettings appSettings;
 		readonly IDbContextScopeFactory dbContextScopeFactory;
-		readonly IReferenceGenerator generate;
+		readonly IReferenceGenerator generator;
 		readonly IMapper mapper;
 		readonly IPlayerRepository playerRepository;
 
 		public PlayerService(IOptions<AppSettings> appSettings, IDbContextScopeFactory dbContextScopeFactory,
-			IReferenceGenerator generate, IMapper mapper, IPlayerRepository playerRepository)
+			IReferenceGenerator generator, IMapper mapper, IPlayerRepository playerRepository)
 		{
 			this.appSettings = appSettings.Value;
 			this.dbContextScopeFactory = dbContextScopeFactory;
-			this.generate = generate;
+			this.generator = generator;
 			this.mapper = mapper;
 			this.playerRepository = playerRepository;
 		}
@@ -68,8 +68,8 @@ namespace StarCommander.Application.Services
 
 				var (passwordHash, passwordSalt) = Password.CreatePasswordHashWithSalt(password);
 
-				var player = Player.SignUp(generate.Reference<Player>(), callSign, firstName, lastName, passwordHash,
-					passwordSalt);
+				var player = Player.SignUp(generator.NewReference<Player>(), callSign, firstName, lastName,
+					passwordHash, passwordSalt);
 
 				await playerRepository.Save(player);
 				await dbContextScope.SaveChangesAsync();
