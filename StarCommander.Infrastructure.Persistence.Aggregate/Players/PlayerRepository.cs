@@ -6,7 +6,7 @@ using StarCommander.Domain.Players;
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 {
 	public class PlayerRepository :
-		EventPublishingRepositoryBase<Domain.Players.Player, PlayerJson, Player, PlayerDataContext>, IPlayerRepository
+		EventPublishingRepositoryBase<Domain.Players.Player, Player, PlayerDataContext>, IPlayerRepository
 	{
 		public PlayerRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator,
 			IEventPublisher eventPublisher) : base(ambientDbContextConfigurator, eventPublisher)

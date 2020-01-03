@@ -1,12 +1,19 @@
+using System;
+using Newtonsoft.Json;
+
 namespace StarCommander.Domain.Players
 {
+	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public abstract class PlayerEvent : DomainEvent
 	{
-		public PlayerEvent(string callSign)
+		[JsonConstructor]
+		protected PlayerEvent(string callSign)
 		{
 			CallSign = callSign;
 		}
 
-		public string CallSign { get; protected set; }
+		[JsonProperty]
+		public string CallSign { get; private set; }
 	}
 }

@@ -1,13 +1,13 @@
 using System;
+using Newtonsoft.Json;
 
 namespace StarCommander.Domain.Players
 {
+	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public class Player : EventPublisherBase, IAggregate
 	{
-		protected Player()
-		{
-		}
-
+		[JsonConstructor]
 		Player(Reference<Player> id, string callSign, string firstName, string lastName, byte[] passwordHash,
 			byte[] passwordSalt)
 		{
@@ -19,13 +19,23 @@ namespace StarCommander.Domain.Players
 			PasswordSalt = passwordSalt;
 		}
 
-		public string CallSign { get; protected set; } = string.Empty;
-		public string FirstName { get; protected set; } = string.Empty;
-		public string LastName { get; protected set; } = string.Empty;
-		public byte[] PasswordHash { get; protected set; } = new byte[0];
-		public byte[] PasswordSalt { get; protected set; } = new byte[0];
+		[JsonProperty]
+		public string CallSign { get; private set; }
 
-		public Guid Id { get; protected set; }
+		[JsonProperty]
+		public string FirstName { get; private set; }
+
+		[JsonProperty]
+		public string LastName { get; private set; }
+
+		[JsonProperty]
+		public byte[] PasswordHash { get; private set; }
+
+		[JsonProperty]
+		public byte[] PasswordSalt { get; private set; }
+
+		[JsonProperty]
+		public Guid Id { get; }
 
 		public static Player SignUp(Reference<Player> id, string callSign, string firstName, string lastName,
 			byte[] passwordHash, byte[] passwordSalt)

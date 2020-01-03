@@ -7,10 +7,9 @@ using StarCommander.Domain;
 
 namespace StarCommander.Infrastructure.Persistence
 {
-	public abstract class JsonRepositoryBase<T, T1, TU, TV> : RepositoryBase<TV>, IRepository<T>
+	public abstract class JsonRepositoryBase<T, TU, TV> : RepositoryBase<TV>, IRepository<T>
 		where T : class, IAggregate
-		where T1 : class, T
-		where TU : JsonEntity<T, T1>
+		where TU : JsonEntity<T>
 		where TV : class, IDbContext
 	{
 		protected JsonRepositoryBase(IAmbientDbContextConfigurator ambientDbContextConfigurator) : base(

@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace StarCommander.Domain
 {
@@ -15,8 +16,11 @@ namespace StarCommander.Domain
 		}
 	}
 
+	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public readonly struct Reference<T> : IEquatable<Reference<T>> where T : IAggregate
 	{
+		[JsonConstructor]
 		public Reference(Guid id)
 		{
 			Id = id;
@@ -27,6 +31,7 @@ namespace StarCommander.Domain
 			Id = aggregate.Id;
 		}
 
+		[JsonProperty]
 		public Guid Id { get; }
 
 		public bool Equals(Reference<T> other)

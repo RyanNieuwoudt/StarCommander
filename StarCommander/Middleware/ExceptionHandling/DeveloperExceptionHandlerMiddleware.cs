@@ -1,6 +1,7 @@
 using System;
-using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using StarCommander.Infrastructure.Serialization;
 
 namespace StarCommander.Middleware.ExceptionHandling
 {
@@ -12,7 +13,8 @@ namespace StarCommander.Middleware.ExceptionHandling
 
 		protected override string Serialize(Exception ex)
 		{
-			return JsonSerializer.Serialize(new { message = ex.Message, Exception = ex });
+			return JsonConvert.SerializeObject(new { message = ex.Message, exception = ex },
+				SerializationSettings.Middleware);
 		}
 	}
 }

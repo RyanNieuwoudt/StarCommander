@@ -5,7 +5,7 @@ using StarCommander.Domain.Messages;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 {
-	public sealed class EventRepository : JsonRepositoryBase<Domain.Messages.Event, EventJson, Event, EventDataContext>,
+	public sealed class EventRepository : JsonRepositoryBase<Domain.Messages.Event, Event, EventDataContext>,
 		IEventRepository
 	{
 		public EventRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator) : base(

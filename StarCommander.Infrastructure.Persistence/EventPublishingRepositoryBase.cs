@@ -5,10 +5,9 @@ using StarCommander.Domain.Messages;
 
 namespace StarCommander.Infrastructure.Persistence
 {
-	public abstract class EventPublishingRepositoryBase<T, T1, TU, TV> : JsonRepositoryBase<T, T1, TU, TV>
+	public abstract class EventPublishingRepositoryBase<T, TU, TV> : JsonRepositoryBase<T, TU, TV>
 		where T : class, IAggregate, IRaiseDomainEvents
-		where T1 : class, T
-		where TU : JsonEntity<T, T1>
+		where TU : JsonEntity<T>
 		where TV : class, IDbContext
 	{
 		readonly IEventPublisher eventPublisher;

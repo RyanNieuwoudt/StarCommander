@@ -1,9 +1,10 @@
 using System;
 using System.Net;
 using System.Security;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using StarCommander.Infrastructure.Serialization;
 
 namespace StarCommander.Middleware.ExceptionHandling
 {
@@ -43,7 +44,7 @@ namespace StarCommander.Middleware.ExceptionHandling
 
 		protected virtual string Serialize(Exception ex)
 		{
-			return JsonSerializer.Serialize(new { message = ex.Message });
+			return JsonConvert.SerializeObject(new { message = ex.Message }, SerializationSettings.Middleware);
 		}
 	}
 }

@@ -1,10 +1,11 @@
 using System;
-using System.Text.Json;
+using Newtonsoft.Json;
 using StarCommander.Domain;
+using StarCommander.Infrastructure.Serialization;
 
 namespace StarCommander.Infrastructure.Persistence
 {
-	public abstract class JsonEntity<T, TU> where T : class, IAggregate where TU : class, T
+	public abstract class JsonEntity<T> where T : class, IAggregate
 	{
 		public Guid Id { get; set; }
 
@@ -13,7 +14,7 @@ namespace StarCommander.Infrastructure.Persistence
 		public void SetValuesFrom(T aggregate)
 		{
 			Id = aggregate.Id;
-			Json = JsonSerializer.Serialize(aggregate);
+			Json = JsonConvert.SerializeObject(aggregate, Formatting.Indented, SerializationSettings.Persistence);
 			ProjectValues(aggregate);
 		}
 
@@ -23,7 +24,7 @@ namespace StarCommander.Infrastructure.Persistence
 
 		public T ToDomain()
 		{
-			return JsonSerializer.Deserialize<TU>(Json);
+			return JsonConvert.DeserializeObject<T>(Json, SerializationSettings.Persistence);
 		}
 	}
 }

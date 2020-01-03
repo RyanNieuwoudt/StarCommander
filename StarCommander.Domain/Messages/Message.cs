@@ -1,13 +1,13 @@
 using System;
+using Newtonsoft.Json;
 
 namespace StarCommander.Domain.Messages
 {
+	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public abstract class Message<T> : IAggregate
 	{
-		protected Message()
-		{
-		}
-
+		[JsonConstructor]
 		protected Message(in Reference<Message<T>> id, DateTimeOffset created, T payload, DateTimeOffset? processed)
 		{
 			Id = id;
@@ -16,15 +16,19 @@ namespace StarCommander.Domain.Messages
 			Processed = processed;
 		}
 
-		public DateTimeOffset Created { get; protected set; }
+		[JsonProperty]
+		public DateTimeOffset Created { get; private set; }
 
 		public bool IsProcessed => Processed.HasValue;
 
-		public T Payload { get; protected set; }
+		[JsonProperty]
+		public T Payload { get; private set; }
 
-		public DateTimeOffset? Processed { get; protected set; }
+		[JsonProperty]
+		public DateTimeOffset? Processed { get; private set; }
 
-		public Guid Id { get; protected set; }
+		[JsonProperty]
+		public Guid Id { get; }
 
 		public void MarkAsProcessed()
 		{

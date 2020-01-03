@@ -28,7 +28,7 @@ namespace StarCommander
 		{
 			new ApplicationSetup(Configuration).ConfigureServices(services);
 
-			services.AddControllers();
+			services.AddControllers().AddNewtonsoftJson();
 			services.AddSignalR().AddMessagePackProtocol();
 
 			// In production, the React files will be served from this directory
