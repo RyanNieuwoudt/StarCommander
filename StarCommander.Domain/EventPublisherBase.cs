@@ -7,6 +7,10 @@ namespace StarCommander.Domain
 		readonly List<IDomainEvent> events;
 		bool enableEventPublishing;
 
+		protected EventPublisherBase() : this(true)
+		{
+		}
+
 		protected EventPublisherBase(bool enableEventPublishing)
 		{
 			this.enableEventPublishing = enableEventPublishing;

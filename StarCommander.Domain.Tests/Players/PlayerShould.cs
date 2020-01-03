@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoFixture;
 using StarCommander.Domain.Players;
 using Xunit;
@@ -51,6 +52,13 @@ namespace StarCommander.Domain.Tests.Players
 
 			Assert.Equal(newFirstName, player.FirstName);
 			Assert.Equal(newLastName, player.LastName);
+
+			var playNameChanged = player.Events.Single(e => e is PlayerNameChanged) as PlayerNameChanged;
+
+			Assert.NotNull(playNameChanged);
+			Assert.Equal(player.CallSign, playNameChanged.CallSign);
+			Assert.Equal(player.FirstName, playNameChanged.FirstName);
+			Assert.Equal(player.LastName, playNameChanged.LastName);
 		}
 	}
 }

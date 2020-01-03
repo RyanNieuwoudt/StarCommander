@@ -2,7 +2,7 @@ using System;
 
 namespace StarCommander.Domain.Players
 {
-	public class Player : IAggregate
+	public class Player : EventPublisherBase, IAggregate
 	{
 		protected Player()
 		{
@@ -35,8 +35,15 @@ namespace StarCommander.Domain.Players
 
 		public void UpdateName(string firstName, string lastName)
 		{
+			if (firstName == FirstName && lastName == LastName)
+			{
+				return;
+			}
+
 			FirstName = firstName;
 			LastName = lastName;
+
+			RaiseEvent(new PlayerNameChanged(CallSign, FirstName, LastName));
 		}
 	}
 }
