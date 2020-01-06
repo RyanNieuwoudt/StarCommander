@@ -13,7 +13,7 @@ namespace StarCommander.Shared.Model.Notifications
 
 	[Serializable]
 	[JsonObject(MemberSerialization.OptIn)]
-	public sealed class Action<T> : IAction
+	public class Action<T> : IAction
 	{
 		[JsonConstructor]
 		public Action(string type, T payload)

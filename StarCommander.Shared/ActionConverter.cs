@@ -6,7 +6,7 @@ using StarCommander.Shared.Model.Notifications;
 
 namespace StarCommander.Shared
 {
-	public sealed class ActionConverter : JsonConverter
+	public class ActionConverter : JsonConverter
 	{
 		public override bool CanRead => true;
 		public override bool CanWrite => false;

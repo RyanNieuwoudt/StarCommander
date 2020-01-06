@@ -6,7 +6,7 @@ using StarCommander.Domain;
 
 namespace StarCommander.Infrastructure.Serialization
 {
-	public sealed class DomainEventConverter : JsonConverter
+	public class DomainEventConverter : JsonConverter
 	{
 		public override bool CanRead => true;
 		public override bool CanWrite => false;

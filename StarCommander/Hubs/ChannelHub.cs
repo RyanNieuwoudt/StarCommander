@@ -6,7 +6,7 @@ using static StarCommander.Hubs.Channels;
 
 namespace StarCommander.Hubs
 {
-	public sealed class ChannelHub : Hub<IChannelClient>, IChannelServer
+	public class ChannelHub : Hub<IChannelClient>, IChannelServer
 	{
 		public override async Task OnConnectedAsync()
 		{

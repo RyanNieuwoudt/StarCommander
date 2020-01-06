@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace StarCommander.Application.Events
 {
-	public sealed class EventMonitor : BackgroundService
+	public class EventMonitor : BackgroundService
 	{
 		readonly ILogger<EventMonitor> logger;
 		readonly IServiceProvider serviceProvider;

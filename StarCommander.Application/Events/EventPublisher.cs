@@ -6,7 +6,7 @@ using StarCommander.Domain.Messages;
 
 namespace StarCommander.Application.Events
 {
-	public sealed class EventPublisher : IEventPublisher
+	public class EventPublisher : IEventPublisher
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IEventRepository eventRepository;
