@@ -12,7 +12,7 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 		{
 		}
 
-		public async Task<Domain.Messages.Event> FetchNextUnprocessed()
+		public async Task<Domain.Messages.Event?> FetchNextUnprocessed()
 		{
 			return (await GetDbSet()
 				.AsNoTracking()
