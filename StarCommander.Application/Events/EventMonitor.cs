@@ -20,7 +20,7 @@ namespace StarCommander.Application.Events
 
 		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
 		{
-			logger.LogInformation("Starting event forwarder.");
+			logger.LogInformation("Starting event monitor.");
 
 			cancellationToken.Register(Stop);
 
@@ -50,7 +50,7 @@ namespace StarCommander.Application.Events
 
 		void Stop()
 		{
-			logger.LogInformation("Stopping event forwarder.");
+			logger.LogInformation("Stopping event monitor.");
 		}
 	}
 }
