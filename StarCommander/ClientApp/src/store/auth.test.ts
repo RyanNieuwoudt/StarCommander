@@ -81,4 +81,16 @@ describe("auth reducer", () => {
 			)
 		).toEqual({ player: { callSign, firstName, lastName } });
 	});
+
+	it("should update name on notification, preserving callSign", () => {
+		expect(
+			reducer(
+				{ player: { callSign } },
+				{
+					type: "ON_PLAYER_NAME_UPDATED",
+					payload: { firstName, lastName }
+				}
+			)
+		).toEqual({ player: { callSign, firstName, lastName } });
+	});
 });

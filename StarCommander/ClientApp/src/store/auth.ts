@@ -16,6 +16,14 @@ export interface AuthState {
 	token?: string;
 }
 
+export interface OnPlayerNameChangedAction {
+	type: "ON_PLAYER_NAME_CHANGED";
+	payload: {
+		firstName: string;
+		lastName: string;
+	};
+}
+
 export interface SignInAction {
 	type: "SIGN_IN";
 	payload: {
@@ -115,6 +123,7 @@ export interface UpdateNameSuccessAction {
 }
 
 export type KnownAction =
+	| OnPlayerNameChangedAction
 	| SignInAction
 	| SignInFailureAction
 	| SignInSuccessAction
@@ -174,6 +183,7 @@ export const reducer: Reducer<AuthState> = (
 		case "SIGN_OUT":
 		case "SIGN_UP":
 			return defaultState;
+		case "ON_PLAYER_NAME_CHANGED":
 		case "UPDATE_NAME_SUCCESS": {
 			const lens = R.lensPath(["player"]);
 			return R.set(
