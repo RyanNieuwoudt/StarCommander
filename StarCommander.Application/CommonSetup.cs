@@ -32,12 +32,19 @@ namespace StarCommander.Application
 			services.AddScoped<IDbContextScopeFactory, DbContextScopeFactory>();
 
 			services.AddScoped<IEventRepository, EventRepository>();
+			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
 
+			services.AddScoped<IEventForwarder, EventForwarder>();
 			services.AddScoped<IEventPublisher, EventPublisher>();
+			services.AddSingleton<IJobScheduler, JobScheduler>();
+			services.AddWorkerRegistry(typeof(CommonSetup));
+			services.AddHostedService<EventMonitor>();
+			services.AddHostedService<JobMonitor>();
 
-			services.AddScoped<IReferenceGenerator, RandomIdGenerator>();
+			services.AddScoped<IJobService, JobService>();
 			services.AddScoped<IPlayerService, PlayerService>();
+			services.AddScoped<IReferenceGenerator, RandomIdGenerator>();
 		}
 
 		protected abstract void ConfigureContextualServices(IServiceCollection services);
