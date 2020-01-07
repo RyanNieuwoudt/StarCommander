@@ -2,6 +2,7 @@ using AutoMapper;
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using StarCommander.Application.CommandHandlers;
 using StarCommander.Application.Events;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
@@ -36,7 +37,7 @@ namespace StarCommander.Application
 			services.AddScoped<IPlayerCommandRepository, PlayerCommandRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
 
-			services.AddScoped<IEventForwarder, EventForwarder>();
+			services.AddScoped<IMessageForwarder, MessageForwarder>();
 			services.AddScoped<IEventPublisher, EventPublisher>();
 			services.AddSingleton<IJobScheduler, JobScheduler>();
 			services.AddWorkerRegistry(typeof(CommonSetup));

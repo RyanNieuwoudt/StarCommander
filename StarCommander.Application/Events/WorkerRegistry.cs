@@ -13,6 +13,18 @@ namespace StarCommander.Application.Events
 			this.handlers = handlers;
 		}
 
+		public IEnumerable<string> GetHandlersFor(ICommand command)
+		{
+			var result = new List<string>();
+
+			if (handlers.Contains(command.Type))
+			{
+				result.AddRange(handlers[command.Type]);
+			}
+
+			return result.Distinct();
+		}
+
 		public IEnumerable<string> GetHandlersFor(IDomainEvent @event)
 		{
 			var result = new List<string>();

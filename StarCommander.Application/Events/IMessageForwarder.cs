@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace StarCommander.Application.Events
 {
-	public interface IEventForwarder
+	public interface IMessageForwarder
 	{
-		Task<bool> ForwardNextEvent(CancellationToken cancellationToken);
+		Task<bool> ForwardNextMessage(CancellationToken cancellationToken);
 	}
 }

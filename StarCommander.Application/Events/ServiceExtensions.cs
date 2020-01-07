@@ -11,9 +11,45 @@ namespace StarCommander.Application.Events
 	{
 		public static void AddWorkerRegistry(this IServiceCollection serviceCollection, Type type)
 		{
+			var iHandleCommands = typeof(IHandleCommands<>);
 			var iHandleDomainEvents = typeof(IHandleDomainEvents<>);
 
 			var handlers = new Dictionary<string, List<string>>();
+
+			foreach (var commandHandler in GetAllTypesImplementingOpenGenericType(iHandleCommands, type.Assembly)
+				.Where(e => e.IsClass))
+			{
+				serviceCollection.AddScoped(commandHandler);
+
+				foreach (var i in commandHandler.GetInterfaces()
+					.Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == iHandleCommands))
+				{
+					foreach (var commandType in i.GetGenericArguments())
+					{
+						var key = commandType.FullName;
+						if (key == null)
+						{
+							continue;
+						}
+
+						var handlerType = commandHandler.FullName;
+						if (handlerType == null)
+						{
+							continue;
+						}
+
+						if (!handlers.ContainsKey(key))
+						{
+							handlers.Add(key, new List<string>());
+						}
+
+						if (!handlers[key].Contains(handlerType))
+						{
+							handlers[key].Add(handlerType);
+						}
+					}
+				}
+			}
 
 			foreach (var eventHandler in GetAllTypesImplementingOpenGenericType(iHandleDomainEvents, type.Assembly)
 				.Where(e => e.IsClass))
@@ -21,7 +57,7 @@ namespace StarCommander.Application.Events
 				serviceCollection.AddScoped(eventHandler);
 
 				foreach (var i in eventHandler.GetInterfaces()
-					.Where(i => i.GetGenericTypeDefinition() == iHandleDomainEvents))
+					.Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == iHandleDomainEvents))
 				{
 					foreach (var eventType in i.GetGenericArguments())
 					{
