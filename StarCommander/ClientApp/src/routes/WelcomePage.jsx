@@ -7,14 +7,14 @@ export default function WelcomePage() {
 		<Box align="center" pad="large">
 			<Heading>Star Commander</Heading>
 			<Tabs>
-				<Tab title="Welcome">
-					<Box pad="medium">
-						<SignInForm />
-					</Box>
-				</Tab>
-				<Tab title="Need an account?">
+				<Tab title="Enlist">
 					<Box pad="medium">
 						<SignUpForm />
+					</Box>
+				</Tab>
+				<Tab title="Engage">
+					<Box pad="medium">
+						<SignInForm />
 					</Box>
 				</Tab>
 			</Tabs>
