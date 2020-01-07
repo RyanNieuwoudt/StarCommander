@@ -7,7 +7,7 @@ using StarCommander.Domain.Messages;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 {
-	public class JobRepository : RepositoryBase<EventDataContext>, IJobRepository
+	public class JobRepository : RepositoryBase<MessageDataContext>, IJobRepository
 	{
 		public JobRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator) : base(
 			ambientDbContextConfigurator)

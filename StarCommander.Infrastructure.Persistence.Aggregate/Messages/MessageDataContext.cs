@@ -2,13 +2,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 {
-	public class EventDataContext : DataContextBase
+	public class MessageDataContext : DataContextBase
 	{
-		public EventDataContext()
+		public MessageDataContext()
 		{
 		}
 
-		public EventDataContext(DbContextOptions<EventDataContext> options) : base(options)
+		public MessageDataContext(DbContextOptions<MessageDataContext> options) : base(options)
 		{
 		}
 
