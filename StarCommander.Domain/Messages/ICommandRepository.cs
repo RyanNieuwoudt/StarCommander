@@ -4,6 +4,6 @@ namespace StarCommander.Domain.Messages
 {
 	public interface ICommandRepository<T> : IRepository<Command>
 	{
-		Task<Event?> FetchNextUnprocessed();
+		Task<Command?> FetchNextUnprocessed();
 	}
 }

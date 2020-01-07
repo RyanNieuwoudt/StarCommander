@@ -33,6 +33,7 @@ namespace StarCommander.Application
 
 			services.AddScoped<IEventRepository, EventRepository>();
 			services.AddScoped<IJobRepository, JobRepository>();
+			services.AddScoped<IPlayerCommandRepository, PlayerCommandRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
 
 			services.AddScoped<IEventForwarder, EventForwarder>();
@@ -42,6 +43,7 @@ namespace StarCommander.Application
 			services.AddHostedService<EventMonitor>();
 			services.AddHostedService<JobMonitor>();
 
+			services.AddScoped<ICommandService, CommandService>();
 			services.AddScoped<IJobService, JobService>();
 			services.AddScoped<IPlayerService, PlayerService>();
 			services.AddScoped<IReferenceGenerator, RandomIdGenerator>();
