@@ -11,27 +11,36 @@ namespace StarCommander.Application.Events
 	{
 		public static void AddWorkerRegistry(this IServiceCollection serviceCollection, Type type)
 		{
-			var iHandleDomainEvents = typeof(IHandleDomainEvents<>);
-
 			var handlers = new Dictionary<string, List<string>>();
 
-			foreach (var eventHandler in GetAllTypesImplementingOpenGenericType(iHandleDomainEvents, type.Assembly)
+			AddHandlersOfType(serviceCollection, typeof(IHandleCommands<>), type.Assembly, handlers);
+			AddHandlersOfType(serviceCollection, typeof(IHandleDomainEvents<>), type.Assembly, handlers);
+
+			var lookup = handlers.SelectMany(p => p.Value, Tuple.Create).ToLookup(p => p.Item1.Key, p => p.Item2);
+
+			serviceCollection.AddSingleton<IWorkerRegistry>(new WorkerRegistry(lookup));
+		}
+
+		static void AddHandlersOfType(IServiceCollection serviceCollection, Type openGenericType, Assembly assembly,
+			IDictionary<string, List<string>> handlers)
+		{
+			foreach (var handler in GetAllTypesImplementingOpenGenericType(openGenericType, assembly)
 				.Where(e => e.IsClass))
 			{
-				serviceCollection.AddScoped(eventHandler);
+				serviceCollection.AddScoped(handler);
 
-				foreach (var i in eventHandler.GetInterfaces()
-					.Where(i => i.GetGenericTypeDefinition() == iHandleDomainEvents))
+				foreach (var i in handler.GetInterfaces()
+					.Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == openGenericType))
 				{
-					foreach (var eventType in i.GetGenericArguments())
+					foreach (var messageType in i.GetGenericArguments())
 					{
-						var key = eventType.FullName;
+						var key = messageType.FullName;
 						if (key == null)
 						{
 							continue;
 						}
 
-						var handlerType = eventHandler.FullName;
+						var handlerType = handler.FullName;
 						if (handlerType == null)
 						{
 							continue;
@@ -49,10 +58,6 @@ namespace StarCommander.Application.Events
 					}
 				}
 			}
-
-			var lookup = handlers.SelectMany(p => p.Value, Tuple.Create).ToLookup(p => p.Item1.Key, p => p.Item2);
-
-			serviceCollection.AddSingleton<IWorkerRegistry>(new WorkerRegistry(lookup));
 		}
 
 		static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)

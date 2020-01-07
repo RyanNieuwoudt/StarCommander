@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarCommander.Application;
 using StarCommander.Application.Services;
+using StarCommander.Domain.Players;
 using StarCommander.Shared.Model;
 
 namespace StarCommander.Controllers
@@ -12,10 +13,12 @@ namespace StarCommander.Controllers
 	[Route("api/[controller]")]
 	public class PlayerController : ControllerBase
 	{
+		readonly ICommandService commandService;
 		readonly IPlayerService playerService;
 
-		public PlayerController(IPlayerService playerService)
+		public PlayerController(ICommandService commandService, IPlayerService playerService)
 		{
+			this.commandService = commandService;
 			this.playerService = playerService;
 		}
 
@@ -37,7 +40,7 @@ namespace StarCommander.Controllers
 		[HttpPost("name")]
 		public async Task<IActionResult> UpdateName([FromBody] PlayerName player)
 		{
-			await playerService.UpdateName(User.CallSign(), player.FirstName, player.LastName);
+			await commandService.Issue(new UpdatePlayerName(User.CallSign(), player.FirstName, player.LastName));
 			return Ok();
 		}
 	}
