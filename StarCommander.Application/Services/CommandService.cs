@@ -3,6 +3,7 @@ using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
+using static StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Services
 {
@@ -28,8 +29,8 @@ namespace StarCommander.Application.Services
 
 			var player = await playerRepository.Fetch(command.CallSign);
 
-			await playerCommandRepository.Save(Command<Player>.Wrap(generator.NewReference<Message<ICommand>>(),
-				player.Reference, command));
+			await playerCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), player.Reference,
+				command));
 
 			await dbContextScope.SaveChangesAsync();
 		}

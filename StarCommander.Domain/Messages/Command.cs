@@ -5,21 +5,21 @@ namespace StarCommander.Domain.Messages
 {
 	[Serializable]
 	[JsonObject(MemberSerialization.OptIn)]
-	public class Command<T> : Message<ICommand> where T : notnull, IAggregate
+	public class Command : Message<ICommand>
 	{
 		[JsonConstructor]
-		public Command(Reference<Message<ICommand>> id, Reference<T> targetId, DateTimeOffset created, ICommand payload,
+		public Command(Reference<Message<ICommand>> id, Guid targetId, DateTimeOffset created, ICommand payload,
 			DateTimeOffset? processed) : base(id, created, payload, processed)
 		{
 			TargetId = targetId;
 		}
 
 		[JsonProperty]
-		public Reference<T> TargetId { get; private set; }
+		public Guid TargetId { get; private set; }
 
-		public static Command<T> Wrap(in Reference<Message<ICommand>> id, Reference<T> targetId, ICommand payload)
+		public static Command Wrap(in Reference<Message<ICommand>> id, Guid targetId, ICommand payload)
 		{
-			return new Command<T>(id, targetId, DateTimeOffset.Now, payload, null);
+			return new Command(id, targetId, DateTimeOffset.Now, payload, null);
 		}
 	}
 }
