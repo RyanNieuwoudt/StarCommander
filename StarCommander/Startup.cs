@@ -17,16 +17,16 @@ namespace StarCommander
 {
 	public class Startup
 	{
+		readonly IConfiguration configuration;
+
 		public Startup(IConfiguration configuration)
 		{
-			Configuration = configuration;
+			this.configuration = configuration;
 		}
-
-		public IConfiguration Configuration { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			new ApplicationSetup(Configuration).ConfigureServices(services);
+			new ApplicationSetup(configuration).ConfigureServices(services);
 
 			services.AddControllers().AddNewtonsoftJson();
 			services.AddSignalR().AddMessagePackProtocol();
@@ -34,7 +34,7 @@ namespace StarCommander
 			// In production, the React files will be served from this directory
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
 
-			var appSettingsSection = Configuration.GetSection("AppSettings");
+			var appSettingsSection = configuration.GetSection("AppSettings");
 			services.Configure<AppSettings>(appSettingsSection);
 
 			var appSettings = appSettingsSection.Get<AppSettings>();
