@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using static StarCommander.Domain.Reference;
 
 namespace StarCommander.Domain.Players
 {
@@ -33,6 +34,8 @@ namespace StarCommander.Domain.Players
 
 		[JsonProperty]
 		public byte[] PasswordSalt { get; private set; }
+
+		public Reference<Player> Reference => To(this);
 
 		[JsonProperty]
 		public Guid Id { get; }
