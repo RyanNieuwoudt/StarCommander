@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using StarCommander.Domain.Messages;
 
 namespace StarCommander.Infrastructure.Serialization
 {
@@ -16,7 +17,8 @@ namespace StarCommander.Infrastructure.Serialization
 			Formatting = Formatting.None,
 			NullValueHandling = NullValueHandling.Ignore,
 			TypeNameHandling = TypeNameHandling.None,
-			Converters = new List<JsonConverter> { new DomainEventConverter(), new SingleValueObjectConverter() }
+			Converters = new List<JsonConverter>
+				{ new CommandConverter(), new DomainEventConverter(), new SingleValueObjectConverter() }
 		};
 
 		static SerializationSettings()
