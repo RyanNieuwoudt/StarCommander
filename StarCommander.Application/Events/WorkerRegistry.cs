@@ -25,7 +25,7 @@ namespace StarCommander.Application.Events
 			switch (@event)
 			{
 				case INotifyPlayer _:
-					result.AddRange(handlers[typeof(INotifyPlayer).FullName]);
+					result.AddRange(handlers[typeof(INotifyPlayer).FullName!]);
 					break;
 			}
 

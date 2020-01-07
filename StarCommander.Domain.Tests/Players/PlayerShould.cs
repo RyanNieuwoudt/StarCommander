@@ -53,12 +53,12 @@ namespace StarCommander.Domain.Tests.Players
 			Assert.Equal(newFirstName, player.FirstName);
 			Assert.Equal(newLastName, player.LastName);
 
-			var playNameChanged = player.Events.Single(e => e is PlayerNameChanged) as PlayerNameChanged;
+			var playerNameChanged = player.Events.Single(e => e is PlayerNameChanged) as PlayerNameChanged;
 
-			Assert.NotNull(playNameChanged);
-			Assert.Equal(player.CallSign, playNameChanged.CallSign);
-			Assert.Equal(player.FirstName, playNameChanged.FirstName);
-			Assert.Equal(player.LastName, playNameChanged.LastName);
+			Assert.NotNull(playerNameChanged);
+			Assert.Equal(player.CallSign, playerNameChanged!.CallSign);
+			Assert.Equal(player.FirstName, playerNameChanged.FirstName);
+			Assert.Equal(player.LastName, playerNameChanged.LastName);
 		}
 	}
 }

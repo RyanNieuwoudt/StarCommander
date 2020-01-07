@@ -38,7 +38,7 @@ namespace StarCommander.Infrastructure.Serialization
 			return IsNullable(objectType) ? objectType.GetGenericArguments()[0] : objectType;
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
+		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
 			JsonSerializer serializer)
 		{
 			var isNullable = IsNullable(objectType);
@@ -58,7 +58,7 @@ namespace StarCommander.Infrastructure.Serialization
 		{
 			var typeToUse = TypeToUse(objectType);
 			var parameterType = ConstructFromTypes.GetOrAdd(objectType, GetBestConstructor(typeToUse));
-			return Activator.CreateInstance(TypeToUse(objectType), serializer.Deserialize(reader, parameterType));
+			return Activator.CreateInstance(TypeToUse(objectType), serializer.Deserialize(reader, parameterType))!;
 		}
 
 		static Type GetBestConstructor(Type objectType)

@@ -5,7 +5,7 @@ namespace StarCommander.Shared.Model.Notifications
 {
 	public static class Action
 	{
-		public static Action<T> WithPayload<T>(T payload)
+		public static Action<T> WithPayload<T>(T payload) where T : notnull
 		{
 			return new Action<T>(payload.GetType().Name.ToActionType(), payload);
 		}
@@ -13,7 +13,7 @@ namespace StarCommander.Shared.Model.Notifications
 
 	[Serializable]
 	[JsonObject(MemberSerialization.OptIn)]
-	public class Action<T> : IAction
+	public class Action<T> : IAction where T : notnull
 	{
 		[JsonConstructor]
 		public Action(string type, T payload)

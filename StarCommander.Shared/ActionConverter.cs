@@ -16,7 +16,7 @@ namespace StarCommander.Shared
 			return objectType == typeof(IAction);
 		}
 
-		public override object ReadJson(JsonReader reader, Type objectType, object? existingValue,
+		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
 			JsonSerializer serializer)
 		{
 			var token = JToken.Load(reader);
@@ -24,8 +24,8 @@ namespace StarCommander.Shared
 			var payloadType = $"StarCommander.Shared.Model.Payload.{actionType.ToClassName()}";
 			try
 			{
-				var type = typeof(Model.Notifications.Action<>).MakeGenericType(Type.GetType(payloadType));
-				var action = FormatterServices.GetUninitializedObject(type) as IAction;
+				var type = typeof(Model.Notifications.Action<>).MakeGenericType(Type.GetType(payloadType)!);
+				var action = (IAction)FormatterServices.GetUninitializedObject(type);
 				serializer.Populate(token.CreateReader(), action);
 				return action;
 			}

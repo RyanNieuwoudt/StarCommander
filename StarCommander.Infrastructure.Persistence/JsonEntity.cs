@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using Newtonsoft.Json;
 using StarCommander.Domain;
 using StarCommander.Infrastructure.Serialization;
@@ -24,7 +25,8 @@ namespace StarCommander.Infrastructure.Persistence
 
 		public T ToDomain()
 		{
-			return JsonConvert.DeserializeObject<T>(Json, SerializationSettings.Persistence);
+			return JsonConvert.DeserializeObject<T>(Json, SerializationSettings.Persistence) ??
+			       throw new DataException($"Unable to deserialize entity {Id}.");
 		}
 	}
 }

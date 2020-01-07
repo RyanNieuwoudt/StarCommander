@@ -63,7 +63,7 @@ namespace StarCommander.Application.Events
 			return true;
 		}
 
-		async Task<Event> FetchNextUnprocessedEvent()
+		async Task<Event?> FetchNextUnprocessedEvent()
 		{
 			using (dbContextScopeFactory.CreateReadOnly())
 			{

@@ -25,8 +25,17 @@ namespace StarCommander.Application.Events
 				{
 					foreach (var eventType in i.GetGenericArguments())
 					{
-						var handlerType = eventHandler.FullName;
 						var key = eventType.FullName;
+						if (key == null)
+						{
+							continue;
+						}
+
+						var handlerType = eventHandler.FullName;
+						if (handlerType == null)
+						{
+							continue;
+						}
 
 						if (!handlers.ContainsKey(key))
 						{
