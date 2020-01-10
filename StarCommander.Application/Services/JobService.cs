@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
@@ -75,39 +76,20 @@ namespace StarCommander.Application.Services
 			await dbContextScope.SaveChangesAsync(cancellationToken);
 		}
 
-		async Task Handle(Type handlerType, Command command, CancellationToken cancellationToken)
+		async Task Handle<T>(Type handlerType, Message<T> message, CancellationToken cancellationToken)
+			where T : notnull
 		{
 			using var scope = serviceProvider.CreateScope();
 			var handler = scope.ServiceProvider.GetService(handlerType);
-
-			var method =
-				handlerType.GetMethod("Handle", new[] { command.Payload.GetType(), typeof(CancellationToken) });
+			var arguments = new object[] { message.Payload, cancellationToken };
+			var method = handlerType.GetMethod("Handle", arguments.Select(a => a.GetType()).ToArray());
 
 			if (method == null)
 			{
 				throw new InvalidOperationException();
 			}
 
-			if (method.Invoke(handler, new object[] { command.Payload, cancellationToken }) is Task
-				task)
-			{
-				await task;
-			}
-		}
-
-		async Task Handle(Type handlerType, Event @event, CancellationToken cancellationToken)
-		{
-			using var scope = serviceProvider.CreateScope();
-			var handler = scope.ServiceProvider.GetService(handlerType);
-
-			var method = handlerType.GetMethod("Handle", new[] { @event.Payload.GetType(), typeof(CancellationToken) });
-
-			if (method == null)
-			{
-				throw new InvalidOperationException();
-			}
-
-			if (method.Invoke(handler, new object[] { @event.Payload, cancellationToken }) is Task task)
+			if (method.Invoke(handler, arguments) is Task task)
 			{
 				await task;
 			}
