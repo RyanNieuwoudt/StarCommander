@@ -14,6 +14,7 @@ namespace StarCommander.Application
 		static NotificationRegistry()
 		{
 			AddPlayer<PlayerNameChanged, OnPlayerNameChanged>();
+			AddPlayer<PlayerSignedUp, OnPlayerSignedUp>();
 		}
 
 		static void AddPlayer<TU, TV>() where TU : INotifyPlayer
