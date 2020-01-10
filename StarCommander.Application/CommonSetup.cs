@@ -36,6 +36,7 @@ namespace StarCommander.Application
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IPlayerCommandRepository, PlayerCommandRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
+			services.AddScoped<IShipCommandRepository, ShipCommandRepository>();
 			services.AddScoped<IShipRepository, ShipRepository>();
 
 			services.AddScoped<IMessageForwarder, MessageForwarder>();
