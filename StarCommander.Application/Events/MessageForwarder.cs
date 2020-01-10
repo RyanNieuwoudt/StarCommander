@@ -7,6 +7,8 @@ using StarCommander.Application.Services;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
+using StarCommander.Domain.Ships;
+using static StarCommander.Domain.Messages.Job;
 using Command = StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Events
@@ -19,11 +21,13 @@ namespace StarCommander.Application.Events
 		readonly IJobRepository jobRepository;
 		readonly IJobScheduler jobScheduler;
 		readonly IPlayerCommandRepository playerCommandRepository;
+		readonly IShipCommandRepository shipCommandRepository;
 		readonly IWorkerRegistry workerRegistry;
 
 		public MessageForwarder(IDbContextScopeFactory dbContextScopeFactory, IEventRepository eventRepository,
 			IReferenceGenerator generator, IJobRepository jobRepository, IJobScheduler jobScheduler,
-			IPlayerCommandRepository playerCommandRepository, IWorkerRegistry workerRegistry)
+			IPlayerCommandRepository playerCommandRepository, IWorkerRegistry workerRegistry,
+			IShipCommandRepository shipCommandRepository)
 		{
 			this.dbContextScopeFactory = dbContextScopeFactory;
 			this.eventRepository = eventRepository;
@@ -31,20 +35,20 @@ namespace StarCommander.Application.Events
 			this.jobRepository = jobRepository;
 			this.jobScheduler = jobScheduler;
 			this.playerCommandRepository = playerCommandRepository;
+			this.shipCommandRepository = shipCommandRepository;
 			this.workerRegistry = workerRegistry;
 		}
 
 		public async Task<bool> ForwardNextMessage(CancellationToken cancellationToken)
 		{
-			var c = await ForwardNextCommand(cancellationToken);
-			var e = await ForwardNextEvent(cancellationToken);
-
-			return c || e;
+			return await ForwardNextPlayerCommand(cancellationToken) ||
+			       await ForwardNextShipCommand(cancellationToken) ||
+			       await ForwardNextEvent(cancellationToken);
 		}
 
-		async Task<bool> ForwardNextCommand(CancellationToken cancellationToken)
+		async Task<bool> ForwardNextPlayerCommand(CancellationToken cancellationToken)
 		{
-			var command = await FetchNextUnprocessedCommand();
+			var command = await FetchNextUnprocessedPlayerCommand();
 
 			if (command == null)
 			{
@@ -54,8 +58,8 @@ namespace StarCommander.Application.Events
 			var queueId = GetQueueId(command.Payload);
 
 			var jobs = workerRegistry.GetHandlersFor(command.Payload)
-				.Select(handler =>
-					new Job(generator.NewReference<Job>(), queueId, command.Id, handler, command.Created))
+				.Select(handler => new Job(generator.NewReference<Job>(), queueId, command.Id, PlayerCommands, handler,
+					command.Created))
 				.ToList();
 
 			using (var dbContextScope = dbContextScopeFactory.Create())
@@ -76,11 +80,53 @@ namespace StarCommander.Application.Events
 			return true;
 		}
 
-		async Task<Command?> FetchNextUnprocessedCommand()
+		async Task<Command?> FetchNextUnprocessedPlayerCommand()
 		{
 			using (dbContextScopeFactory.CreateReadOnly())
 			{
 				return await playerCommandRepository.FetchNextUnprocessed();
+			}
+		}
+
+		async Task<bool> ForwardNextShipCommand(CancellationToken cancellationToken)
+		{
+			var command = await FetchNextUnprocessedShipCommand();
+
+			if (command == null)
+			{
+				return false;
+			}
+
+			var queueId = GetQueueId(command.Payload);
+
+			var jobs = workerRegistry.GetHandlersFor(command.Payload)
+				.Select(handler => new Job(generator.NewReference<Job>(), queueId, command.Id, ShipCommands, handler,
+					command.Created))
+				.ToList();
+
+			using (var dbContextScope = dbContextScopeFactory.Create())
+			{
+				await jobRepository.SaveAll(jobs);
+
+				command.MarkAsProcessed();
+				await shipCommandRepository.Save(command);
+
+				await dbContextScope.SaveChangesAsync(cancellationToken);
+			}
+
+			foreach (var job in jobs)
+			{
+				jobScheduler.Add(job);
+			}
+
+			return true;
+		}
+
+		async Task<Command?> FetchNextUnprocessedShipCommand()
+		{
+			using (dbContextScopeFactory.CreateReadOnly())
+			{
+				return await shipCommandRepository.FetchNextUnprocessed();
 			}
 		}
 
@@ -101,7 +147,8 @@ namespace StarCommander.Application.Events
 			var queueId = GetQueueId(@event.Payload);
 
 			var jobs = workerRegistry.GetHandlersFor(@event.Payload)
-				.Select(handler => new Job(generator.NewReference<Job>(), queueId, @event.Id, handler, @event.Created))
+				.Select(handler => new Job(generator.NewReference<Job>(), queueId, @event.Id, DomainEvents, handler,
+					@event.Created))
 				.ToList();
 
 			using (var dbContextScope = dbContextScopeFactory.Create())

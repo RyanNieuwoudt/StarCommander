@@ -61,6 +61,8 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 			modelBuilder.Entity<Job>().Property(j => j.MessageId).IsRequired();
 			modelBuilder.Entity<Job>().HasIndex(j => j.MessageId);
 
+			modelBuilder.Entity<Job>().Property(j => j.Address).IsRequired();
+
 			modelBuilder.Entity<Job>().Property(j => j.Handler).IsRequired();
 
 			modelBuilder.Entity<Job>().Property(j => j.Created).IsRequired();
