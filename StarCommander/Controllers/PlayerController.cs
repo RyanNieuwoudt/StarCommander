@@ -36,7 +36,6 @@ namespace StarCommander.Controllers
 			return Ok(await playerService.SignUp(signUp.CallSign, signUp.FirstName, signUp.LastName, signUp.Password));
 		}
 
-		[AllowAnonymous]
 		[HttpPost("name")]
 		public async Task<IActionResult> UpdateName([FromBody] PlayerName player)
 		{
