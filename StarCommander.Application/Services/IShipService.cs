@@ -4,8 +4,8 @@ using StarCommander.Domain.Players;
 
 namespace StarCommander.Application.Services
 {
-	public interface IChannelService
+	public interface IShipService
 	{
-		Task MessagePlayer(Reference<Player> player, string message);
+		Task Launch(Reference<Player> player);
 	}
 }

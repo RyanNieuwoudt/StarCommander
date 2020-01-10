@@ -8,6 +8,7 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 		public Guid Id { get; set; }
 		public Guid QueueId { get; set; }
 		public Guid MessageId { get; set; }
+		public string Address { get; set; } = string.Empty;
 		public string Handler { get; set; } = string.Empty;
 		public DateTimeOffset Created { get; set; }
 
@@ -16,13 +17,14 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 			Id = job.Id;
 			QueueId = job.QueueId;
 			MessageId = job.MessageId;
+			Address = job.Address;
 			Handler = job.Handler;
 			Created = job.Created;
 		}
 
 		public Domain.Messages.Job ToDomain()
 		{
-			return new Domain.Messages.Job(To<Domain.Messages.Job>(Id), QueueId, MessageId, Handler, Created);
+			return new Domain.Messages.Job(To<Domain.Messages.Job>(Id), QueueId, MessageId, Address, Handler, Created);
 		}
 	}
 }

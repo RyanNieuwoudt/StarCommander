@@ -16,7 +16,7 @@ namespace StarCommander.Application.CommandHandlers
 
 		public async Task Handle(UpdatePlayerName command, CancellationToken cancellationToken)
 		{
-			await playerService.UpdateName(command.CallSign, command.FirstName, command.LastName);
+			await playerService.UpdateName(command.Player, command.FirstName, command.LastName);
 		}
 	}
 }

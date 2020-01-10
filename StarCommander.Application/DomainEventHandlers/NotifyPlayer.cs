@@ -22,7 +22,7 @@ namespace StarCommander.Application.DomainEventHandlers
 		{
 			var sourceType = @event.GetType();
 			var destinationType = NotificationRegistry.Player[sourceType];
-			await channelService.MessagePlayer(@event.CallSign,
+			await channelService.MessagePlayer(@event.Player,
 				WithPayload(mapper.Map(@event, sourceType, destinationType)));
 		}
 	}

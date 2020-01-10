@@ -8,12 +8,16 @@ namespace StarCommander.Domain.Players
 	public abstract class PlayerCommand : Command
 	{
 		[JsonConstructor]
-		protected PlayerCommand(string callSign)
+		protected PlayerCommand(Reference<Player> player, string callSign)
 		{
+			Player = player;
 			CallSign = callSign;
 		}
 
 		[JsonProperty]
 		public string CallSign { get; private set; }
+
+		[JsonProperty]
+		public Reference<Player> Player { get; private set; }
 	}
 }

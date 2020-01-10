@@ -9,6 +9,7 @@ using AutoMapper;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using StarCommander.Domain;
 using StarCommander.Domain.Players;
 using StarCommander.Shared.Model;
 using Player = StarCommander.Domain.Players.Player;
@@ -82,11 +83,11 @@ namespace StarCommander.Application.Services
 			}
 		}
 
-		public async Task UpdateName(string callSign, string firstName, string lastName)
+		public async Task UpdateName(Reference<Domain.Players.Player> id, string firstName, string lastName)
 		{
 			using var dbContextScope = dbContextScopeFactory.Create();
 
-			var player = await playerRepository.Fetch(callSign);
+			var player = await playerRepository.Fetch(id);
 
 			player.UpdateName(firstName, lastName);
 
@@ -116,7 +117,8 @@ namespace StarCommander.Application.Services
 
 		static IEnumerable<Claim> GetClaims(Player player)
 		{
-			yield return new Claim(ClaimTypes.Name, player.CallSign);
+			yield return new Claim(ClaimTypes.Name, player.Id.ToString());
+			yield return new Claim(ClaimTypes.NameIdentifier, player.CallSign);
 		}
 	}
 }

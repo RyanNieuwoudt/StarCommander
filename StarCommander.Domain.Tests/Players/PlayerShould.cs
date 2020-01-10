@@ -15,6 +15,23 @@ namespace StarCommander.Domain.Tests.Players
 		readonly IFixture fixture;
 
 		[Fact]
+		public void RaiseEventOnSignUp()
+		{
+			var id = fixture.Create<Reference<Player>>();
+			var callSign = fixture.Create<string>();
+			var firstName = fixture.Create<string>();
+			var lastName = fixture.Create<string>();
+
+			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+
+			var playerSignedUp = player.Events.Single(e => e is PlayerSignedUp) as PlayerSignedUp;
+
+			Assert.NotNull(playerSignedUp);
+			Assert.Equal(player.Reference, playerSignedUp!.Player);
+			Assert.Equal(player.CallSign, playerSignedUp!.CallSign);
+		}
+
+		[Fact]
 		public void SignUpWithCorrectValues()
 		{
 			var id = fixture.Create<Reference<Player>>();
@@ -56,6 +73,7 @@ namespace StarCommander.Domain.Tests.Players
 			var playerNameChanged = player.Events.Single(e => e is PlayerNameChanged) as PlayerNameChanged;
 
 			Assert.NotNull(playerNameChanged);
+			Assert.Equal(player.Reference, playerNameChanged!.Player);
 			Assert.Equal(player.CallSign, playerNameChanged!.CallSign);
 			Assert.Equal(player.FirstName, playerNameChanged.FirstName);
 			Assert.Equal(player.LastName, playerNameChanged.LastName);

@@ -6,9 +6,11 @@ using StarCommander.Application.Events;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
+using StarCommander.Domain.Ships;
 using StarCommander.Infrastructure.Persistence;
 using StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 using StarCommander.Infrastructure.Persistence.Aggregate.Players;
+using StarCommander.Infrastructure.Persistence.Aggregate.Ships;
 
 namespace StarCommander.Application
 {
@@ -35,6 +37,8 @@ namespace StarCommander.Application
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IPlayerCommandRepository, PlayerCommandRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
+			services.AddScoped<IShipCommandRepository, ShipCommandRepository>();
+			services.AddScoped<IShipRepository, ShipRepository>();
 
 			services.AddScoped<IMessageForwarder, MessageForwarder>();
 			services.AddScoped<IEventPublisher, EventPublisher>();
@@ -47,6 +51,7 @@ namespace StarCommander.Application
 			services.AddScoped<IJobService, JobService>();
 			services.AddScoped<IPlayerService, PlayerService>();
 			services.AddScoped<IReferenceGenerator, RandomIdGenerator>();
+			services.AddScoped<IShipService, ShipService>();
 		}
 
 		protected abstract void ConfigureContextualServices(IServiceCollection services);
