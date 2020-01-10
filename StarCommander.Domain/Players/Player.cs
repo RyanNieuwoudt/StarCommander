@@ -56,7 +56,7 @@ namespace StarCommander.Domain.Players
 			FirstName = firstName;
 			LastName = lastName;
 
-			RaiseEvent(new PlayerNameChanged(CallSign, FirstName, LastName));
+			RaiseEvent(new PlayerNameChanged(Reference, CallSign, FirstName, LastName));
 		}
 	}
 }
