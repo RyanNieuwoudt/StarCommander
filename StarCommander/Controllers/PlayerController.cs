@@ -39,7 +39,8 @@ namespace StarCommander.Controllers
 		[HttpPost("name")]
 		public async Task<IActionResult> UpdateName([FromBody] PlayerName player)
 		{
-			await commandService.Issue(new UpdatePlayerName(User.CallSign(), player.FirstName, player.LastName));
+			await commandService.Issue(new UpdatePlayerName(User.Id(), User.CallSign(), player.FirstName,
+				player.LastName));
 			return Ok();
 		}
 	}

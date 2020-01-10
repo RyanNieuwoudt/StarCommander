@@ -13,17 +13,14 @@ namespace StarCommander.Application.Services
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IReferenceGenerator generator;
 		readonly IPlayerCommandRepository playerCommandRepository;
-		readonly IPlayerRepository playerRepository;
 		readonly IShipCommandRepository shipCommandRepository;
 
 		public CommandService(IDbContextScopeFactory dbContextScopeFactory, IReferenceGenerator generator,
-			IPlayerCommandRepository playerCommandRepository, IPlayerRepository playerRepository,
-			IShipCommandRepository shipCommandRepository)
+			IPlayerCommandRepository playerCommandRepository, IShipCommandRepository shipCommandRepository)
 		{
 			this.dbContextScopeFactory = dbContextScopeFactory;
 			this.generator = generator;
 			this.playerCommandRepository = playerCommandRepository;
-			this.playerRepository = playerRepository;
 			this.shipCommandRepository = shipCommandRepository;
 		}
 
@@ -31,9 +28,7 @@ namespace StarCommander.Application.Services
 		{
 			using var dbContextScope = dbContextScopeFactory.Create();
 
-			var player = await playerRepository.Fetch(command.CallSign);
-
-			await playerCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), player.Reference,
+			await playerCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), command.Player,
 				command));
 
 			await dbContextScope.SaveChangesAsync();

@@ -7,7 +7,8 @@ namespace StarCommander.Domain.Players
 	[JsonObject(MemberSerialization.OptIn)]
 	public class UpdatePlayerName : PlayerCommand
 	{
-		public UpdatePlayerName(string callSign, string firstName, string lastName) : base(callSign)
+		public UpdatePlayerName(Reference<Player> player, string callSign, string firstName, string lastName) : base(
+			player, callSign)
 		{
 			FirstName = firstName;
 			LastName = lastName;
