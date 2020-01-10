@@ -2,7 +2,6 @@ using AutoMapper;
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using StarCommander.Application.CommandHandlers;
 using StarCommander.Application.Events;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;

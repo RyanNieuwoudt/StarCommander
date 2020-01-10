@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
-using Microsoft.EntityFrameworkCore.Update;
-using StarCommander.Application.CommandHandlers;
 using StarCommander.Application.Services;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
+using Command = StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Events
 {
@@ -17,10 +15,10 @@ namespace StarCommander.Application.Events
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IEventRepository eventRepository;
-		readonly IPlayerCommandRepository playerCommandRepository;
 		readonly IReferenceGenerator generator;
 		readonly IJobRepository jobRepository;
 		readonly IJobScheduler jobScheduler;
+		readonly IPlayerCommandRepository playerCommandRepository;
 		readonly IWorkerRegistry workerRegistry;
 
 		public MessageForwarder(IDbContextScopeFactory dbContextScopeFactory, IEventRepository eventRepository,
@@ -56,7 +54,8 @@ namespace StarCommander.Application.Events
 			var queueId = GetQueueId(command.Payload);
 
 			var jobs = workerRegistry.GetHandlersFor(command.Payload)
-				.Select(handler => new Job(generator.NewReference<Job>(), queueId, @command.Id, handler, @command.Created))
+				.Select(handler =>
+					new Job(generator.NewReference<Job>(), queueId, command.Id, handler, command.Created))
 				.ToList();
 
 			using (var dbContextScope = dbContextScopeFactory.Create())
@@ -77,7 +76,7 @@ namespace StarCommander.Application.Events
 			return true;
 		}
 
-		async Task<Domain.Messages.Command?> FetchNextUnprocessedCommand()
+		async Task<Command?> FetchNextUnprocessedCommand()
 		{
 			using (dbContextScopeFactory.CreateReadOnly())
 			{

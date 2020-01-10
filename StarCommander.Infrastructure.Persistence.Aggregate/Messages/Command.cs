@@ -1,6 +1,4 @@
 using System;
-using StarCommander.Domain;
-using StarCommander.Domain.Messages;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 {

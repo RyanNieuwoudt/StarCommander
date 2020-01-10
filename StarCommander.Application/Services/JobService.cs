@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
@@ -10,6 +9,7 @@ using StarCommander.Application.DomainEventHandlers;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
+using Command = StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Services
 {
@@ -58,8 +58,7 @@ namespace StarCommander.Application.Services
 			{
 				case IObey _:
 				{
-					var command =
-						await playerCommandRepository.Fetch(new Reference<Domain.Messages.Command>(job.MessageId));
+					var command = await playerCommandRepository.Fetch(new Reference<Command>(job.MessageId));
 					await Handle(handlerType, command, cancellationToken);
 					break;
 				}
@@ -76,7 +75,7 @@ namespace StarCommander.Application.Services
 			await dbContextScope.SaveChangesAsync(cancellationToken);
 		}
 
-		async Task Handle(Type handlerType, Domain.Messages.Command command, CancellationToken cancellationToken)
+		async Task Handle(Type handlerType, Command command, CancellationToken cancellationToken)
 		{
 			using var scope = serviceProvider.CreateScope();
 			var handler = scope.ServiceProvider.GetService(handlerType);

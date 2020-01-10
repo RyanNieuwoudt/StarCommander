@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using StarCommander.Domain.Messages;
 
 namespace StarCommander.Infrastructure.Serialization
 {

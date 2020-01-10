@@ -39,7 +39,8 @@ namespace StarCommander.Application.Events
 			try
 			{
 				using var scope = serviceProvider.CreateScope();
-				return await scope.ServiceProvider.GetService<IMessageForwarder>().ForwardNextMessage(cancellationToken);
+				return await scope.ServiceProvider.GetService<IMessageForwarder>()
+					.ForwardNextMessage(cancellationToken);
 			}
 			catch (Exception e)
 			{
