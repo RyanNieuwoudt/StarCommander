@@ -37,5 +37,10 @@ namespace StarCommander.Domain.Ships
 		{
 			return !left.Equals(right);
 		}
+
+		public Position Apply(Heading heading, Distance distance)
+		{
+			return this;
+		}
 	}
 }
