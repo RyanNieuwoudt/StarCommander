@@ -4,16 +4,16 @@ namespace StarCommander.Domain.Ships
 {
 	public readonly struct Time : IEquatable<Time>
 	{
-		readonly int value;
+		internal int Value { get; }
 
 		public Time(int value)
 		{
-			this.value = value;
+			Value = value;
 		}
 
 		public bool Equals(Time other)
 		{
-			return value == other.value;
+			return Value == other.Value;
 		}
 
 		public override bool Equals(object? obj)
@@ -23,7 +23,7 @@ namespace StarCommander.Domain.Ships
 
 		public override int GetHashCode()
 		{
-			return value;
+			return Value;
 		}
 
 		public static bool operator ==(Time left, Time right)
@@ -34,6 +34,11 @@ namespace StarCommander.Domain.Ships
 		public static bool operator !=(Time left, Time right)
 		{
 			return !left.Equals(right);
+		}
+
+		public static Distance operator *(Time time, Speed speed)
+		{
+			return new Distance(time.Value * speed.Value);
 		}
 	}
 }

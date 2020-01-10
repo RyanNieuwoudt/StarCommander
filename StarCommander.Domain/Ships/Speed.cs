@@ -4,16 +4,16 @@ namespace StarCommander.Domain.Ships
 {
 	public readonly struct Speed : IEquatable<Speed>
 	{
-		readonly long value;
+		internal long Value { get; }
 
 		public Speed(long value)
 		{
-			this.value = value;
+			Value = value;
 		}
 
 		public bool Equals(Speed other)
 		{
-			return value == other.value;
+			return Value == other.Value;
 		}
 
 		public override bool Equals(object? obj)
@@ -23,7 +23,7 @@ namespace StarCommander.Domain.Ships
 
 		public override int GetHashCode()
 		{
-			return value.GetHashCode();
+			return Value.GetHashCode();
 		}
 
 		public static bool operator ==(Speed left, Speed right)
@@ -34,6 +34,11 @@ namespace StarCommander.Domain.Ships
 		public static bool operator !=(Speed left, Speed right)
 		{
 			return !left.Equals(right);
+		}
+
+		public static Distance operator *(Speed speed, Time time)
+		{
+			return new Distance(speed.Value * time.Value);
 		}
 	}
 }
