@@ -43,7 +43,9 @@ namespace StarCommander.Domain.Players
 		public static Player SignUp(Reference<Player> id, string callSign, string firstName, string lastName,
 			byte[] passwordHash, byte[] passwordSalt)
 		{
-			return new Player(id, callSign, firstName, lastName, passwordHash, passwordSalt);
+			var player = new Player(id, callSign, firstName, lastName, passwordHash, passwordSalt);
+			player.RaiseEvent(new PlayerSignedUp(player.Reference, player.CallSign));
+			return player;
 		}
 
 		public void UpdateName(string firstName, string lastName)
