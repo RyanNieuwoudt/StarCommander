@@ -1,12 +1,18 @@
 using System;
+using Newtonsoft.Json;
 
 namespace StarCommander.Domain.Ships
 {
+	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public readonly struct Heading : IEquatable<Heading>
 	{
+		[JsonProperty]
 		internal double Value { get; }
+
 		internal double Radians { get; }
 
+		[JsonConstructor]
 		public Heading(double value)
 		{
 			Value = value;
@@ -36,6 +42,11 @@ namespace StarCommander.Domain.Ships
 		public static bool operator !=(Heading left, Heading right)
 		{
 			return !left.Equals(right);
+		}
+
+		public static implicit operator double(Heading heading)
+		{
+			return heading.Value;
 		}
 	}
 }

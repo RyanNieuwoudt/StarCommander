@@ -1,11 +1,16 @@
 using System;
+using Newtonsoft.Json;
 
 namespace StarCommander.Domain.Ships
 {
+	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public readonly struct Time : IEquatable<Time>
 	{
+		[JsonProperty]
 		internal int Value { get; }
 
+		[JsonConstructor]
 		public Time(int value)
 		{
 			Value = value;
@@ -39,6 +44,11 @@ namespace StarCommander.Domain.Ships
 		public static Distance operator *(Time time, Speed speed)
 		{
 			return new Distance(time.Value * speed.Value);
+		}
+
+		public static implicit operator int(Time time)
+		{
+			return time.Value;
 		}
 	}
 }
