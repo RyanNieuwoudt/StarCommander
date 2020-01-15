@@ -5,8 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using StarCommander.Application.CommandHandlers;
-using StarCommander.Application.DomainEventHandlers;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;

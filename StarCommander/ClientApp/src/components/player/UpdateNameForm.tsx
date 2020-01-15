@@ -28,7 +28,7 @@ export default function UpdateNameForm() {
 			/>
 			<FormFieldLabel
 				name="lastName"
-				label="FastName"
+				label="LastName"
 				value={lastName}
 				required
 			/>

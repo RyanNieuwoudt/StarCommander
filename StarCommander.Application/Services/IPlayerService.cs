@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using StarCommander.Domain;
 using StarCommander.Shared.Model;
+using Player = StarCommander.Domain.Players.Player;
 
 namespace StarCommander.Application.Services
 {
@@ -8,6 +9,6 @@ namespace StarCommander.Application.Services
 	{
 		Task<Session> SignIn(string callSign, string password);
 		Task<Session> SignUp(string callSign, string firstName, string lastName, string password);
-		Task UpdateName(Reference<Domain.Players.Player> player, string firstName, string lastName);
+		Task UpdateName(Reference<Player> player, string firstName, string lastName);
 	}
 }

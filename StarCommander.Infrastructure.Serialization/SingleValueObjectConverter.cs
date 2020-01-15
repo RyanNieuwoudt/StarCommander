@@ -12,7 +12,7 @@ namespace StarCommander.Infrastructure.Serialization
 	{
 		static readonly ConcurrentDictionary<Type, Type> ConstructFromTypes = new ConcurrentDictionary<Type, Type>();
 
-		static readonly Type[] Supported = { typeof(Guid), typeof(decimal), typeof(int) };
+		static readonly Type[] Supported = { typeof(Guid), typeof(decimal), typeof(double), typeof(int), typeof(long) };
 
 		public override bool CanConvert(Type objectType)
 		{
