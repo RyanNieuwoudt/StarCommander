@@ -1,6 +1,7 @@
 using System.Linq;
 using AutoFixture;
 using StarCommander.Domain.Players;
+using StarCommander.Domain.Ships;
 using Xunit;
 
 namespace StarCommander.Domain.Tests.Players
@@ -13,24 +14,6 @@ namespace StarCommander.Domain.Tests.Players
 		}
 
 		readonly IFixture fixture;
-
-		[Fact]
-		public void RaiseEventWhenBoardingShip()
-		{
-			var id = fixture.Create<Reference<Player>>();
-			var callSign = fixture.Create<string>();
-			var firstName = fixture.Create<string>();
-			var lastName = fixture.Create<string>();
-
-			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
-
-			player.BoardShip();
-
-			var captainBoarded = player.Events.Single(e => e is CaptainBoarded) as CaptainBoarded;
-
-			Assert.NotNull(captainBoarded);
-			Assert.Equal(player.Reference, captainBoarded!.Player);
-		}
 
 		[Fact]
 		public void RaiseEventOnSignIn()
@@ -64,6 +47,47 @@ namespace StarCommander.Domain.Tests.Players
 
 			Assert.NotNull(playerSignedUp);
 			Assert.Equal(player.Reference, playerSignedUp!.Player);
+		}
+
+		[Fact]
+		public void RaiseEventWhenAssigningShip()
+		{
+			var id = fixture.Create<Reference<Player>>();
+			var callSign = fixture.Create<string>();
+			var firstName = fixture.Create<string>();
+			var lastName = fixture.Create<string>();
+
+			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+
+			var shipId = fixture.Create<Reference<Ship>>();
+
+			player.AssignShip(shipId);
+
+			Assert.Equal(shipId, player.Ship);
+
+			var shipAssigned = player.Events.Single(e => e is ShipAssigned) as ShipAssigned;
+
+			Assert.NotNull(shipAssigned);
+			Assert.Equal(player.Reference, shipAssigned!.Player);
+			Assert.Equal(player.Ship, shipAssigned.Ship);
+		}
+
+		[Fact]
+		public void RaiseEventWhenBoardingShip()
+		{
+			var id = fixture.Create<Reference<Player>>();
+			var callSign = fixture.Create<string>();
+			var firstName = fixture.Create<string>();
+			var lastName = fixture.Create<string>();
+
+			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+
+			player.BoardShip();
+
+			var captainBoarded = player.Events.Single(e => e is CaptainBoarded) as CaptainBoarded;
+
+			Assert.NotNull(captainBoarded);
+			Assert.Equal(player.Reference, captainBoarded!.Player);
 		}
 
 		[Fact]
