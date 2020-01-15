@@ -15,6 +15,24 @@ namespace StarCommander.Domain.Tests.Players
 		readonly IFixture fixture;
 
 		[Fact]
+		public void RaiseEventOnSignIn()
+		{
+			var id = fixture.Create<Reference<Player>>();
+			var callSign = fixture.Create<string>();
+			var firstName = fixture.Create<string>();
+			var lastName = fixture.Create<string>();
+
+			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+
+			player.SignIn();
+
+			var playerSignedIn = player.Events.Single(e => e is PlayerSignedIn) as PlayerSignedIn;
+
+			Assert.NotNull(playerSignedIn);
+			Assert.Equal(player.Reference, playerSignedIn!.Player);
+		}
+
+		[Fact]
 		public void RaiseEventOnSignUp()
 		{
 			var id = fixture.Create<Reference<Player>>();

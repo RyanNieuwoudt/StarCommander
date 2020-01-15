@@ -48,6 +48,11 @@ namespace StarCommander.Domain.Players
 			return player;
 		}
 
+		public void SignIn()
+		{
+			RaiseEvent(new PlayerSignedIn(Reference));
+		}
+
 		public void UpdateName(string firstName, string lastName)
 		{
 			if (firstName == FirstName && lastName == LastName)
