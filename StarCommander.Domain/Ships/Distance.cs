@@ -4,16 +4,16 @@ namespace StarCommander.Domain.Ships
 {
 	public readonly struct Distance : IEquatable<Distance>
 	{
-		readonly long value;
+		internal long Value { get; }
 
 		public Distance(long value)
 		{
-			this.value = value;
+			Value = value;
 		}
 
 		public bool Equals(Distance other)
 		{
-			return value == other.value;
+			return Value == other.Value;
 		}
 
 		public override bool Equals(object? obj)
@@ -23,7 +23,7 @@ namespace StarCommander.Domain.Ships
 
 		public override int GetHashCode()
 		{
-			return value.GetHashCode();
+			return Value.GetHashCode();
 		}
 
 		public static bool operator ==(Distance left, Distance right)

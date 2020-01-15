@@ -4,16 +4,18 @@ namespace StarCommander.Domain.Ships
 {
 	public readonly struct Heading : IEquatable<Heading>
 	{
-		readonly double value;
+		internal double Value { get; }
+		internal double Radians { get; }
 
 		public Heading(double value)
 		{
-			this.value = value;
+			Value = value;
+			Radians = Math.PI * Value / 180.0;
 		}
 
 		public bool Equals(Heading other)
 		{
-			return value.Equals(other.value);
+			return Value.Equals(other.Value);
 		}
 
 		public override bool Equals(object? obj)
@@ -23,7 +25,7 @@ namespace StarCommander.Domain.Ships
 
 		public override int GetHashCode()
 		{
-			return value.GetHashCode();
+			return Value.GetHashCode();
 		}
 
 		public static bool operator ==(Heading left, Heading right)
