@@ -3,10 +3,11 @@ using System.Threading.Tasks;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
+using TB.ComponentModel;
 
 namespace StarCommander.Application.DomainEventHandlers
 {
-	public class WelcomeCaptainAboard : IWhen<PlayerSignedIn>, IWhen<ShipLaunched>
+	public class WelcomeCaptainAboard : IWhen<PlayerSignedIn>, IWhen<ShipAssigned>
 	{
 		readonly IPlayerService playerService;
 
@@ -20,7 +21,7 @@ namespace StarCommander.Application.DomainEventHandlers
 			await playerService.BoardShip(@event.Player);
 		}
 
-		public async Task Handle(ShipLaunched @event, CancellationToken cancellationToken)
+		public async Task Handle(ShipAssigned @event, CancellationToken cancellationToken)
 		{
 			await playerService.BoardShip(@event.Player);
 		}

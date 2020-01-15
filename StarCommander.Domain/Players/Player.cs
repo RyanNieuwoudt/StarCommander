@@ -54,6 +54,12 @@ namespace StarCommander.Domain.Players
 			return player;
 		}
 
+		public void AssignShip(in Reference<Ship> ship)
+		{
+			Ship = ship;
+			RaiseEvent(new ShipAssigned(Reference, Ship));
+		}
+
 		public void BoardShip()
 		{
 			RaiseEvent(new CaptainBoarded(Reference, Ship));

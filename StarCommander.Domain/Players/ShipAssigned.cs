@@ -6,10 +6,10 @@ namespace StarCommander.Domain.Players
 {
 	[Serializable]
 	[JsonObject(MemberSerialization.OptIn)]
-	public class CaptainBoarded : PlayerShipEvent, INotifyPlayer
+	public class ShipAssigned : PlayerShipEvent
 	{
 		[JsonConstructor]
-		public CaptainBoarded(Reference<Player> player, Reference<Ship> ship) : base(player, ship)
+		public ShipAssigned(Reference<Player> player, Reference<Ship> ship) : base(player, ship)
 		{
 		}
 	}
