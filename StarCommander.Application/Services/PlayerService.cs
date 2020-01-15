@@ -58,6 +58,11 @@ namespace StarCommander.Application.Services
 					throw new Exception();
 				}
 
+				player.SignIn();
+
+				await playerRepository.Save(player);
+				await dbContextScope.SaveChangesAsync();
+
 				return GetSession(player);
 			}
 			catch
