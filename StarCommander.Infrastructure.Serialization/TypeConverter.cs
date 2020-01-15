@@ -2,7 +2,6 @@ using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using StarCommander.Domain;
 
 namespace StarCommander.Infrastructure.Serialization
 {

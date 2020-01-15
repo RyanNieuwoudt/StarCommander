@@ -83,7 +83,7 @@ namespace StarCommander.Application.Services
 			}
 		}
 
-		public async Task UpdateName(Reference<Domain.Players.Player> id, string firstName, string lastName)
+		public async Task UpdateName(Reference<Player> id, string firstName, string lastName)
 		{
 			using var dbContextScope = dbContextScopeFactory.Create();
 
