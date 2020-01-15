@@ -24,5 +24,10 @@ namespace StarCommander.Domain.Ships
 			ship.RaiseEvent(new ShipLaunched(id, captain));
 			return ship;
 		}
+
+		public void WelcomeCaptainAboard()
+		{
+			RaiseEvent(new CaptainBoarded(Reference, Captain));
+		}
 	}
 }
