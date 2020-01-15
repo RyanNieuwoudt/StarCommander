@@ -1,14 +1,15 @@
 using System;
 using Newtonsoft.Json;
+using StarCommander.Domain.Ships;
 
 namespace StarCommander.Domain.Players
 {
 	[Serializable]
 	[JsonObject(MemberSerialization.OptIn)]
-	public class PlayerSignedUp : PlayerEvent
+	public class ShipAssigned : PlayerShipEvent
 	{
 		[JsonConstructor]
-		public PlayerSignedUp(Reference<Player> player) : base(player)
+		public ShipAssigned(Reference<Player> player, Reference<Ship> ship) : base(player, ship)
 		{
 		}
 	}

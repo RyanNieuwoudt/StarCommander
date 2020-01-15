@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StarCommander.Domain;
 using StarCommander.Domain.Players;
+using StarCommander.Domain.Ships;
 using StarCommander.Shared.Model;
 using Player = StarCommander.Domain.Players.Player;
 
@@ -34,6 +35,28 @@ namespace StarCommander.Application.Services
 			this.playerRepository = playerRepository;
 		}
 
+		public async Task AssignShip(Reference<Player> player, Reference<Ship> ship)
+		{
+			using var dbContextScope = dbContextScopeFactory.Create();
+
+			var p = await playerRepository.Fetch(player);
+			p.AssignShip(ship);
+
+			await playerRepository.Save(p);
+			await dbContextScope.SaveChangesAsync();
+		}
+
+		public async Task BoardShip(Reference<Player> player)
+		{
+			using var dbContextScope = dbContextScopeFactory.Create();
+
+			var p = await playerRepository.Fetch(player);
+			p.BoardShip();
+
+			await playerRepository.Save(p);
+			await dbContextScope.SaveChangesAsync();
+		}
+
 		public async Task<Session> SignIn(string callSign, string password)
 		{
 			try
@@ -46,6 +69,11 @@ namespace StarCommander.Application.Services
 				{
 					throw new Exception();
 				}
+
+				player.SignIn();
+
+				await playerRepository.Save(player);
+				await dbContextScope.SaveChangesAsync();
 
 				return GetSession(player);
 			}

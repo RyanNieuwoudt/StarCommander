@@ -1,6 +1,6 @@
 namespace StarCommander.Shared.Model.Payload
 {
-	public class OnPlayerSignedUp : OnPlayer
+	public class OnCaptainBoarded : OnShip
 	{
 	}
 }
