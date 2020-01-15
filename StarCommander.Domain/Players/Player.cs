@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using StarCommander.Domain.Ships;
 using static StarCommander.Domain.Reference;
 
 namespace StarCommander.Domain.Players
@@ -10,7 +11,7 @@ namespace StarCommander.Domain.Players
 	{
 		[JsonConstructor]
 		Player(Reference<Player> id, string callSign, string firstName, string lastName, byte[] passwordHash,
-			byte[] passwordSalt)
+			byte[] passwordSalt, Reference<Ship> ship)
 		{
 			Id = id;
 			CallSign = callSign;
@@ -18,6 +19,7 @@ namespace StarCommander.Domain.Players
 			LastName = lastName;
 			PasswordHash = passwordHash;
 			PasswordSalt = passwordSalt;
+			Ship = ship;
 		}
 
 		[JsonProperty]
@@ -38,13 +40,17 @@ namespace StarCommander.Domain.Players
 		public Reference<Player> Reference => To(this);
 
 		[JsonProperty]
+		public Reference<Ship> Ship { get; private set; }
+
+		[JsonProperty]
 		public Guid Id { get; }
 
 		public static Player SignUp(Reference<Player> id, string callSign, string firstName, string lastName,
 			byte[] passwordHash, byte[] passwordSalt)
 		{
-			var player = new Player(id, callSign, firstName, lastName, passwordHash, passwordSalt);
-			player.RaiseEvent(new PlayerSignedUp(player.Reference, player.CallSign));
+			var player = new Player(id, callSign, firstName, lastName, passwordHash, passwordSalt,
+				Reference<Ship>.None);
+			player.RaiseEvent(new PlayerSignedUp(player.Reference));
 			return player;
 		}
 
