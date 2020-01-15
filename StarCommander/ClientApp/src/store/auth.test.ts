@@ -87,7 +87,7 @@ describe("auth reducer", () => {
 			reducer(
 				{ player: { callSign } },
 				{
-					type: "ON_PLAYER_NAME_UPDATED",
+					type: "ON_PLAYER_NAME_CHANGED",
 					payload: { firstName, lastName }
 				}
 			)
