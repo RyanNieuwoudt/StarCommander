@@ -15,6 +15,24 @@ namespace StarCommander.Domain.Tests.Players
 		readonly IFixture fixture;
 
 		[Fact]
+		public void RaiseEventWhenBoardingShip()
+		{
+			var id = fixture.Create<Reference<Player>>();
+			var callSign = fixture.Create<string>();
+			var firstName = fixture.Create<string>();
+			var lastName = fixture.Create<string>();
+
+			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+
+			player.BoardShip();
+
+			var captainBoarded = player.Events.Single(e => e is CaptainBoarded) as CaptainBoarded;
+
+			Assert.NotNull(captainBoarded);
+			Assert.Equal(player.Reference, captainBoarded!.Player);
+		}
+
+		[Fact]
 		public void RaiseEventOnSignIn()
 		{
 			var id = fixture.Create<Reference<Player>>();
