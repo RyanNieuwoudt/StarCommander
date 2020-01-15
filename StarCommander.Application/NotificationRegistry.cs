@@ -16,8 +16,6 @@ namespace StarCommander.Application
 		{
 			AddPlayer<CaptainBoarded, OnCaptainBoarded>();
 			AddPlayer<PlayerNameChanged, OnPlayerNameChanged>();
-			AddPlayer<PlayerSignedUp, OnPlayerSignedUp>();
-			AddPlayer<ShipLaunched, OnShipLaunched>();
 		}
 
 		static void AddPlayer<TU, TV>() where TU : INotifyPlayer
