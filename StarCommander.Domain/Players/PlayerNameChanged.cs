@@ -8,8 +8,7 @@ namespace StarCommander.Domain.Players
 	public class PlayerNameChanged : PlayerEvent, INotifyPlayer
 	{
 		[JsonConstructor]
-		public PlayerNameChanged(Reference<Player> player, string callSign, string firstName, string lastName) : base(
-			player, callSign)
+		public PlayerNameChanged(Reference<Player> player, string firstName, string lastName) : base(player)
 		{
 			FirstName = firstName;
 			LastName = lastName;

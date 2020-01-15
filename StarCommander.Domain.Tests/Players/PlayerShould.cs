@@ -28,7 +28,6 @@ namespace StarCommander.Domain.Tests.Players
 
 			Assert.NotNull(playerSignedUp);
 			Assert.Equal(player.Reference, playerSignedUp!.Player);
-			Assert.Equal(player.CallSign, playerSignedUp!.CallSign);
 		}
 
 		[Fact]
@@ -74,7 +73,6 @@ namespace StarCommander.Domain.Tests.Players
 
 			Assert.NotNull(playerNameChanged);
 			Assert.Equal(player.Reference, playerNameChanged!.Player);
-			Assert.Equal(player.CallSign, playerNameChanged!.CallSign);
 			Assert.Equal(player.FirstName, playerNameChanged.FirstName);
 			Assert.Equal(player.LastName, playerNameChanged.LastName);
 		}

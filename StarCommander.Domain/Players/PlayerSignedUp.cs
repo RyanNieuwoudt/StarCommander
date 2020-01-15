@@ -5,10 +5,10 @@ namespace StarCommander.Domain.Players
 {
 	[Serializable]
 	[JsonObject(MemberSerialization.OptIn)]
-	public class PlayerSignedUp : PlayerEvent, INotifyPlayer
+	public class PlayerSignedUp : PlayerEvent
 	{
 		[JsonConstructor]
-		public PlayerSignedUp(Reference<Player> player, string callSign) : base(player, callSign)
+		public PlayerSignedUp(Reference<Player> player) : base(player)
 		{
 		}
 	}
