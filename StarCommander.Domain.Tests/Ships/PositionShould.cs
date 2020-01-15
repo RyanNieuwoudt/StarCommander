@@ -16,9 +16,13 @@ namespace StarCommander.Domain.Tests.Ships
 		[InlineData(135, 10, 7, 7)]
 		[InlineData(160, 50, 17, 47)]
 		[InlineData(180, 10, 0, 10)]
+		[InlineData(200, 32, -11, -30)]
 		[InlineData(225, 10, -7, -7)]
+		[InlineData(250, 6, -6, -2)]
 		[InlineData(270, 10, -10, 0)]
+		[InlineData(283, 20, -19, 4)]
 		[InlineData(315, 10, -7, 7)]
+		[InlineData(348, 15, -3, 15)]
 		public void ProduceEndPositionByApplyingHeadingAndDistance(double heading, long distance, long endX, long endY)
 		{
 			var expectedEnd = new Position(endX, endY);
