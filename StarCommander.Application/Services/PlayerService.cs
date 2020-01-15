@@ -34,6 +34,17 @@ namespace StarCommander.Application.Services
 			this.playerRepository = playerRepository;
 		}
 
+		public async Task BoardShip(Reference<Player> player)
+		{
+			using var dbContextScope = dbContextScopeFactory.Create();
+
+			var p = await playerRepository.Fetch(player);
+			p.BoardShip();
+
+			await playerRepository.Save(p);
+			await dbContextScope.SaveChangesAsync();
+		}
+
 		public async Task<Session> SignIn(string callSign, string password)
 		{
 			try
