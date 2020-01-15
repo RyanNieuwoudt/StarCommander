@@ -1,15 +1,19 @@
 import * as auth from "./auth";
+import * as ship from "./ship";
 
 export interface ApplicationState {
 	auth: auth.AuthState | undefined;
+	ship: ship.ShipState | undefined;
 }
 
 export const reducers = {
-	auth: auth.reducer
+	auth: auth.reducer,
+	ship: ship.reducer
 };
 
 export const sagas = {
-	auth: auth.rootSaga
+	auth: auth.rootSaga,
+	ship: ship.rootSaga
 };
 
 export interface Action {
