@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Box, Heading } from "grommet";
 import { Layout } from "components";
-import { UpdateNameForm } from "components/player";
+import { Helm } from "components/ship/helm";
 
-export default function Home() {
+export default function Bridge() {
 	return (
 		<Layout>
 			<Box align="center" pad="large">
 				<Heading>Welcome, Commander.</Heading>
-				<UpdateNameForm />
+				<Helm />
 			</Box>
 		</Layout>
 	);

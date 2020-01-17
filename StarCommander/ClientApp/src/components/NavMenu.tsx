@@ -8,7 +8,10 @@ export default function NavMenu() {
 	return (
 		<Header background="light-4" pad="small">
 			<Link to="/">
-				<Text>StarCommander</Text>
+				<Text>Bridge</Text>
+			</Link>
+			<Link to="/fleet">
+				<Text>Fleet</Text>
 			</Link>
 			<Name />
 			<Box direction="row" gap="medium">
