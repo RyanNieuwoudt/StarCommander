@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 			return (await GetDbSet()
 				.AsNoTracking()
 				.Where(c => c.Processed == null)
+				.Where(e => e.ScheduledFor == null || e.ScheduledFor <= DateTimeOffset.Now)
 				.OrderBy(c => c.Created)
 				.FirstOrDefaultAsync())?.ToDomain();
 		}

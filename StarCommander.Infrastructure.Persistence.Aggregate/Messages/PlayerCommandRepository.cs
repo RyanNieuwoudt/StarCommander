@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 			return (await GetDbSet()
 				.AsNoTracking()
 				.Where(e => e.Processed == null)
+				.Where(e => e.ScheduledFor == null || e.ScheduledFor <= DateTimeOffset.Now)
 				.OrderBy(e => e.Created)
 				.FirstOrDefaultAsync())?.ToDomain();
 		}
