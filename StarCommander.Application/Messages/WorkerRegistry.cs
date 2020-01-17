@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using StarCommander.Domain;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public class WorkerRegistry : IWorkerRegistry
 	{

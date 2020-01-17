@@ -11,7 +11,7 @@ using Polly.Retry;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public sealed class JobScheduler : IJobScheduler
 	{

@@ -5,7 +5,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using StarCommander.Domain;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public static class ServiceExtensions
 	{

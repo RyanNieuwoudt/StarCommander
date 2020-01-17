@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using StarCommander.Domain.Messages;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public interface IJobScheduler
 	{

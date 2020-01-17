@@ -11,7 +11,7 @@ using StarCommander.Domain.Ships;
 using static StarCommander.Domain.Messages.Job;
 using Command = StarCommander.Domain.Messages.Command;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public class MessageForwarder : IMessageForwarder
 	{
