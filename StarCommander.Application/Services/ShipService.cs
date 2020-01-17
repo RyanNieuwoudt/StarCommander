@@ -29,5 +29,16 @@ namespace StarCommander.Application.Services
 			await shipRepository.Save(ship);
 			await dbContextScope.SaveChangesAsync();
 		}
+
+		public async Task Locate(Reference<Ship> ship)
+		{
+			using var dbContextScope = dbContextScopeFactory.Create();
+
+			var s = await shipRepository.Fetch(ship);
+			s.Locate();
+
+			await shipRepository.Save(s);
+			await dbContextScope.SaveChangesAsync();
+		}
 	}
 }

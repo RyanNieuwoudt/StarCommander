@@ -28,5 +28,11 @@ namespace StarCommander.Domain.Ships
 			ship.RaiseEvent(new ShipLaunched(id, captain));
 			return ship;
 		}
+
+		public void Locate()
+		{
+			var position = NavigationComputer.Locate();
+			RaiseEvent(new ShipLocated(Reference, Captain, position, NavigationComputer.Speed));
+		}
 	}
 }

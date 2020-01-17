@@ -5,7 +5,7 @@ using StarCommander.Domain.Ships;
 
 namespace StarCommander.Application.CommandHandlers
 {
-	public class ShipCommandHandler : IObey<LaunchShip>
+	public class ShipCommandHandler : IObey<LaunchShip>, IObey<LocateShip>, IObey<SetSpeed>
 	{
 		readonly IShipService shipService;
 
@@ -17,6 +17,16 @@ namespace StarCommander.Application.CommandHandlers
 		public async Task Handle(LaunchShip command, CancellationToken cancellationToken)
 		{
 			await shipService.Launch(command.Captain);
+		}
+
+		public async Task Handle(LocateShip command, CancellationToken cancellationToken)
+		{
+			await shipService.Locate(command.Ship);
+		}
+
+		public async Task Handle(SetSpeed command, CancellationToken cancellationToken)
+		{
+			await shipService.Locate(command.Ship);
 		}
 	}
 }

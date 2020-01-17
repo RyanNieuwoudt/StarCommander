@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StarCommander.Domain.Ships
 {
@@ -28,17 +29,19 @@ namespace StarCommander.Domain.Ships
 
 		public void SetHeading(DateTimeOffset date, Heading heading)
 		{
-			if (date <= latestDate)
-			{
-				throw new Exception("Temporal anomaly detected.");
-			}
-
 			if (date < startDate)
 			{
 				startDate = date;
 			}
 
-			navigation.Add(date, new KeyValuePair<Heading, Speed>(heading, Speed));
+			if (navigation.ContainsKey(date))
+			{
+				navigation[date] = new KeyValuePair<Heading, Speed>(heading, Speed);
+			}
+			else
+			{
+				navigation.Add(date, new KeyValuePair<Heading, Speed>(heading, Speed));
+			}
 
 			latestDate = date;
 			Heading = heading;
@@ -46,17 +49,19 @@ namespace StarCommander.Domain.Ships
 
 		public void SetSpeed(DateTimeOffset date, Speed speed)
 		{
-			if (date <= latestDate)
-			{
-				throw new Exception("Temporal anomaly detected.");
-			}
-
 			if (date < startDate)
 			{
 				startDate = date;
 			}
 
-			navigation.Add(date, new KeyValuePair<Heading, Speed>(Heading, speed));
+			if (navigation.ContainsKey(date))
+			{
+				navigation[date] = new KeyValuePair<Heading, Speed>(Heading, speed);
+			}
+			else
+			{
+				navigation.Add(date, new KeyValuePair<Heading, Speed>(Heading, speed));
+			}
 
 			latestDate = date;
 			Speed = speed;

@@ -12,6 +12,7 @@ namespace StarCommander.Domain.Messages
 			DateTimeOffset? processed, DateTimeOffset? scheduledFor) : base(id, created, payload, processed)
 		{
 			TargetId = targetId;
+			ScheduledFor = scheduledFor;
 		}
 
 		[JsonProperty]
