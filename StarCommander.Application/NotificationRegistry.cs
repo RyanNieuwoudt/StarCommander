@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using StarCommander.Domain;
 using StarCommander.Domain.Players;
+using StarCommander.Domain.Ships;
 using StarCommander.Shared.Model.Payload;
 
 namespace StarCommander.Application
@@ -15,6 +16,7 @@ namespace StarCommander.Application
 		{
 			AddPlayer<CaptainBoarded, OnCaptainBoarded>();
 			AddPlayer<PlayerNameChanged, OnPlayerNameChanged>();
+			AddPlayer<ShipLocated, OnShipLocated>();
 		}
 
 		static void AddPlayer<TU, TV>() where TU : INotifyPlayer

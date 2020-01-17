@@ -9,9 +9,13 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 {
 	public class ShipRepository : EventsOnlyRepository<Ship, ShipDataContext>, IShipRepository
 	{
+		readonly IShipCommandRepository shipCommandRepository;
+
 		public ShipRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator,
-			IEventPublisher eventPublisher) : base(ambientDbContextConfigurator, eventPublisher)
+			IEventPublisher eventPublisher, IShipCommandRepository shipCommandRepository) : base(
+			ambientDbContextConfigurator, eventPublisher)
 		{
+			this.shipCommandRepository = shipCommandRepository;
 		}
 
 		public Task<ICollection<Ship>> All()
@@ -19,9 +23,9 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 			throw new NotImplementedException();
 		}
 
-		public Task<Ship> Fetch(Reference<Ship> reference)
+		public async Task<Ship> Fetch(Reference<Ship> reference)
 		{
-			throw new NotImplementedException();
+			return await shipCommandRepository.Fetch(reference);
 		}
 
 		public async Task SaveAll(ICollection<Ship> aggregates)

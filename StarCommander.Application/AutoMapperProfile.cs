@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AutoMapper;
 using StarCommander.Domain.Players;
+using StarCommander.Domain.Ships;
 
 namespace StarCommander.Application
 {
@@ -16,6 +17,8 @@ namespace StarCommander.Application
 
 		void MapNotifications(IReadOnlyDictionary<Type, Type> types)
 		{
+			CreateMap<Position, Shared.Model.Payload.Position>();
+
 			foreach (var (sourceType, destinationType) in types)
 			{
 				CreateMap(sourceType, destinationType);

@@ -7,6 +7,8 @@ namespace StarCommander.Domain.Ships
 	[JsonObject(MemberSerialization.OptIn)]
 	public readonly struct Speed : IEquatable<Speed>
 	{
+		public static readonly Speed Default = new Speed(default);
+
 		[JsonProperty]
 		internal long Value { get; }
 

@@ -10,7 +10,11 @@ namespace StarCommander.Domain.Ships
 		{
 			Id = id;
 			Captain = captain;
+
+			NavigationComputer = new NavigationComputer(new Position());
 		}
+
+		public NavigationComputer NavigationComputer { get; }
 
 		public Reference<Player> Captain { get; }
 
@@ -23,6 +27,12 @@ namespace StarCommander.Domain.Ships
 			var ship = new Ship(id, captain);
 			ship.RaiseEvent(new ShipLaunched(id, captain));
 			return ship;
+		}
+
+		public void Locate()
+		{
+			var position = NavigationComputer.Locate();
+			RaiseEvent(new ShipLocated(Reference, Captain, position, NavigationComputer.Speed));
 		}
 	}
 }

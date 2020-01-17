@@ -9,17 +9,22 @@ namespace StarCommander.Domain.Messages
 	{
 		[JsonConstructor]
 		public Command(Reference<Message<ICommand>> id, Guid targetId, DateTimeOffset created, ICommand payload,
-			DateTimeOffset? processed) : base(id, created, payload, processed)
+			DateTimeOffset? processed, DateTimeOffset? scheduledFor) : base(id, created, payload, processed)
 		{
 			TargetId = targetId;
+			ScheduledFor = scheduledFor;
 		}
+
+		[JsonProperty]
+		public DateTimeOffset? ScheduledFor { get; private set; }
 
 		[JsonProperty]
 		public Guid TargetId { get; private set; }
 
-		public static Command Wrap(in Reference<Message<ICommand>> id, Guid targetId, ICommand payload)
+		public static Command Wrap(in Reference<Message<ICommand>> id, Guid targetId, ICommand payload,
+			DateTimeOffset? scheduledFor)
 		{
-			return new Command(id, targetId, DateTimeOffset.Now, payload, null);
+			return new Command(id, targetId, DateTimeOffset.Now, payload, null, scheduledFor);
 		}
 	}
 }
