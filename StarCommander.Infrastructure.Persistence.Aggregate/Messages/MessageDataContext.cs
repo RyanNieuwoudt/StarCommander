@@ -27,28 +27,31 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 
 		static void BuildCommand(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Command>().HasKey(r => r.Id);
+			modelBuilder.Entity<Command>().HasKey(c => c.Id);
 
-			modelBuilder.Entity<Command>().Property(r => r.Created).IsRequired();
-			modelBuilder.Entity<Command>().HasIndex(r => r.Created);
+			modelBuilder.Entity<Command>().Property(c => c.Created).IsRequired();
+			modelBuilder.Entity<Command>().HasIndex(c => c.Created);
 
-			modelBuilder.Entity<Command>().Property(r => r.Json).IsRequired();
+			modelBuilder.Entity<Command>().Property(c => c.Json).IsRequired();
 
-			modelBuilder.Entity<Command>().Property(r => r.Processed);
-			modelBuilder.Entity<Command>().HasIndex(r => r.Processed);
+			modelBuilder.Entity<Command>().Property(c => c.Processed);
+			modelBuilder.Entity<Command>().HasIndex(c => c.Processed);
+
+			modelBuilder.Entity<Command>().Property(c => c.TargetId);
+			modelBuilder.Entity<Command>().HasIndex(c => c.TargetId);
 		}
 
 		static void BuildEvent(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Event>().HasKey(r => r.Id);
+			modelBuilder.Entity<Event>().HasKey(e => e.Id);
 
-			modelBuilder.Entity<Event>().Property(r => r.Created).IsRequired();
-			modelBuilder.Entity<Event>().HasIndex(r => r.Created);
+			modelBuilder.Entity<Event>().Property(e => e.Created).IsRequired();
+			modelBuilder.Entity<Event>().HasIndex(e => e.Created);
 
-			modelBuilder.Entity<Event>().Property(r => r.Json).IsRequired();
+			modelBuilder.Entity<Event>().Property(e => e.Json).IsRequired();
 
-			modelBuilder.Entity<Event>().Property(r => r.Processed);
-			modelBuilder.Entity<Event>().HasIndex(r => r.Processed);
+			modelBuilder.Entity<Event>().Property(e => e.Processed);
+			modelBuilder.Entity<Event>().HasIndex(e => e.Processed);
 		}
 
 		static void BuildJob(ModelBuilder modelBuilder)
