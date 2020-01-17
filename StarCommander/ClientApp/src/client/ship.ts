@@ -2,16 +2,20 @@ import { http } from "client/api";
 
 export const setHeading = ({
 	shipId,
-	heading
+	heading,
+	token
 }: {
 	shipId: string;
 	heading: number;
-}) => http.post(`api/ship/${shipId}/heading/${heading}`);
+	token: string;
+}) => http.post(`api/ship/${shipId}/heading/${heading}`, {}, token);
 
 export const setSpeed = ({
 	shipId,
-	speed
+	speed,
+	token
 }: {
 	shipId: string;
 	speed: number;
-}) => http.post(`api/ship/${shipId}/speed/${speed}`);
+	token: string;
+}) => http.post(`api/ship/${shipId}/speed/${speed}`, {}, token);
