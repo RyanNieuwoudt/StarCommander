@@ -55,6 +55,8 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 				}
 			}
 
+			ship.ClearEvents();
+
 			if (ship.Reference == Reference<Ship>.None)
 			{
 				throw new InvalidDataException($"Unable to fetch ship {reference}");
