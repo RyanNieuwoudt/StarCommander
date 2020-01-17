@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Domain;
@@ -24,21 +25,22 @@ namespace StarCommander.Application.Services
 			this.shipCommandRepository = shipCommandRepository;
 		}
 
-		public async Task Issue(PlayerCommand command)
+		public async Task Issue(PlayerCommand command, DateTimeOffset? scheduledFor = null)
 		{
 			using var dbContextScope = dbContextScopeFactory.Create();
 
 			await playerCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), command.Player,
-				command));
+				command, scheduledFor));
 
 			await dbContextScope.SaveChangesAsync();
 		}
 
-		public async Task Issue(ShipCommand command)
+		public async Task Issue(ShipCommand command, DateTimeOffset? scheduledFor = null)
 		{
 			using var dbContextScope = dbContextScopeFactory.Create();
 
-			await shipCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), command.Ship, command));
+			await shipCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), command.Ship, command,
+				scheduledFor));
 
 			await dbContextScope.SaveChangesAsync();
 		}
