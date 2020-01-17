@@ -1,6 +1,6 @@
 import { Action, Reducer } from "redux";
 import { all } from "redux-saga/effects";
-import { SignInAction, SignOutAction, SignUpAction } from "./auth";
+import { SignIn, SignOut, SignUp } from "./auth";
 
 export interface ShipState {
 	shipId?: string;
@@ -11,13 +11,9 @@ export interface OnCaptainBoarded {
 	payload: { shipId: string };
 }
 
-export type KnownAction =
-	| OnCaptainBoarded
-	| SignInAction
-	| SignOutAction
-	| SignUpAction;
 
 export const actionCreators = {};
+export type KnownAction = OnCaptainBoarded | SignIn | SignOut | SignUp;
 
 export const rootSaga = function* root() {};
 

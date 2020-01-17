@@ -16,7 +16,7 @@ export interface AuthState {
 	token?: string;
 }
 
-export interface OnPlayerNameChangedAction {
+export interface OnPlayerNameChanged {
 	type: "ON_PLAYER_NAME_CHANGED";
 	payload: {
 		firstName: string;
@@ -24,7 +24,7 @@ export interface OnPlayerNameChangedAction {
 	};
 }
 
-export interface SignInAction {
+export interface SignIn {
 	type: "SIGN_IN";
 	payload: {
 		callSign: string;
@@ -32,7 +32,7 @@ export interface SignInAction {
 	};
 }
 
-export interface SignInSuccessAction {
+export interface SignInSuccess {
 	type: "SIGN_IN_SUCCESS";
 	payload: {
 		callSign: string;
@@ -48,7 +48,7 @@ export interface SignInSuccessAction {
 	};
 }
 
-export interface SignInFailureAction {
+export interface SignInFailure {
 	type: "SIGN_IN_FAILURE";
 	payload: {
 		callSign: string;
@@ -57,11 +57,11 @@ export interface SignInFailureAction {
 	error: string;
 }
 
-export interface SignOutAction {
+export interface SignOut {
 	type: "SIGN_OUT";
 }
 
-export interface SignUpAction {
+export interface SignUp {
 	type: "SIGN_UP";
 	payload: {
 		callSign: string;
@@ -70,7 +70,7 @@ export interface SignUpAction {
 	};
 }
 
-export interface SignUpFailureAction {
+export interface SignUpFailure {
 	type: "SIGN_UP_FAILURE";
 	payload: {
 		callSign: string;
@@ -80,7 +80,7 @@ export interface SignUpFailureAction {
 	error: string;
 }
 
-export interface SignUpSuccessAction {
+export interface SignUpSuccess {
 	type: "SIGN_UP_SUCCESS";
 	payload: {
 		callSign: string;
@@ -97,7 +97,7 @@ export interface SignUpSuccessAction {
 	};
 }
 
-export interface UpdateNameAction {
+export interface UpdateName {
 	type: "UPDATE_NAME";
 	payload: {
 		firstName: string;
@@ -105,7 +105,7 @@ export interface UpdateNameAction {
 	};
 }
 
-export interface UpdateNameFailureAction {
+export interface UpdateNameFailure {
 	type: "UPDATE_NAME_FAILURE";
 	payload: {
 		firstName: string;
@@ -114,7 +114,7 @@ export interface UpdateNameFailureAction {
 	error: string;
 }
 
-export interface UpdateNameSuccessAction {
+export interface UpdateNameSuccess {
 	type: "UPDATE_NAME_SUCCESS";
 	payload: {
 		firstName: string;
@@ -123,21 +123,21 @@ export interface UpdateNameSuccessAction {
 }
 
 export type KnownAction =
-	| OnPlayerNameChangedAction
-	| SignInAction
-	| SignInFailureAction
-	| SignInSuccessAction
-	| SignOutAction
-	| SignUpAction
-	| SignUpFailureAction
-	| SignUpSuccessAction
-	| UpdateNameAction
-	| UpdateNameFailureAction
-	| UpdateNameSuccessAction;
+	| OnPlayerNameChanged
+	| SignIn
+	| SignInFailure
+	| SignInSuccess
+	| SignOut
+	| SignUp
+	| SignUpFailure
+	| SignUpSuccess
+	| UpdateName
+	| UpdateNameFailure
+	| UpdateNameSuccess;
 
 export const actionCreators = {
 	signIn: (callSign: string, password: string) =>
-		({ type: "SIGN_IN", payload: { callSign, password } } as SignInAction),
+		({ type: "SIGN_IN", payload: { callSign, password } } as SignIn),
 	signOut: () => ({ type: "SIGN_OUT" }),
 	signUp: (
 		callSign: string,
@@ -148,12 +148,12 @@ export const actionCreators = {
 		({
 			type: "SIGN_UP",
 			payload: { callSign, firstName, lastName, password }
-		} as SignUpAction),
+		} as SignUp),
 	updateName: (firstName: string, lastName: string) =>
 		({
 			type: "UPDATE_NAME",
 			payload: { firstName, lastName }
-		} as UpdateNameAction)
+		} as UpdateName)
 };
 
 export const rootSaga = function* root() {
