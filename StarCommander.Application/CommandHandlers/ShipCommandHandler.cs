@@ -16,7 +16,7 @@ namespace StarCommander.Application.CommandHandlers
 
 		public async Task Handle(LaunchShip command, CancellationToken cancellationToken)
 		{
-			await shipService.Launch(command.Captain);
+			await shipService.Launch(command.Ship, command.Captain);
 		}
 
 		public async Task Handle(LocateShip command, CancellationToken cancellationToken)

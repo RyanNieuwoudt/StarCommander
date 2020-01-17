@@ -7,7 +7,7 @@ namespace StarCommander.Application.Services
 {
 	public interface IShipService
 	{
-		Task Launch(Reference<Player> player);
+		Task Launch(Reference<Ship> ship, Reference<Player> player);
 		Task Locate(Reference<Ship> ship);
 	}
 }
