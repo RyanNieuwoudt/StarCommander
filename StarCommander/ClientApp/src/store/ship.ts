@@ -1,6 +1,8 @@
 import { Action, Reducer } from "redux";
-import { all } from "redux-saga/effects";
-import { SignInAction, SignOutAction, SignUpAction } from "./auth";
+import { all, takeLeading } from "redux-saga/effects";
+import { setHeading, setSpeed } from "client/ship";
+import { commandSaga } from "store/saga/templates";
+import { SignIn, SignOut, SignUp } from "./auth";
 
 export interface ShipState {
 	shipId?: string;
@@ -11,15 +13,43 @@ export interface OnCaptainBoarded {
 	payload: { shipId: string };
 }
 
-export type KnownAction =
-	| OnCaptainBoarded
-	| SignInAction
-	| SignOutAction
-	| SignUpAction;
+export interface SetHeading {
+	type: "SET_HEADING";
+	payload: { shipId: string; heading: number };
+}
 
-export const actionCreators = {};
+export interface SetSpeed {
+	type: "SET_SPEED";
+	payload: { shipId: string; speed: number };
+}
 
-export const rootSaga = function* root() {};
+export type KnownAction = OnCaptainBoarded | SignIn | SignOut | SignUp;
+
+export const actionCreators = {
+	setHeading: (shipId: string, heading: number) =>
+		({
+			type: "SET_HEADING",
+			payload: {
+				shipId,
+				heading
+			}
+		} as SetHeading),
+	setSpeed: (shipId: string, speed: number) =>
+		({
+			type: "SET_SPEED",
+			payload: {
+				shipId,
+				speed
+			}
+		} as SetSpeed)
+};
+
+export const rootSaga = function* root() {
+	yield all([
+		yield takeLeading("SET_HEADING", commandSaga, setHeading),
+		yield takeLeading("SET_SPEED", commandSaga, setSpeed)
+	]);
+};
 
 const defaultState: ShipState = {};
 

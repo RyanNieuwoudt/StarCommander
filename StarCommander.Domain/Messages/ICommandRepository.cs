@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace StarCommander.Domain.Messages
 {
-	public interface ICommandRepository<T> : IRepository<Command>
+	public interface ICommandRepository : IRepository<Command>
 	{
 		Task<Command?> FetchNextUnprocessed();
 	}

@@ -1,6 +1,6 @@
-import { SignInSuccessAction, SignOutAction } from "store/auth";
+import { SignInSuccess, SignOut } from "store/auth";
 
-type KnownAction = SignInSuccessAction | SignOutAction;
+type KnownAction = SignInSuccess | SignOut;
 
 export default (connect: (token: string) => void, disconnect: () => void) => {
 	return (store: any) => (next: any) => (action: KnownAction) => {
