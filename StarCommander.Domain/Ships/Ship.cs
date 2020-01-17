@@ -10,7 +10,11 @@ namespace StarCommander.Domain.Ships
 		{
 			Id = id;
 			Captain = captain;
+
+			NavigationComputer = new NavigationComputer(new Position());
 		}
+
+		public NavigationComputer NavigationComputer { get; }
 
 		public Reference<Player> Captain { get; }
 
