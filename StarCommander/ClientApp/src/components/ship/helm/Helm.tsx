@@ -1,5 +1,8 @@
 import React, { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Heading as HeadingText } from "grommet";
+import { ship } from "selectors";
+import { actionCreators } from "store/ship";
 import { Heading, Speed } from ".";
 
 interface SetNumber {
@@ -7,11 +10,20 @@ interface SetNumber {
 }
 
 export default function Helm() {
+	const dispatch = useDispatch();
+
+	const { shipId = "" } = useSelector(ship);
+
 	const [newHeading, setNewHeading] = useState(0);
 	const [newSpeed, setNewSpeed] = useState(0);
 
 	const engage = useCallback(() => {
-		//TODO Dispatch
+		if (shipId === "") {
+			return;
+		}
+
+		dispatch(actionCreators.setHeading(shipId, newHeading));
+		dispatch(actionCreators.setSpeed(shipId, newSpeed));
 	}, [newHeading, newSpeed]);
 
 	return (
