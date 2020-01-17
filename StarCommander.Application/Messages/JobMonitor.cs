@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public class JobMonitor : BackgroundService
 	{

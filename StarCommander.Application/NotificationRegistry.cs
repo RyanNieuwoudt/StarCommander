@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using StarCommander.Domain;
 using StarCommander.Domain.Players;
-using StarCommander.Domain.Ships;
 using StarCommander.Shared.Model.Payload;
 
 namespace StarCommander.Application

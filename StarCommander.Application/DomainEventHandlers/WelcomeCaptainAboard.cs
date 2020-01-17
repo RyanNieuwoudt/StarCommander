@@ -2,8 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Players;
-using StarCommander.Domain.Ships;
-using TB.ComponentModel;
 
 namespace StarCommander.Application.DomainEventHandlers
 {

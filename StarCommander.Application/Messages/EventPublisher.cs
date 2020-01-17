@@ -4,7 +4,7 @@ using StarCommander.Application.Services;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public class EventPublisher : IEventPublisher
 	{

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using StarCommander.Domain;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public interface IWorkerRegistry
 	{

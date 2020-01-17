@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StarCommander.Application.Events
+namespace StarCommander.Application.Messages
 {
 	public interface IMessageForwarder
 	{
