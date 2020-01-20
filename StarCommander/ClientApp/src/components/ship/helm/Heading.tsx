@@ -11,7 +11,9 @@ export default function Heading(props: HeadingProps) {
 
 	return (
 		<Box direction="column">
-			<HeadingText level={3}>Heading</HeadingText>
+			<HeadingText level={3} textAlign="center">
+				Heading
+			</HeadingText>
 			<Box direction="row">
 				<RangeInput
 					min={0}

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Heading as HeadingText } from "grommet";
+import { Box, Button } from "grommet";
 import { usePrevious } from "hooks";
 import { shipHeading, shipId as shipIdSelector, shipSpeed } from "selectors";
 import { actionCreators } from "store/ship";
@@ -40,8 +40,7 @@ export default function Helm() {
 	}, [newHeading, newSpeed]);
 
 	return (
-		<Box>
-			<HeadingText level={2}>Helm</HeadingText>
+		<Box gap="medium" round="medium">
 			<Heading
 				value={newHeading}
 				onChange={(event: SetNumber) =>
