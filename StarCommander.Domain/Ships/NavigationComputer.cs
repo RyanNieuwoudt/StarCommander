@@ -8,23 +8,30 @@ namespace StarCommander.Domain.Ships
 		readonly Dictionary<DateTimeOffset, KeyValuePair<Heading, Speed>> navigation;
 		readonly Position startingPosition;
 
-		DateTimeOffset latestDate;
 		DateTimeOffset startDate;
 
 		internal NavigationComputer(Position startingPosition)
 		{
 			this.startingPosition = startingPosition;
-			latestDate = DateTimeOffset.MinValue;
 			startDate = DateTimeOffset.MaxValue;
 
 			navigation = new Dictionary<DateTimeOffset, KeyValuePair<Heading, Speed>>();
 
 			Heading = Heading.Default;
+			Position = startingPosition;
 			Speed = Speed.Default;
 		}
 
 		public Heading Heading { get; private set; }
+		public Position Position { get; private set; }
 		public Speed Speed { get; private set; }
+
+		public void Deconstruct(out Heading heading, out Position position, out Speed speed)
+		{
+			heading = Heading;
+			position = Position;
+			speed = Speed;
+		}
 
 		public void SetHeading(DateTimeOffset date, Heading heading)
 		{
@@ -42,7 +49,6 @@ namespace StarCommander.Domain.Ships
 				navigation.Add(date, new KeyValuePair<Heading, Speed>(heading, Speed));
 			}
 
-			latestDate = date;
 			Heading = heading;
 		}
 
@@ -62,7 +68,6 @@ namespace StarCommander.Domain.Ships
 				navigation.Add(date, new KeyValuePair<Heading, Speed>(Heading, speed));
 			}
 
-			latestDate = date;
 			Speed = speed;
 		}
 
@@ -77,7 +82,8 @@ namespace StarCommander.Domain.Ships
 				current = date;
 			}
 
-			return position.Apply(Heading, new Distance((DateTimeOffset.Now - current).Seconds * Speed));
+			return Position = position.Apply(Heading,
+				new Distance((long)(DateTimeOffset.Now - current).TotalSeconds * Speed));
 		}
 	}
 }

@@ -11,7 +11,9 @@ export default function Speed(props: SpeedProps) {
 
 	return (
 		<Box direction="column">
-			<Heading level={3}>Speed</Heading>
+			<Heading level={3} textAlign="center">
+				Speed
+			</Heading>
 			<Box direction="row">
 				<RangeInput
 					min={0}

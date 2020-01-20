@@ -4,13 +4,24 @@ import { setHeading, setSpeed } from "client/ship";
 import { commandSaga } from "store/saga/templates";
 import { SignIn, SignOut, SignUp } from "./auth";
 
+export interface Position {
+	x: number;
+	y: number;
+}
+
 export interface ShipState {
 	shipId?: string;
+	position?: Position;
 }
 
 export interface OnCaptainBoarded {
 	type: "ON_CAPTAIN_BOARDED";
 	payload: { shipId: string };
+}
+
+export interface OnShipLocated {
+	type: "ON_SHIP_LOCATED";
+	payload: { position: Position };
 }
 
 export interface SetHeading {
@@ -23,7 +34,12 @@ export interface SetSpeed {
 	payload: { shipId: string; speed: number };
 }
 
-export type KnownAction = OnCaptainBoarded | SignIn | SignOut | SignUp;
+export type KnownAction =
+	| OnCaptainBoarded
+	| OnShipLocated
+	| SignIn
+	| SignOut
+	| SignUp;
 
 export const actionCreators = {
 	setHeading: (shipId: string, heading: number) =>
@@ -65,6 +81,8 @@ export const reducer: Reducer<ShipState> = (
 			return defaultState;
 		case "ON_CAPTAIN_BOARDED":
 			return action.payload;
+		case "ON_SHIP_LOCATED":
+			return { ...state, ...action.payload };
 		default:
 			return state;
 	}

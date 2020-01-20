@@ -1,3 +1,4 @@
+import usePrevious from "./usePrevious";
 import useRouter from "./useRouter";
 
-export { useRouter };
+export { usePrevious, useRouter };

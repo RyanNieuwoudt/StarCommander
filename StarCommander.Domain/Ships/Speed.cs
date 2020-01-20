@@ -10,17 +10,17 @@ namespace StarCommander.Domain.Ships
 		public static readonly Speed Default = new Speed(default);
 
 		[JsonProperty]
-		internal long Value { get; }
+		readonly long value;
 
 		[JsonConstructor]
 		public Speed(long value)
 		{
-			Value = value;
+			this.value = value;
 		}
 
 		public bool Equals(Speed other)
 		{
-			return Value == other.Value;
+			return value == other.value;
 		}
 
 		public override bool Equals(object? obj)
@@ -30,7 +30,7 @@ namespace StarCommander.Domain.Ships
 
 		public override int GetHashCode()
 		{
-			return Value.GetHashCode();
+			return value.GetHashCode();
 		}
 
 		public static bool operator ==(Speed left, Speed right)
@@ -45,12 +45,12 @@ namespace StarCommander.Domain.Ships
 
 		public static Distance operator *(Speed speed, Time time)
 		{
-			return new Distance(speed.Value * time.Value);
+			return new Distance(speed.value * time);
 		}
 
 		public static implicit operator long(Speed speed)
 		{
-			return speed.Value;
+			return speed.value;
 		}
 	}
 }

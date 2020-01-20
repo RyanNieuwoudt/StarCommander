@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, Heading as HeadingText } from "grommet";
-import { ship } from "selectors";
+import { Box, Button } from "grommet";
+import { usePrevious } from "hooks";
+import { shipHeading, shipId as shipIdSelector, shipSpeed } from "selectors";
 import { actionCreators } from "store/ship";
 import { Heading, Speed } from ".";
 
@@ -12,13 +13,25 @@ interface SetNumber {
 export default function Helm() {
 	const dispatch = useDispatch();
 
-	const { shipId = "" } = useSelector(ship);
+	const shipId = useSelector(shipIdSelector);
+	const heading = useSelector(shipHeading);
+	const speed = useSelector(shipSpeed);
 
-	const [newHeading, setNewHeading] = useState(0);
-	const [newSpeed, setNewSpeed] = useState(0);
+	const [newHeading, setNewHeading] = useState(heading);
+	const [newSpeed, setNewSpeed] = useState(speed);
+
+	const previousHeading = usePrevious(heading);
+	if (previousHeading !== heading && newHeading !== heading) {
+		setNewHeading(heading);
+	}
+
+	const previousSpeed = usePrevious(speed);
+	if (previousSpeed !== speed && newSpeed !== speed) {
+		setNewSpeed(speed);
+	}
 
 	const engage = useCallback(() => {
-		if (shipId === "") {
+		if (!shipId) {
 			return;
 		}
 
@@ -27,8 +40,7 @@ export default function Helm() {
 	}, [newHeading, newSpeed]);
 
 	return (
-		<Box>
-			<HeadingText level={2}>Helm</HeadingText>
+		<Box gap="medium" round="medium">
 			<Heading
 				value={newHeading}
 				onChange={(event: SetNumber) =>

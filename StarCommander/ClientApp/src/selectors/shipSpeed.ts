@@ -1,6 +1,5 @@
 import * as R from "ramda";
 import { ApplicationState } from "store";
-import { ShipState } from "store/ship";
 
 export default (state: ApplicationState) =>
-	R.path(["ship"], state) as ShipState;
+	R.compose(R.defaultTo(0), R.path(["ship", "speed"]))(state) as number;
