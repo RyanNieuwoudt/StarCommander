@@ -8,6 +8,7 @@
 		"@types/lodash.throttle": "^4.1.6",
 		"@types/qs": "^6.9.0",
 		"@types/ramda": "^0.26.39",
+		"@types/styled-components": "^4.4.2",
 		"axios": "^0.19.1",
 		"connected-react-router": "^6.6.1",
 		"grommet": "^2.10.0",
