@@ -4,8 +4,8 @@ namespace StarCommander.Domain.Ships
 {
 	public readonly struct Position : IEquatable<Position>
 	{
-		internal long X { get; }
-		internal long Y { get; }
+		public long X { get; }
+		public long Y { get; }
 
 		public Position(long x, long y)
 		{
