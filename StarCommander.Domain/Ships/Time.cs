@@ -8,17 +8,17 @@ namespace StarCommander.Domain.Ships
 	public readonly struct Time : IEquatable<Time>
 	{
 		[JsonProperty]
-		internal int Value { get; }
+		readonly long value;
 
 		[JsonConstructor]
-		public Time(int value)
+		public Time(long value)
 		{
-			Value = value;
+			this.value = value;
 		}
 
 		public bool Equals(Time other)
 		{
-			return Value == other.Value;
+			return value == other.value;
 		}
 
 		public override bool Equals(object? obj)
@@ -28,7 +28,7 @@ namespace StarCommander.Domain.Ships
 
 		public override int GetHashCode()
 		{
-			return Value;
+			return value.GetHashCode();
 		}
 
 		public static bool operator ==(Time left, Time right)
@@ -41,14 +41,14 @@ namespace StarCommander.Domain.Ships
 			return !left.Equals(right);
 		}
 
-		public static Distance operator *(Time time, Speed speed)
+		public static implicit operator long(Time time)
 		{
-			return new Distance(time.Value * speed.Value);
+			return time.value;
 		}
 
-		public static implicit operator int(Time time)
+		public static Distance operator *(Time time, Speed speed)
 		{
-			return time.Value;
+			return new Distance(time.value * speed);
 		}
 	}
 }
