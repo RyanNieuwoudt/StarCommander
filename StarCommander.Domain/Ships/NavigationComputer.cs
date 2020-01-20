@@ -70,15 +70,15 @@ namespace StarCommander.Domain.Ships
 		public Position Locate()
 		{
 			var position = startingPosition;
-			var now = startDate;
+			var current = startDate;
 
 			foreach (var (date, (heading, speed)) in navigation)
 			{
-				position = position.Apply(heading, new Distance((date - now).Seconds * speed));
-				now = date;
+				position = position.Apply(heading, new Distance((date - current).Seconds * speed));
+				current = date;
 			}
 
-			return position;
+			return position.Apply(Heading, new Distance((DateTimeOffset.Now - current).Seconds * Speed));
 		}
 	}
 }
