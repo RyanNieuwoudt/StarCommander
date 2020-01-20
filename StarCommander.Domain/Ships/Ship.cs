@@ -31,8 +31,9 @@ namespace StarCommander.Domain.Ships
 
 		public void Locate()
 		{
-			var position = NavigationComputer.Locate();
-			RaiseEvent(new ShipLocated(Reference, Captain, position, NavigationComputer.Speed));
+			NavigationComputer.Locate();
+			var (heading, position, speed) = NavigationComputer;
+			RaiseEvent(new ShipLocated(Reference, Captain, heading, position, speed));
 		}
 	}
 }
