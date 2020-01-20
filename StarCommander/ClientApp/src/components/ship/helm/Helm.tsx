@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Heading as HeadingText } from "grommet";
-import { shipId as shipIdSelector } from "selectors";
+import { usePrevious } from "hooks";
+import { shipHeading, shipId as shipIdSelector, shipSpeed } from "selectors";
 import { actionCreators } from "store/ship";
 import { Heading, Speed } from ".";
 
@@ -13,9 +14,21 @@ export default function Helm() {
 	const dispatch = useDispatch();
 
 	const shipId = useSelector(shipIdSelector);
+	const heading = useSelector(shipHeading);
+	const speed = useSelector(shipSpeed);
 
-	const [newHeading, setNewHeading] = useState(0);
-	const [newSpeed, setNewSpeed] = useState(0);
+	const [newHeading, setNewHeading] = useState(heading);
+	const [newSpeed, setNewSpeed] = useState(speed);
+
+	const previousHeading = usePrevious(heading);
+	if (previousHeading !== heading && newHeading !== heading) {
+		setNewHeading(heading);
+	}
+
+	const previousSpeed = usePrevious(speed);
+	if (previousSpeed !== speed && newSpeed !== speed) {
+		setNewSpeed(speed);
+	}
 
 	const engage = useCallback(() => {
 		if (!shipId) {
