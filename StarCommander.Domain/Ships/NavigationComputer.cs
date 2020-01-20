@@ -18,11 +18,20 @@ namespace StarCommander.Domain.Ships
 			navigation = new Dictionary<DateTimeOffset, KeyValuePair<Heading, Speed>>();
 
 			Heading = Heading.Default;
+			Position = startingPosition;
 			Speed = Speed.Default;
 		}
 
 		public Heading Heading { get; private set; }
+		public Position Position { get; private set; }
 		public Speed Speed { get; private set; }
+
+		public void Deconstruct(out Heading heading, out Position position, out Speed speed)
+		{
+			heading = Heading;
+			position = Position;
+			speed = Speed;
+		}
 
 		public void SetHeading(DateTimeOffset date, Heading heading)
 		{
@@ -73,7 +82,7 @@ namespace StarCommander.Domain.Ships
 				current = date;
 			}
 
-			return position.Apply(Heading, new Distance((DateTimeOffset.Now - current).Seconds * Speed));
+			return Position = position.Apply(Heading, new Distance((DateTimeOffset.Now - current).Seconds * Speed));
 		}
 	}
 }
