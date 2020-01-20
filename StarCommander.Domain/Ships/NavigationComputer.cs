@@ -82,7 +82,8 @@ namespace StarCommander.Domain.Ships
 				current = date;
 			}
 
-			return Position = position.Apply(Heading, new Distance((DateTimeOffset.Now - current).Seconds * Speed));
+			return Position = position.Apply(Heading,
+				new Distance((long)(DateTimeOffset.Now - current).TotalSeconds * Speed));
 		}
 	}
 }
