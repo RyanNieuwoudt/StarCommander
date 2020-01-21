@@ -16,10 +16,12 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 
 		public async Task<Domain.Messages.Command?> FetchNextUnprocessed()
 		{
+			var now = DateTimeOffset.Now;
+
 			return (await GetDbSet()
 				.AsNoTracking()
 				.Where(e => e.Processed == null)
-				.Where(e => e.ScheduledFor == null || e.ScheduledFor <= DateTimeOffset.Now)
+				.Where(e => e.ScheduledFor == null || e.ScheduledFor <= now)
 				.OrderBy(e => e.Created)
 				.FirstOrDefaultAsync())?.ToDomain();
 		}

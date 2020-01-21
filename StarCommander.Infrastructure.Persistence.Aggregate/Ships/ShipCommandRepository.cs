@@ -20,10 +20,12 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 
 		public async Task<Command?> FetchNextUnprocessed()
 		{
+			var now = DateTimeOffset.Now;
+			
 			return (await GetDbSet()
 				.AsNoTracking()
 				.Where(c => c.Processed == null)
-				.Where(e => e.ScheduledFor == null || e.ScheduledFor <= DateTimeOffset.Now)
+				.Where(e => e.ScheduledFor == null || e.ScheduledFor <= now)
 				.OrderBy(c => c.Created)
 				.FirstOrDefaultAsync())?.ToDomain();
 		}
