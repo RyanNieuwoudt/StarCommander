@@ -7,12 +7,12 @@ using Microsoft.Extensions.Logging;
 
 namespace StarCommander.Application.Messages
 {
-	public class EventMonitor : BackgroundService
+	public class MessageMonitor : BackgroundService
 	{
-		readonly ILogger<EventMonitor> logger;
+		readonly ILogger<MessageMonitor> logger;
 		readonly IServiceProvider serviceProvider;
 
-		public EventMonitor(ILogger<EventMonitor> logger, IServiceProvider serviceProvider)
+		public MessageMonitor(ILogger<MessageMonitor> logger, IServiceProvider serviceProvider)
 		{
 			this.logger = logger;
 			this.serviceProvider = serviceProvider;
@@ -20,7 +20,7 @@ namespace StarCommander.Application.Messages
 
 		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
 		{
-			logger.LogInformation("Starting event monitor.");
+			logger.LogInformation("Starting message monitor.");
 
 			cancellationToken.Register(Stop);
 
@@ -51,7 +51,7 @@ namespace StarCommander.Application.Messages
 
 		void Stop()
 		{
-			logger.LogInformation("Stopping event monitor.");
+			logger.LogInformation("Stopping message monitor.");
 		}
 	}
 }

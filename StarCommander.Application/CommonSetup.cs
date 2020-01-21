@@ -44,8 +44,8 @@ namespace StarCommander.Application
 			services.AddScoped<IEventPublisher, EventPublisher>();
 			services.AddSingleton<IJobScheduler, JobScheduler>();
 			services.AddWorkerRegistry(typeof(CommonSetup));
-			services.AddHostedService<EventMonitor>();
 			services.AddHostedService<JobMonitor>();
+			services.AddHostedService<MessageMonitor>();
 
 			services.AddScoped<ICommandService, CommandService>();
 			services.AddScoped<IJobService, JobService>();
