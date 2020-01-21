@@ -15,14 +15,7 @@ namespace StarCommander.Application.Messages
 
 		public IEnumerable<string> GetHandlersFor(ICommand command)
 		{
-			var result = new List<string>();
-
-			if (handlers.Contains(command.Type))
-			{
-				result.AddRange(handlers[command.Type]);
-			}
-
-			return result.Distinct();
+			return handlers.Contains(command.Type) ? handlers[command.Type].Distinct() : new List<string>();
 		}
 
 		public IEnumerable<string> GetHandlersFor(IDomainEvent @event)
