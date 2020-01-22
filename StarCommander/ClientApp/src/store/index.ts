@@ -1,17 +1,21 @@
+import * as acknowledgement from "./acknowledgement";
 import * as auth from "./auth";
 import * as ship from "./ship";
 
 export interface ApplicationState {
+	acknowledgement: acknowledgement.AcknowledgementState | undefined;
 	auth: auth.AuthState | undefined;
 	ship: ship.ShipState | undefined;
 }
 
 export const reducers = {
+	acknowledgement: acknowledgement.reducer,
 	auth: auth.reducer,
 	ship: ship.reducer
 };
 
 export const sagas = {
+	acknowledgement: acknowledgement.rootSaga,
 	auth: auth.rootSaga,
 	ship: ship.rootSaga
 };
