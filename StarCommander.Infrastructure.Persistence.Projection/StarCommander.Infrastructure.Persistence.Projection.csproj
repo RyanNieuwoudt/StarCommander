@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0" />
+	</ItemGroup>
+</Project>
