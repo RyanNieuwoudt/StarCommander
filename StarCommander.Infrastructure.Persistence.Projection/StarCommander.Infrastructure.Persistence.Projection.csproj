@@ -8,6 +8,7 @@
 	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+	  <PackageReference Include="AutoMapper" Version="9.0.0" />
 	  <PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0" />
 	</ItemGroup>
 </Project>
