@@ -7,5 +7,6 @@ namespace StarCommander.Application.Messages
 	{
 		IEnumerable<string> GetHandlersFor(ICommand command);
 		IEnumerable<string> GetHandlersFor(IDomainEvent @event);
+		IEnumerable<string> GetHandlersFor(IHaveType payload);
 	}
 }
