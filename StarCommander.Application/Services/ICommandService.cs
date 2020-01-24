@@ -1,13 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using StarCommander.Domain.Players;
-using StarCommander.Domain.Ships;
+using StarCommander.Domain;
 
 namespace StarCommander.Application.Services
 {
 	public interface ICommandService
 	{
-		Task Issue(PlayerCommand command, DateTimeOffset? scheduledFor = null);
-		Task Issue(ShipCommand command, DateTimeOffset? scheduledFor = null);
+		Task Issue(ICommand command, DateTimeOffset? scheduledFor = null);
 	}
 }

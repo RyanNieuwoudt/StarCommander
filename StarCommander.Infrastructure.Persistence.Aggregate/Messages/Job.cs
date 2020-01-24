@@ -15,16 +15,18 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 		public void SetValuesFrom(Domain.Messages.Job job)
 		{
 			Id = job.Id;
-			QueueId = job.QueueId;
-			MessageId = job.MessageId;
+
 			Address = job.Address;
 			Handler = job.Handler;
+			MessageId = job.MessageId;
+			QueueId = job.QueueId;
+
 			Created = job.Created;
 		}
 
 		public Domain.Messages.Job ToDomain()
 		{
-			return new Domain.Messages.Job(To<Domain.Messages.Job>(Id), QueueId, MessageId, Address, Handler, Created);
+			return new Domain.Messages.Job(To<Domain.Messages.Job>(Id), Address, Handler, MessageId, QueueId, Created);
 		}
 	}
 }

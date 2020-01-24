@@ -5,7 +5,7 @@ namespace StarCommander.Domain.Messages
 {
 	[Serializable]
 	[JsonObject(MemberSerialization.OptIn)]
-	public abstract class Message<T> : IAggregate where T : notnull
+	public abstract class Message<T> : IAggregate where T : notnull, IHaveType
 	{
 		[JsonConstructor]
 		protected Message(in Reference<Message<T>> id, DateTimeOffset created, T payload, DateTimeOffset? processed)

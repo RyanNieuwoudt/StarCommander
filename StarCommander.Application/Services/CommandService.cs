@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
-using StarCommander.Domain.Players;
-using StarCommander.Domain.Ships;
 using static StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Services
@@ -13,35 +11,20 @@ namespace StarCommander.Application.Services
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IReferenceGenerator generator;
-		readonly IPlayerCommandRepository playerCommandRepository;
-		readonly IShipCommandRepository shipCommandRepository;
+		readonly ICommandRepository commandRepository;
 
-		public CommandService(IDbContextScopeFactory dbContextScopeFactory, IReferenceGenerator generator,
-			IPlayerCommandRepository playerCommandRepository, IShipCommandRepository shipCommandRepository)
+		public CommandService(ICommandRepository commandRepository, IDbContextScopeFactory dbContextScopeFactory,
+			IReferenceGenerator generator)
 		{
+			this.commandRepository = commandRepository;
 			this.dbContextScopeFactory = dbContextScopeFactory;
 			this.generator = generator;
-			this.playerCommandRepository = playerCommandRepository;
-			this.shipCommandRepository = shipCommandRepository;
 		}
 
-		public async Task Issue(PlayerCommand command, DateTimeOffset? scheduledFor = null)
+		public async Task Issue(ICommand command, DateTimeOffset? scheduledFor = null)
 		{
 			using var dbContextScope = dbContextScopeFactory.Create();
-
-			await playerCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), command.Player,
-				command, scheduledFor));
-
-			await dbContextScope.SaveChangesAsync();
-		}
-
-		public async Task Issue(ShipCommand command, DateTimeOffset? scheduledFor = null)
-		{
-			using var dbContextScope = dbContextScopeFactory.Create();
-
-			await shipCommandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), command.Ship, command,
-				scheduledFor));
-
+			await commandRepository.Save(Wrap(generator.NewReference<Message<ICommand>>(), command, scheduledFor));
 			await dbContextScope.SaveChangesAsync();
 		}
 	}
