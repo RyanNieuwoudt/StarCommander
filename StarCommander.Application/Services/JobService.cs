@@ -13,25 +13,22 @@ using Command = StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Services
 {
-	public class JobService : IJobService
+	public sealed class JobService : IJobService
 	{
+		readonly ICommandRepository commandRepository;
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IEventRepository eventRepository;
 		readonly IJobRepository jobRepository;
-		readonly IPlayerCommandRepository playerCommandRepository;
 		readonly IServiceProvider serviceProvider;
-		readonly IShipCommandRepository shipCommandRepository;
 
-		public JobService(IDbContextScopeFactory dbContextScopeFactory, IEventRepository eventRepository,
-			IJobRepository jobRepository, IPlayerCommandRepository playerCommandRepository,
-			IServiceProvider serviceProvider, IShipCommandRepository shipCommandRepository)
+		public JobService(ICommandRepository commandRepository, IDbContextScopeFactory dbContextScopeFactory,
+			IEventRepository eventRepository, IJobRepository jobRepository, IServiceProvider serviceProvider)
 		{
+			this.commandRepository = commandRepository;
 			this.dbContextScopeFactory = dbContextScopeFactory;
 			this.eventRepository = eventRepository;
 			this.jobRepository = jobRepository;
-			this.playerCommandRepository = playerCommandRepository;
 			this.serviceProvider = serviceProvider;
-			this.shipCommandRepository = shipCommandRepository;
 		}
 
 		public async Task<ICollection<Job>> Fetch()
@@ -55,17 +52,13 @@ namespace StarCommander.Application.Services
 
 			switch (job.Address)
 			{
+				case Job.Commands:
+					var command = await commandRepository.Fetch(new Reference<Command>(job.MessageId));
+					await Handle(handlerType, command, cancellationToken);
+					break;
 				case Job.DomainEvents:
 					var @event = await eventRepository.Fetch(new Reference<Event>(job.MessageId));
 					await Handle(handlerType, @event, cancellationToken);
-					break;
-				case Job.PlayerCommands:
-					var playerCommand = await playerCommandRepository.Fetch(new Reference<Command>(job.MessageId));
-					await Handle(handlerType, playerCommand, cancellationToken);
-					break;
-				case Job.ShipCommands:
-					var shipCommand = await shipCommandRepository.Fetch(new Reference<Command>(job.MessageId));
-					await Handle(handlerType, shipCommand, cancellationToken);
 					break;
 			}
 
@@ -75,7 +68,7 @@ namespace StarCommander.Application.Services
 		}
 
 		async Task Handle<T>(Type handlerType, Message<T> message, CancellationToken cancellationToken)
-			where T : notnull
+			where T : notnull, IHaveType
 		{
 			using var scope = serviceProvider.CreateScope();
 			var handler = scope.ServiceProvider.GetService(handlerType);

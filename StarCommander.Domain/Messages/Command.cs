@@ -1,5 +1,7 @@
 using System;
 using Newtonsoft.Json;
+using StarCommander.Domain.Players;
+using StarCommander.Domain.Ships;
 
 namespace StarCommander.Domain.Messages
 {
@@ -21,10 +23,19 @@ namespace StarCommander.Domain.Messages
 		[JsonProperty]
 		public Guid TargetId { get; private set; }
 
-		public static Command Wrap(in Reference<Message<ICommand>> id, Guid targetId, ICommand payload,
-			DateTimeOffset? scheduledFor)
+		public static Command Wrap(in Reference<Message<ICommand>> id, ICommand payload, DateTimeOffset? scheduledFor)
 		{
-			return new Command(id, targetId, DateTimeOffset.Now, payload, null, scheduledFor);
+			return new Command(id, ExtractTargetId(payload), DateTimeOffset.Now, payload, null, scheduledFor);
+		}
+
+		static Guid ExtractTargetId(ICommand command)
+		{
+			return command switch
+			{
+				PlayerCommand playerCommand => (Guid)playerCommand.Player,
+				ShipCommand shipCommand => shipCommand.Ship,
+				_ => throw new InvalidOperationException()
+			};
 		}
 	}
 }

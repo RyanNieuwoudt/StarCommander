@@ -36,5 +36,15 @@ namespace StarCommander.Application.Messages
 
 			return result.Distinct();
 		}
+
+		public IEnumerable<string> GetHandlersFor(IHaveType payload)
+		{
+			return payload switch
+			{
+				ICommand command => GetHandlersFor(command),
+				IDomainEvent @event => GetHandlersFor(@event),
+				_ => new string[0]
+			};
+		}
 	}
 }

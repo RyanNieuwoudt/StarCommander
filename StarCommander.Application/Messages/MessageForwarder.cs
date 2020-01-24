@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,157 +5,75 @@ using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Application.Services;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
-using StarCommander.Domain.Players;
-using StarCommander.Domain.Ships;
-using static StarCommander.Domain.Messages.Job;
 using Command = StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Messages
 {
-	public class MessageForwarder : IMessageForwarder
+	public sealed class MessageForwarder : IMessageForwarder
 	{
+		readonly ICommandRepository commandRepository;
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IEventRepository eventRepository;
 		readonly IReferenceGenerator generator;
 		readonly IJobRepository jobRepository;
 		readonly IJobScheduler jobScheduler;
-		readonly IPlayerCommandRepository playerCommandRepository;
-		readonly IShipCommandRepository shipCommandRepository;
 		readonly IWorkerRegistry workerRegistry;
 
-		public MessageForwarder(IDbContextScopeFactory dbContextScopeFactory, IEventRepository eventRepository,
-			IReferenceGenerator generator, IJobRepository jobRepository, IJobScheduler jobScheduler,
-			IPlayerCommandRepository playerCommandRepository, IWorkerRegistry workerRegistry,
-			IShipCommandRepository shipCommandRepository)
+		public MessageForwarder(ICommandRepository commandRepository, IDbContextScopeFactory dbContextScopeFactory,
+			IEventRepository eventRepository, IJobRepository jobRepository, IJobScheduler jobScheduler,
+			IReferenceGenerator generator, IWorkerRegistry workerRegistry)
 		{
+			this.commandRepository = commandRepository;
 			this.dbContextScopeFactory = dbContextScopeFactory;
 			this.eventRepository = eventRepository;
 			this.generator = generator;
 			this.jobRepository = jobRepository;
 			this.jobScheduler = jobScheduler;
-			this.playerCommandRepository = playerCommandRepository;
-			this.shipCommandRepository = shipCommandRepository;
 			this.workerRegistry = workerRegistry;
 		}
 
 		public async Task<bool> ForwardNextMessage(CancellationToken cancellationToken)
 		{
-			return await ForwardNextPlayerCommand(cancellationToken) ||
-			       await ForwardNextShipCommand(cancellationToken) ||
-			       await ForwardNextEvent(cancellationToken);
+			return await ForwardNextCommand(cancellationToken) || await ForwardNextEvent(cancellationToken);
 		}
 
-		async Task<bool> ForwardNextPlayerCommand(CancellationToken cancellationToken)
+		async Task<bool> ForwardNextCommand(CancellationToken cancellationToken)
 		{
-			var command = await FetchNextUnprocessedPlayerCommand();
-
-			if (command == null)
-			{
-				return false;
-			}
-
-			var queueId = GetQueueId(command.Payload);
-
-			var jobs = workerRegistry.GetHandlersFor(command.Payload)
-				.Select(handler => new Job(generator.NewReference<Job>(), queueId, command.Id, PlayerCommands, handler,
-					command.Created))
-				.ToList();
-
-			using (var dbContextScope = dbContextScopeFactory.Create())
-			{
-				await jobRepository.SaveAll(jobs);
-
-				command.MarkAsProcessed();
-				await playerCommandRepository.Save(command);
-
-				await dbContextScope.SaveChangesAsync(cancellationToken);
-			}
-
-			foreach (var job in jobs)
-			{
-				jobScheduler.Add(job);
-			}
-
-			return true;
-		}
-
-		async Task<Command?> FetchNextUnprocessedPlayerCommand()
-		{
-			using (dbContextScopeFactory.CreateReadOnly())
-			{
-				return await playerCommandRepository.FetchNextUnprocessed();
-			}
-		}
-
-		async Task<bool> ForwardNextShipCommand(CancellationToken cancellationToken)
-		{
-			var command = await FetchNextUnprocessedShipCommand();
-
-			if (command == null)
-			{
-				return false;
-			}
-
-			var queueId = GetQueueId(command.Payload);
-
-			var jobs = workerRegistry.GetHandlersFor(command.Payload)
-				.Select(handler => new Job(generator.NewReference<Job>(), queueId, command.Id, ShipCommands, handler,
-					command.Created))
-				.ToList();
-
-			using (var dbContextScope = dbContextScopeFactory.Create())
-			{
-				await jobRepository.SaveAll(jobs);
-
-				command.MarkAsProcessed();
-				await shipCommandRepository.Save(command);
-
-				await dbContextScope.SaveChangesAsync(cancellationToken);
-			}
-
-			foreach (var job in jobs)
-			{
-				jobScheduler.Add(job);
-			}
-
-			return true;
-		}
-
-		async Task<Command?> FetchNextUnprocessedShipCommand()
-		{
-			using (dbContextScopeFactory.CreateReadOnly())
-			{
-				return await shipCommandRepository.FetchNextUnprocessed();
-			}
-		}
-
-		static Guid GetQueueId(ICommand command)
-		{
-			return command switch { _ => Guid.Empty };
+			var command = await FetchNextUnprocessedCommand();
+			return command != null && await ForwardMessage(command, cancellationToken);
 		}
 
 		async Task<bool> ForwardNextEvent(CancellationToken cancellationToken)
 		{
 			var @event = await FetchNextUnprocessedEvent();
+			return @event != null && await ForwardMessage(@event, cancellationToken);
+		}
 
-			if (@event == null)
-			{
-				return false;
-			}
+		async Task<bool> ForwardMessage<T>(Message<T> message, CancellationToken cancellationToken)
+			where T : notnull, IHaveType
+		{
+			var payload = message.Payload as IHaveType;
 
-			var queueId = GetQueueId(@event.Payload);
-
-			var jobs = workerRegistry.GetHandlersFor(@event.Payload)
-				.Select(handler => new Job(generator.NewReference<Job>(), queueId, @event.Id, DomainEvents, handler,
-					@event.Created))
+			var jobs = workerRegistry.GetHandlersFor(message.Payload)
+				.Select(handler => new Job(generator.NewReference<Job>(), payload.GetAddress(), handler, message.Id,
+					payload.GetQueueId(), message.Created))
 				.ToList();
 
 			using (var dbContextScope = dbContextScopeFactory.Create())
 			{
 				await jobRepository.SaveAll(jobs);
 
-				@event.MarkAsProcessed();
-				await eventRepository.Save(@event);
+				message.MarkAsProcessed();
+
+				switch (message)
+				{
+					case Command command:
+						await commandRepository.Save(command);
+						break;
+					case Event @event:
+						await eventRepository.Save(@event);
+						break;
+				}
 
 				await dbContextScope.SaveChangesAsync(cancellationToken);
 			}
@@ -167,6 +84,14 @@ namespace StarCommander.Application.Messages
 			}
 
 			return true;
+		}
+
+		async Task<Command?> FetchNextUnprocessedCommand()
+		{
+			using (dbContextScopeFactory.CreateReadOnly())
+			{
+				return await commandRepository.FetchNextUnprocessed();
+			}
 		}
 
 		async Task<Event?> FetchNextUnprocessedEvent()
@@ -175,14 +100,6 @@ namespace StarCommander.Application.Messages
 			{
 				return await eventRepository.FetchNextUnprocessed();
 			}
-		}
-
-		static Guid GetQueueId(IDomainEvent @event)
-		{
-			return @event switch
-			{
-				_ => Guid.Empty
-			};
 		}
 	}
 }

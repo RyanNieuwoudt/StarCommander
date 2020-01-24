@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
+using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 {
 	public class ShipRepository : EventsOnlyRepository<Ship, ShipDataContext>, IShipRepository
 	{
-		readonly IShipCommandRepository shipCommandRepository;
+		readonly ICommandRepository commandRepository;
 
 		public ShipRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator,
-			IEventPublisher eventPublisher, IShipCommandRepository shipCommandRepository) : base(
-			ambientDbContextConfigurator, eventPublisher)
+			ICommandRepository commandRepository, IEventPublisher eventPublisher) : base(ambientDbContextConfigurator,
+			eventPublisher)
 		{
-			this.shipCommandRepository = shipCommandRepository;
+			this.commandRepository = commandRepository;
 		}
 
 		public Task<ICollection<Ship>> All()
@@ -25,7 +27,32 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 
 		public async Task<Ship> Fetch(Reference<Ship> reference)
 		{
-			return await shipCommandRepository.Fetch(reference);
+			var ship = Ship.Launch(Reference<Ship>.None, Reference<Player>.None);
+
+			foreach (var command in await commandRepository.FetchForTarget(reference))
+			{
+				switch (command.Payload)
+				{
+					case LaunchShip launchShip:
+						ship = Ship.Launch(launchShip.Ship, launchShip.Captain);
+						break;
+					case SetHeading setHeading:
+						ship.NavigationComputer.SetHeading(command.Created, setHeading.Heading);
+						break;
+					case SetSpeed setSpeed:
+						ship.NavigationComputer.SetSpeed(command.Created, setSpeed.Speed);
+						break;
+				}
+			}
+
+			ship.ClearEvents();
+
+			if (ship.Reference == Reference<Ship>.None)
+			{
+				throw new InvalidDataException($"Unable to fetch ship {reference}");
+			}
+
+			return ship;
 		}
 
 		public async Task SaveAll(ICollection<Ship> aggregates)

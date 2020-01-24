@@ -33,11 +33,10 @@ namespace StarCommander.Application
 			services.AddScoped<IAmbientDbContextLocator, AmbientDbContextLocator>();
 			services.AddScoped<IDbContextScopeFactory, DbContextScopeFactory>();
 
+			services.AddScoped<ICommandRepository, CommandRepository>();
 			services.AddScoped<IEventRepository, EventRepository>();
 			services.AddScoped<IJobRepository, JobRepository>();
-			services.AddScoped<IPlayerCommandRepository, PlayerCommandRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
-			services.AddScoped<IShipCommandRepository, ShipCommandRepository>();
 			services.AddScoped<IShipRepository, ShipRepository>();
 
 			services.AddScoped<IMessageForwarder, MessageForwarder>();

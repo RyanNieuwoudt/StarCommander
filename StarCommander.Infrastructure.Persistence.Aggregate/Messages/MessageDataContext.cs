@@ -12,9 +12,9 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 		{
 		}
 
+		public DbSet<Command> Commands { get; set; } = default!;
 		public DbSet<Event> Events { get; set; } = default!;
 		public DbSet<Job> Jobs { get; set; } = default!;
-		public DbSet<Command> PlayerCommands { get; set; } = default!;
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
