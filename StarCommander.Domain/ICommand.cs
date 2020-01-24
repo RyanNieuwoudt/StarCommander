@@ -1,7 +1,6 @@
 namespace StarCommander.Domain
 {
-	public interface ICommand
+	public interface ICommand : IHaveType
 	{
-		string Type { get; }
 	}
 }
