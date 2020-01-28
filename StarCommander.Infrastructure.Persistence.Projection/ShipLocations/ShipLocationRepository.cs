@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
+using StarCommander.Shared.Model.Query;
 
 namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 {
@@ -56,6 +57,20 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 				.Where(s => s.ShipId == ship.Id)
 				.OrderBy(s => s.ShipLocationId)
 				.ToListAsync();
+		}
+
+		public async Task<IEnumerable<ScanResult>> ScanForNearbyShips(Reference<Ship> ship)
+		{
+			//TODO Filter on range...
+			//const long range = 1000;
+
+			var query =
+				from sl in DataContext.ShipLocations.AsNoTracking()
+				join ol in DataContext.ShipLocations.AsNoTracking() on 1 equals 1
+				where sl.ShipId != ol.ShipId
+				select new ScanResult { X = ol.X, Y = ol.Y };
+
+			return await query.ToListAsync();
 		}
 	}
 }

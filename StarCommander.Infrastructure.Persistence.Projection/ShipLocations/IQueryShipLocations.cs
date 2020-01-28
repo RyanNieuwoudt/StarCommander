@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
+using StarCommander.Shared.Model.Query;
 
 namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 {
-	public interface IShipLocationRepository : IProjectionRepository<ShipLocation>, IQueryShipLocations
+	public interface IQueryShipLocations
 	{
-		Task<IEnumerable<ShipLocation>> Fetch(Reference<Ship> ship);
+		Task<IEnumerable<ScanResult>> ScanForNearbyShips(Reference<Ship> ship);
 	}
 }
