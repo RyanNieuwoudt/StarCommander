@@ -3,32 +3,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using StarCommander.Domain;
+using StarCommander.Domain.Ships;
 
 namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 {
-	public class ShipPositionRepository : RepositoryBase<ProjectionDataContext>, IShipPositionRepository
+	public class ShipLocationRepository : RepositoryBase<ProjectionDataContext>, IShipLocationRepository
 	{
 		readonly IMapper mapper;
 
-		public ShipPositionRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator, IMapper mapper) :
+		public ShipLocationRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator, IMapper mapper) :
 			base(ambientDbContextConfigurator)
 		{
 			this.mapper = mapper;
 		}
 
-		public async Task Delete(List<ShipPosition> shipPositions)
+		public async Task Delete(List<ShipLocation> shipPositions)
 		{
 			DataContext.RemoveRange(
 				(await DataContext.ShipPositions.ToListAsync()).Where(a =>
 					shipPositions.Any(b => b.HasSamePrimaryKeyAs(a))));
 		}
 
-		public async Task Insert(List<ShipPosition> shipPositions)
+		public async Task Insert(List<ShipLocation> shipPositions)
 		{
 			await DataContext.AddRangeAsync(shipPositions);
 		}
 
-		public async Task Update(List<ShipPosition> shipPositions)
+		public async Task Update(List<ShipLocation> shipPositions)
 		{
 			foreach (var shipPosition in shipPositions)
 			{
@@ -46,6 +48,14 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 			}
 
 			await Task.CompletedTask;
+		}
+
+		public async Task<IEnumerable<ShipLocation>> Fetch(Reference<Ship> ship)
+		{
+			return await DataContext.ShipPositions.AsNoTracking()
+				.Where(s => s.ShipId == ship.Id)
+				.OrderBy(s => s.ShipPositionId)
+				.ToListAsync();
 		}
 	}
 }

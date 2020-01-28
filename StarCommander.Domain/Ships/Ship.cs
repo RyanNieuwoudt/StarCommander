@@ -10,7 +10,6 @@ namespace StarCommander.Domain.Ships
 		{
 			Id = id;
 			Captain = captain;
-
 			NavigationComputer = new NavigationComputer(new Position());
 		}
 
@@ -31,9 +30,8 @@ namespace StarCommander.Domain.Ships
 
 		public void Locate()
 		{
-			NavigationComputer.Locate();
-			var (heading, position, speed) = NavigationComputer;
-			RaiseEvent(new ShipLocated(Reference, Captain, heading, position, speed));
+			var (date, heading, position, speed) = NavigationComputer.Locate();
+			RaiseEvent(new ShipLocated(Reference, Captain, date, heading, position, speed));
 		}
 	}
 }

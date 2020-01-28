@@ -3,6 +3,7 @@ using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using StarCommander.Application.Messages;
+using StarCommander.Application.Projectors;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
@@ -11,6 +12,7 @@ using StarCommander.Infrastructure.Persistence;
 using StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 using StarCommander.Infrastructure.Persistence.Aggregate.Players;
 using StarCommander.Infrastructure.Persistence.Aggregate.Ships;
+using StarCommander.Infrastructure.Persistence.Projection.ShipPositions;
 
 namespace StarCommander.Application
 {
@@ -38,6 +40,9 @@ namespace StarCommander.Application
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
 			services.AddScoped<IShipRepository, ShipRepository>();
+			services.AddScoped<IShipLocationRepository, ShipLocationRepository>();
+
+			services.AddScoped<IShipLocationProjector, ShipLocationProjector>();
 
 			services.AddScoped<IMessageForwarder, MessageForwarder>();
 			services.AddScoped<IEventPublisher, EventPublisher>();

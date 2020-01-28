@@ -7,8 +7,6 @@ using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
-using StarCommander.Domain.Players;
-using StarCommander.Domain.Ships;
 using Command = StarCommander.Domain.Messages.Command;
 
 namespace StarCommander.Application.Services

@@ -9,9 +9,9 @@ namespace StarCommander.Application.Services
 {
 	public class CommandService : ICommandService
 	{
+		readonly ICommandRepository commandRepository;
 		readonly IDbContextScopeFactory dbContextScopeFactory;
 		readonly IReferenceGenerator generator;
-		readonly ICommandRepository commandRepository;
 
 		public CommandService(ICommandRepository commandRepository, IDbContextScopeFactory dbContextScopeFactory,
 			IReferenceGenerator generator)

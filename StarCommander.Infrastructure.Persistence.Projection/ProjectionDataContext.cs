@@ -13,7 +13,7 @@ namespace StarCommander.Infrastructure.Persistence.Projection
 		{
 		}
 
-		public DbSet<ShipPosition> ShipPositions { get; set; } = default!;
+		public DbSet<ShipLocation> ShipPositions { get; set; } = default!;
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -24,21 +24,25 @@ namespace StarCommander.Infrastructure.Persistence.Projection
 
 		static void BuildShipPosition(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<ShipPosition>()
+			modelBuilder.Entity<ShipLocation>()
 				.Property(a => a.ShipPositionId)
 				.IsRequired()
 				.ValueGeneratedOnAdd();
 
-			modelBuilder.Entity<ShipPosition>()
+			modelBuilder.Entity<ShipLocation>()
 				.HasKey(a => a.ShipPositionId);
 
-			modelBuilder.Entity<ShipPosition>().Property(a => a.X).IsRequired();
-			modelBuilder.Entity<ShipPosition>().HasIndex(a => a.X);
+			modelBuilder.Entity<ShipLocation>().Property(a => a.Heading).IsRequired();
 
-			modelBuilder.Entity<ShipPosition>().Property(a => a.Y).IsRequired();
-			modelBuilder.Entity<ShipPosition>().HasIndex(a => a.Y);
+			modelBuilder.Entity<ShipLocation>().Property(a => a.Speed).IsRequired();
 
-			modelBuilder.Entity<ShipPosition>().Property(a => a.Created).IsRequired();
+			modelBuilder.Entity<ShipLocation>().Property(a => a.X).IsRequired();
+			modelBuilder.Entity<ShipLocation>().HasIndex(a => a.X);
+
+			modelBuilder.Entity<ShipLocation>().Property(a => a.Y).IsRequired();
+			modelBuilder.Entity<ShipLocation>().HasIndex(a => a.Y);
+
+			modelBuilder.Entity<ShipLocation>().Property(a => a.Created).IsRequired();
 		}
 	}
 }
