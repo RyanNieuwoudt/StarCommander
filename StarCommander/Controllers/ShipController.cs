@@ -23,6 +23,12 @@ namespace StarCommander.Controllers
 			this.shipQuery = shipQuery;
 		}
 
+		[HttpGet("{shipId}/scan")]
+		public async Task<IActionResult> Scan(Guid shipId)
+		{
+			return Ok(await shipQuery.ScanForNearbyShips(new Reference<Ship>(shipId)));
+		}
+
 		[HttpPost("{shipId}/heading/{heading}")]
 		public async Task<IActionResult> SetHeading(Guid shipId, int heading)
 		{
@@ -35,12 +41,6 @@ namespace StarCommander.Controllers
 		{
 			await commandService.Issue(new SetSpeed(new Reference<Ship>(shipId), new Speed(speed)));
 			return Ok();
-		}
-
-		[HttpGet("{shipId}/scan")]
-		public async Task<IActionResult> Scan(Guid shipId)
-		{
-			return Ok(await shipQuery.ScanForNearbyShips(new Reference<Ship>(shipId)));
 		}
 	}
 }

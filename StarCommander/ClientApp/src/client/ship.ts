@@ -1,5 +1,8 @@
 import { http } from "client/api";
 
+export const scan = ({ shipId, token }: { shipId: string; token: string }) =>
+	http.get(`api/ship/${shipId}/scan/`, token);
+
 export const setHeading = ({
 	shipId,
 	heading,
