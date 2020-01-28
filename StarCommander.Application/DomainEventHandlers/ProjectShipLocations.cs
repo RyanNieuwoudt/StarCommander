@@ -17,7 +17,8 @@ namespace StarCommander.Application.DomainEventHandlers
 
 		public async Task Handle(ShipLocated @event, CancellationToken cancellationToken)
 		{
-			await shipLocationProjector.Project(@event.Ship, @event.Position);
+			await shipLocationProjector.Project(@event.Ship, @event.Date, @event.Heading, @event.Position,
+				@event.Speed);
 		}
 	}
 }

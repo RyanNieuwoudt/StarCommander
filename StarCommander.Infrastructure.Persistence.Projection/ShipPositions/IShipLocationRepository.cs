@@ -5,8 +5,8 @@ using StarCommander.Domain.Ships;
 
 namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 {
-	public interface IShipPositionRepository : IProjectionRepository<ShipPosition>
+	public interface IShipLocationRepository : IProjectionRepository<ShipLocation>
 	{
-		Task<IEnumerable<ShipPosition>> Fetch(Reference<Ship> ship);
+		Task<IEnumerable<ShipLocation>> Fetch(Reference<Ship> ship);
 	}
 }

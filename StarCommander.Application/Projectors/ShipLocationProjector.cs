@@ -12,29 +12,38 @@ namespace StarCommander.Application.Projectors
 	public class ShipLocationProjector : ProjectorBase, IShipLocationProjector
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
-		readonly IShipPositionRepository shipPositionRepository;
+		readonly IShipLocationRepository shipLocationRepository;
 
 		public ShipLocationProjector(IDbContextScopeFactory dbContextScopeFactory,
-			IShipPositionRepository shipPositionRepository)
+			IShipLocationRepository shipLocationRepository)
 		{
 			this.dbContextScopeFactory = dbContextScopeFactory;
-			this.shipPositionRepository = shipPositionRepository;
+			this.shipLocationRepository = shipLocationRepository;
 		}
 
-		public async Task Project(Reference<Ship> ship, Position position)
+		public async Task Project(Reference<Ship> ship, DateTimeOffset date, Heading heading, Position position,
+			Speed speed)
 		{
 			using var dbContextScope = dbContextScopeFactory.Create();
 
-			var existingPositions = (await shipPositionRepository.Fetch(ship)).ToList();
+			var existingLocations = (await shipLocationRepository.Fetch(ship)).ToList();
 
-			var positions = new List<ShipPosition>
+			var locations = new List<ShipLocation>
 			{
-				new ShipPosition { ShipId = ship, Created = DateTimeOffset.Now, X = position.X, Y = position.Y }
+				new ShipLocation
+				{
+					ShipId = ship,
+					Heading = heading,
+					Speed = speed,
+					X = position.X,
+					Y = position.Y,
+					Created = DateTimeOffset.Now,
+				}
 			};
 
-			var (toDelete, toUpdate, toInsert) = Split(existingPositions, positions);
+			var (toDelete, toUpdate, toInsert) = Split(existingLocations, locations);
 
-			await Execute(shipPositionRepository, toDelete, toUpdate, toInsert);
+			await Execute(shipLocationRepository, toDelete, toUpdate, toInsert);
 
 			dbContextScope.SaveChanges();
 		}

@@ -40,7 +40,7 @@ namespace StarCommander.Application
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
 			services.AddScoped<IShipRepository, ShipRepository>();
-			services.AddScoped<IShipPositionRepository, ShipPositionRepository>();
+			services.AddScoped<IShipLocationRepository, ShipLocationRepository>();
 
 			services.AddScoped<IShipLocationProjector, ShipLocationProjector>();
 
