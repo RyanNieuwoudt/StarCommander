@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using StarCommander.Domain;
+using StarCommander.Domain.Ships;
 
 namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 {
@@ -46,6 +48,14 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 			}
 
 			await Task.CompletedTask;
+		}
+
+		public async Task<IEnumerable<ShipPosition>> Fetch(Reference<Ship> ship)
+		{
+			return await DataContext.ShipPositions.AsNoTracking()
+				.Where(s => s.ShipId == ship.Id)
+				.OrderBy(s => s.ShipPositionId)
+				.ToListAsync();
 		}
 	}
 }
