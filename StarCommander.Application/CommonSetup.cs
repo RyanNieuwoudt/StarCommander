@@ -12,7 +12,7 @@ using StarCommander.Infrastructure.Persistence;
 using StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 using StarCommander.Infrastructure.Persistence.Aggregate.Players;
 using StarCommander.Infrastructure.Persistence.Aggregate.Ships;
-using StarCommander.Infrastructure.Persistence.Projection.ShipPositions;
+using StarCommander.Infrastructure.Persistence.Projection.ShipLocations;
 
 namespace StarCommander.Application
 {

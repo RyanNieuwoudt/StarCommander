@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
-using StarCommander.Infrastructure.Persistence.Projection.ShipPositions;
+using StarCommander.Infrastructure.Persistence.Projection.ShipLocations;
 
 namespace StarCommander.Application.Projectors
 {

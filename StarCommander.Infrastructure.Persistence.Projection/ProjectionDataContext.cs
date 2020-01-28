@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using StarCommander.Infrastructure.Persistence.Projection.ShipPositions;
+using StarCommander.Infrastructure.Persistence.Projection.ShipLocations;
 
 namespace StarCommander.Infrastructure.Persistence.Projection
 {

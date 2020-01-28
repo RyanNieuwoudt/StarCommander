@@ -1,6 +1,6 @@
 using System;
 
-namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
+namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 {
 	public class ShipLocation : ProjectWithKeyBase<ShipLocation>, IEquatable<ShipLocation>
 	{

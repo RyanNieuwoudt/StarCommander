@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
 
-namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
+namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 {
 	public class ShipLocationRepository : RepositoryBase<ProjectionDataContext>, IShipLocationRepository
 	{
