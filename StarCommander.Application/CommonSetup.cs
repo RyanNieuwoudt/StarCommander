@@ -4,6 +4,7 @@ using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using StarCommander.Application.Messages;
 using StarCommander.Application.Projectors;
+using StarCommander.Application.Queries;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
@@ -35,12 +36,16 @@ namespace StarCommander.Application
 			services.AddScoped<IAmbientDbContextLocator, AmbientDbContextLocator>();
 			services.AddScoped<IDbContextScopeFactory, DbContextScopeFactory>();
 
+			services.AddScoped<IShipQuery, ShipQuery>();
+
 			services.AddScoped<ICommandRepository, CommandRepository>();
 			services.AddScoped<IEventRepository, EventRepository>();
 			services.AddScoped<IJobRepository, JobRepository>();
 			services.AddScoped<IPlayerRepository, PlayerRepository>();
 			services.AddScoped<IShipRepository, ShipRepository>();
+
 			services.AddScoped<IShipLocationRepository, ShipLocationRepository>();
+			services.AddScoped<IQueryShipLocations, ShipLocationRepository>();
 
 			services.AddScoped<IShipLocationProjector, ShipLocationProjector>();
 
