@@ -13,24 +13,24 @@ namespace StarCommander.Infrastructure.Persistence.Projection
 		{
 		}
 
-		public DbSet<ShipLocation> ShipPositions { get; set; } = default!;
+		public DbSet<ShipLocation> ShipLocations { get; set; } = default!;
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 
-			BuildShipPosition(modelBuilder);
+			BuildShipLocation(modelBuilder);
 		}
 
-		static void BuildShipPosition(ModelBuilder modelBuilder)
+		static void BuildShipLocation(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<ShipLocation>()
-				.Property(a => a.ShipPositionId)
+				.Property(a => a.ShipLocationId)
 				.IsRequired()
 				.ValueGeneratedOnAdd();
 
 			modelBuilder.Entity<ShipLocation>()
-				.HasKey(a => a.ShipPositionId);
+				.HasKey(a => a.ShipLocationId);
 
 			modelBuilder.Entity<ShipLocation>().Property(a => a.Heading).IsRequired();
 

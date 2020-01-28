@@ -18,32 +18,32 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 			this.mapper = mapper;
 		}
 
-		public async Task Delete(List<ShipLocation> shipPositions)
+		public async Task Delete(List<ShipLocation> shipLocations)
 		{
 			DataContext.RemoveRange(
-				(await DataContext.ShipPositions.ToListAsync()).Where(a =>
-					shipPositions.Any(b => b.HasSamePrimaryKeyAs(a))));
+				(await DataContext.ShipLocations.ToListAsync()).Where(a =>
+					shipLocations.Any(b => b.HasSamePrimaryKeyAs(a))));
 		}
 
-		public async Task Insert(List<ShipLocation> shipPositions)
+		public async Task Insert(List<ShipLocation> shipLocations)
 		{
-			await DataContext.AddRangeAsync(shipPositions);
+			await DataContext.AddRangeAsync(shipLocations);
 		}
 
-		public async Task Update(List<ShipLocation> shipPositions)
+		public async Task Update(List<ShipLocation> shipLocations)
 		{
-			foreach (var shipPosition in shipPositions)
+			foreach (var shipLocation in shipLocations)
 			{
 				var entity =
-					(await DataContext.ShipPositions.ToListAsync()).SingleOrDefault(a =>
-						a.HasSamePrimaryKeyAs(shipPosition));
+					(await DataContext.ShipLocations.ToListAsync()).SingleOrDefault(a =>
+						a.HasSamePrimaryKeyAs(shipLocation));
 
 				if (entity == null)
 				{
 					continue;
 				}
 
-				mapper.Map(shipPosition, entity);
+				mapper.Map(shipLocation, entity);
 				DataContext.Update(entity);
 			}
 
@@ -52,9 +52,9 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 
 		public async Task<IEnumerable<ShipLocation>> Fetch(Reference<Ship> ship)
 		{
-			return await DataContext.ShipPositions.AsNoTracking()
+			return await DataContext.ShipLocations.AsNoTracking()
 				.Where(s => s.ShipId == ship.Id)
-				.OrderBy(s => s.ShipPositionId)
+				.OrderBy(s => s.ShipLocationId)
 				.ToListAsync();
 		}
 	}
