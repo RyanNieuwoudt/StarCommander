@@ -67,6 +67,7 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 			var query =
 				from sl in DataContext.ShipLocations.AsNoTracking()
 				join ol in DataContext.ShipLocations.AsNoTracking() on 1 equals 1
+				where sl.ShipId == ship.Id
 				where sl.ShipId != ol.ShipId
 				select new ScanResult { X = ol.X, Y = ol.Y };
 
