@@ -69,7 +69,7 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 				join ol in DataContext.ShipLocations.AsNoTracking() on 1 equals 1
 				where sl.ShipId == ship.Id
 				where sl.ShipId != ol.ShipId
-				select new ScanResult { X = ol.X, Y = ol.Y };
+				select new ScanResult { X = ol.X - sl.X, Y = ol.Y - sl.Y };
 
 			return await query.ToListAsync();
 		}
