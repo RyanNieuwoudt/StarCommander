@@ -3,7 +3,6 @@ import { all, takeEvery } from "redux-saga/effects";
 import { scan } from "client/ship";
 import { forwardSaga, querySaga } from "store/saga/templates";
 import { SignIn, SignOut, SignUp } from "./auth";
-import { OnShipLocated } from "./ship";
 
 export interface Position {
 	x: number;
@@ -49,7 +48,6 @@ export const reducer: Reducer<ScannerState> = (
 		case "SIGN_UP":
 			return defaultState;
 		case "SCAN_SUCCESS":
-			console.log(action);
 			return action.data;
 		default:
 			return state;
