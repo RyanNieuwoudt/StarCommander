@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using AutoMapper;
 using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
+using StarCommander.Infrastructure.Persistence.Projection;
+using static StarCommander.Application.Reflection;
 
 namespace StarCommander.Application
 {
@@ -13,6 +15,7 @@ namespace StarCommander.Application
 			CreateMap<Player, Shared.Model.Player>();
 
 			MapNotifications(NotificationRegistry.Player);
+			MapProjections();
 		}
 
 		void MapNotifications(IReadOnlyDictionary<Type, Type> types)
@@ -22,6 +25,15 @@ namespace StarCommander.Application
 			foreach (var (sourceType, destinationType) in types)
 			{
 				CreateMap(sourceType, destinationType);
+			}
+		}
+
+		void MapProjections()
+		{
+			var openGenericType = typeof(ProjectWithKeyBase<>);
+			foreach (var type in GetAllTypesImplementingOpenGenericType(openGenericType, openGenericType.Assembly))
+			{
+				CreateMap(type, type);
 			}
 		}
 	}

@@ -6,6 +6,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj" />
+	  <ProjectReference Include="..\StarCommander.Shared\StarCommander.Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <PackageReference Include="AutoMapper" Version="9.0.0" />

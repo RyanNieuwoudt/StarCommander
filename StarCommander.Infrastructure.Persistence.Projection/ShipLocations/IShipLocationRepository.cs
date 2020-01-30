@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
 
-namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
+namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 {
-	public interface IShipLocationRepository : IProjectionRepository<ShipLocation>
+	public interface IShipLocationRepository : IProjectionRepository<ShipLocation>, IQueryShipLocations
 	{
 		Task<IEnumerable<ShipLocation>> Fetch(Reference<Ship> ship);
 	}

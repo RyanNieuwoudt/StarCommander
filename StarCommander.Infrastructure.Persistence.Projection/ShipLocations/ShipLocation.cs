@@ -1,10 +1,10 @@
 using System;
 
-namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
+namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 {
 	public class ShipLocation : ProjectWithKeyBase<ShipLocation>, IEquatable<ShipLocation>
 	{
-		public long ShipPositionId { get; set; }
+		public long ShipLocationId { get; set; }
 		public Guid ShipId { get; set; }
 		public double Heading { get; set; }
 		public long Speed { get; set; }
@@ -24,14 +24,14 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 				return true;
 			}
 
-			return ShipPositionId == other.ShipPositionId && ShipId.Equals(other.ShipId) &&
+			return ShipLocationId == other.ShipLocationId && ShipId.Equals(other.ShipId) &&
 			       Heading.Equals(other.Heading) && Speed == other.Speed && X == other.X && Y == other.Y &&
 			       Created.Equals(other.Created);
 		}
 
 		public override bool HasSamePrimaryKeyAs(ShipLocation other)
 		{
-			return ShipPositionId == other.ShipPositionId;
+			return ShipLocationId == other.ShipLocationId;
 		}
 
 		public override bool RepresentsTheSameDataAs(ShipLocation other)
@@ -48,7 +48,7 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 		{
 			return new ShipLocation
 			{
-				ShipPositionId = other.ShipPositionId,
+				ShipLocationId = other.ShipLocationId,
 				ShipId = ShipId,
 				Heading = Heading,
 				Speed = Speed,
@@ -75,7 +75,7 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipPositions
 
 		public override int GetHashCode()
 		{
-			return HashCode.Combine(ShipPositionId, ShipId, Heading, Speed, X, Y, Created);
+			return HashCode.Combine(ShipLocationId, ShipId, Heading, Speed, X, Y, Created);
 		}
 
 		public static bool operator ==(ShipLocation? left, ShipLocation? right)

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StarCommander.Application.Queries;
 using StarCommander.Application.Services;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
@@ -14,10 +15,18 @@ namespace StarCommander.Controllers
 	public class ShipController : ControllerBase
 	{
 		readonly ICommandService commandService;
+		readonly IShipQuery shipQuery;
 
-		public ShipController(ICommandService commandService)
+		public ShipController(ICommandService commandService, IShipQuery shipQuery)
 		{
 			this.commandService = commandService;
+			this.shipQuery = shipQuery;
+		}
+
+		[HttpGet("{shipId}/scan")]
+		public async Task<IActionResult> Scan(Guid shipId)
+		{
+			return Ok(await shipQuery.ScanForNearbyShips(new Reference<Ship>(shipId)));
 		}
 
 		[HttpPost("{shipId}/heading/{heading}")]
