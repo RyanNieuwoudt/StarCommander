@@ -4,6 +4,7 @@ import { Layout } from "components";
 import { Acknowledgements } from "components/ship/crew";
 import { Helm } from "components/ship/helm";
 import { Navigation } from "components/ship/navigation";
+import { Scanner } from "components/ship/scanner";
 
 export default function Bridge() {
 	return (
@@ -23,6 +24,7 @@ export default function Bridge() {
 				<Helm />
 				<Navigation />
 				<Acknowledgements />
+				<Scanner />
 			</Grid>
 		</Layout>
 	);
