@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using StarCommander.Domain;
+using static StarCommander.Application.Reflection;
 
 namespace StarCommander.Application.Messages
 {
@@ -58,17 +59,6 @@ namespace StarCommander.Application.Messages
 					}
 				}
 			}
-		}
-
-		static IEnumerable<Type> GetAllTypesImplementingOpenGenericType(Type openGenericType, Assembly assembly)
-		{
-			return from x in assembly.GetTypes()
-				from z in x.GetInterfaces()
-				let y = x.BaseType
-				where y != null && y.IsGenericType &&
-				      openGenericType.IsAssignableFrom(y.GetGenericTypeDefinition()) ||
-				      z.IsGenericType && openGenericType.IsAssignableFrom(z.GetGenericTypeDefinition())
-				select x;
 		}
 	}
 }
