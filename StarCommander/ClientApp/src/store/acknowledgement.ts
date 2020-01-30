@@ -32,7 +32,7 @@ export const rootSaga = function* root() {};
 const defaultState: AcknowledgementState = [];
 
 export const reducer: Reducer<AcknowledgementState> = (
-	state: AcknowledgementState | undefined = defaultState,
+	state: AcknowledgementState = defaultState,
 	incomingAction: Action
 ): AcknowledgementState => {
 	const action = incomingAction as KnownAction;

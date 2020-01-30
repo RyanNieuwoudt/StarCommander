@@ -4,10 +4,10 @@ import * as scanner from "./scanner";
 import * as ship from "./ship";
 
 export interface ApplicationState {
-	acknowledgement: acknowledgement.AcknowledgementState | undefined;
-	auth: auth.AuthState | undefined;
-	scanner: scanner.ScannerState | undefined;
-	ship: ship.ShipState | undefined;
+	acknowledgement: acknowledgement.AcknowledgementState;
+	auth: auth.AuthState;
+	scanner: scanner.ScannerState;
+	ship: ship.ShipState;
 }
 
 export const reducers = {

@@ -168,7 +168,7 @@ export const rootSaga = function* root() {
 const defaultState: AuthState = {};
 
 export const reducer: Reducer<AuthState> = (
-	state: AuthState | undefined = defaultState,
+	state: AuthState = defaultState,
 	incomingAction: Action
 ): AuthState => {
 	const action = incomingAction as KnownAction;

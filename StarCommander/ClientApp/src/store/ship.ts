@@ -70,7 +70,7 @@ export const rootSaga = function* root() {
 const defaultState: ShipState = {};
 
 export const reducer: Reducer<ShipState> = (
-	state: ShipState | undefined = defaultState,
+	state: ShipState = defaultState,
 	incomingAction: Action
 ): ShipState => {
 	const action = incomingAction as KnownAction;
