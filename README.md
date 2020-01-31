@@ -3,7 +3,6 @@
 > Fun showcase of software architecture presented as a game yet inspired by domain driven design.
 
 ![GitHub](https://img.shields.io/github/license/RyanNieuwoudt/StarCommander?style=flat-square)
-![GitHub Release Date](https://img.shields.io/github/release-date/RyanNieuwoudt/StarCommander?style=flat-square)
 
 ---
 
