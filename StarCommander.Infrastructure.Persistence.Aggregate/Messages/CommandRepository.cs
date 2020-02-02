@@ -37,6 +37,20 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 				.ToListAsync();
 		}
 
+		public async Task<IEnumerable<Domain.Messages.Command>> FetchScheduledForTarget(Guid targetId)
+		{
+			var now = DateTimeOffset.Now;
+
+			return await GetDbSet()
+				.AsNoTracking()
+				.Where(c => c.TargetId == targetId)
+				.Where(e => e.Processed == null)
+				.Where(e => e.ScheduledFor > now)
+				.OrderBy(c => c.Created)
+				.Select(c => c.ToDomain())
+				.ToListAsync();
+		}
+
 		protected override Command AddEntity()
 		{
 			var entity = new Command();

@@ -8,5 +8,6 @@ namespace StarCommander.Domain.Messages
 	{
 		Task<Command?> FetchNextUnprocessed();
 		Task<IEnumerable<Command>> FetchForTarget(Guid targetId);
+		Task<IEnumerable<Command>> FetchScheduledForTarget(Guid targetId);
 	}
 }
