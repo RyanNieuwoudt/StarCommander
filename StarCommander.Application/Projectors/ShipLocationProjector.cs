@@ -37,7 +37,7 @@ namespace StarCommander.Application.Projectors
 					Speed = speed,
 					X = position.X,
 					Y = position.Y,
-					Created = DateTimeOffset.Now,
+					Created = DateTimeOffset.Now
 				}
 			};
 
