@@ -88,5 +88,9 @@ export default function configureStore(
 
 	R.forEach(saga => sagaMiddleware.run(saga), R.values(sagas));
 
+	if (isDevelopment && connect) {
+		connect(store.getState().auth.token);
+	}
+
 	return store;
 }
