@@ -35,8 +35,13 @@ export default function Helm() {
 			return;
 		}
 
-		dispatch(actionCreators.setHeading(shipId, newHeading));
-		dispatch(actionCreators.setSpeed(shipId, newSpeed));
+		if (newHeading !== heading) {
+			dispatch(actionCreators.setHeading(shipId, newHeading));
+		}
+
+		if (newSpeed !== speed) {
+			dispatch(actionCreators.setSpeed(shipId, newSpeed));
+		}
 	}, [dispatch, newHeading, newSpeed, shipId]);
 
 	return (
