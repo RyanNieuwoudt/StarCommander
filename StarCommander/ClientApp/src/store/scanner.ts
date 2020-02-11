@@ -1,8 +1,18 @@
 import { Action, Reducer } from "redux";
-import { all, takeEvery } from "redux-saga/effects";
+import {
+	all,
+	cancel,
+	delay,
+	fork,
+	put,
+	take,
+	takeEvery,
+	takeLeading
+} from "redux-saga/effects";
 import { scan } from "client/ship";
-import { forwardSaga, querySaga } from "store/saga/templates";
+import { querySaga } from "store/saga/templates";
 import { SignIn, SignOut, SignUp } from "./auth";
+import { OnCaptainBoarded } from "./ship";
 
 export interface Position {
 	x: number;
@@ -28,10 +38,23 @@ export const actionCreators = {
 	scan: (shipId: string) => ({ type: "SCAN", payload: { shipId } } as Scan)
 };
 
+function* scanner(shipId: string) {
+	while (true) {
+		yield put(actionCreators.scan(shipId));
+		yield delay(3000);
+	}
+}
+
+function* scanSaga(action: OnCaptainBoarded) {
+	const scannerTask = yield fork(scanner, action.payload.shipId);
+	yield take("SIGN_OUT");
+	yield cancel(scannerTask);
+}
+
 export const rootSaga = function* root() {
 	yield all([
-		yield takeEvery("ON_SHIP_LOCATED", forwardSaga, "SCAN"),
-		yield takeEvery("SCAN", querySaga, scan)
+		yield takeEvery("ON_CAPTAIN_BOARDED", scanSaga),
+		yield takeLeading("SCAN", querySaga, scan)
 	]);
 };
 
