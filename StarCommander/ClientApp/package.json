@@ -29,9 +29,9 @@
 		"@types/history": "^4.7.5",
 		"@types/jest": "^25.1.2",
 		"@types/lodash.throttle": "^4.1.6",
-		"@types/node": "^13.7.6",
+		"@types/node": "^13.7.7",
 		"@types/qs": "^6.9.1",
-		"@types/ramda": "^0.26.42",
+		"@types/ramda": "^0.26.43",
 		"@types/react": "^16.9.23",
 		"@types/react-dom": "^16.9.5",
 		"@types/react-redux": "^7.1.7",
@@ -45,7 +45,7 @@
 		"eslint-plugin-import": "^2.20.1",
 		"eslint-plugin-jsx-a11y": "6.2.3",
 		"eslint-plugin-react": "^7.18.3",
-		"typescript": "^3.8.2"
+		"typescript": "^3.8.3"
 	},
 	"scripts": {
 		"start": "react-scripts start",
