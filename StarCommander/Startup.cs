@@ -97,7 +97,7 @@ namespace StarCommander
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapHub<ChannelHub>(ChannelHubPath).RequireAuthorization();
-				endpoints.MapControllerRoute("default", "{controller}/{action=Index}/{id?}").RequireAuthorization();
+				endpoints.MapControllers();
 			});
 
 			app.UseSpa(spa =>
