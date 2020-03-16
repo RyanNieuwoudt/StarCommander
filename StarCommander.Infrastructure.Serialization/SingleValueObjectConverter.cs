@@ -35,7 +35,11 @@ namespace StarCommander.Infrastructure.Serialization
 
 		static Type TypeToUse(Type objectType)
 		{
-			return IsNullable(objectType) ? objectType.GetGenericArguments()[0] : objectType;
+			var notByRefType = objectType.IsByRef && objectType.HasElementType
+				? objectType.GetElementType() ?? objectType
+				: objectType;
+
+			return IsNullable(notByRefType) ? notByRefType.GetGenericArguments()[0] : notByRefType;
 		}
 
 		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue,
