@@ -8,7 +8,7 @@ export default function SignUpForm() {
 	const dispatch = useDispatch();
 
 	const onSubmit = useCallback(
-		event => {
+		(event) => {
 			const { callSign, firstName, lastName, password } = event.value;
 			dispatch(
 				actionCreators.signUp(callSign, firstName, lastName, password)

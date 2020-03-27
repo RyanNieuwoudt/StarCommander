@@ -7,7 +7,7 @@ import {
 	put,
 	take,
 	takeEvery,
-	takeLeading
+	takeLeading,
 } from "redux-saga/effects";
 import { scan } from "client/ship";
 import { querySaga } from "store/saga/templates";
@@ -35,7 +35,7 @@ export interface ScanSuccess {
 export type KnownAction = ScanSuccess | SignIn | SignOut | SignUp;
 
 export const actionCreators = {
-	scan: (shipId: string) => ({ type: "SCAN", payload: { shipId } } as Scan)
+	scan: (shipId: string) => ({ type: "SCAN", payload: { shipId } } as Scan),
 };
 
 function* scanner(shipId: string) {
@@ -54,7 +54,7 @@ function* scanSaga(action: OnCaptainBoarded) {
 export const rootSaga = function* root() {
 	yield all([
 		yield takeEvery("ON_CAPTAIN_BOARDED", scanSaga),
-		yield takeLeading("SCAN", querySaga, scan)
+		yield takeLeading("SCAN", querySaga, scan),
 	]);
 };
 

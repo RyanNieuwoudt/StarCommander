@@ -20,7 +20,7 @@ describe("auth reducer", () => {
 			reducer(emptyState, {
 				type: "SIGN_IN_SUCCESS",
 				payload: { callSign, password },
-				data: { player: { callSign, firstName, lastName }, token }
+				data: { player: { callSign, firstName, lastName }, token },
 			})
 		).toEqual({ player: { callSign, firstName, lastName }, token });
 	});
@@ -30,7 +30,7 @@ describe("auth reducer", () => {
 			reducer(emptyState, {
 				type: "SIGN_UP_SUCCESS",
 				payload: { callSign, firstName, lastName },
-				data: { player: { callSign, firstName, lastName }, token }
+				data: { player: { callSign, firstName, lastName }, token },
 			})
 		).toEqual({ player: { callSign, firstName, lastName }, token });
 	});
@@ -56,7 +56,7 @@ describe("auth reducer", () => {
 		expect(
 			reducer(emptyState, {
 				type: "SIGN_IN_FAILURE",
-				error: message
+				error: message,
 			})
 		).toEqual({ message });
 	});
@@ -65,7 +65,7 @@ describe("auth reducer", () => {
 		expect(
 			reducer(emptyState, {
 				type: "SIGN_UP_FAILURE",
-				error: message
+				error: message,
 			})
 		).toEqual({ message });
 	});
@@ -76,7 +76,7 @@ describe("auth reducer", () => {
 				{ player: { callSign } },
 				{
 					type: "UPDATE_NAME_SUCCESS",
-					payload: { firstName, lastName }
+					payload: { firstName, lastName },
 				}
 			)
 		).toEqual({ player: { callSign, firstName, lastName } });
@@ -88,7 +88,7 @@ describe("auth reducer", () => {
 				{ player: { callSign } },
 				{
 					type: "ON_PLAYER_NAME_CHANGED",
-					payload: { firstName, lastName }
+					payload: { firstName, lastName },
 				}
 			)
 		).toEqual({ player: { callSign, firstName, lastName } });

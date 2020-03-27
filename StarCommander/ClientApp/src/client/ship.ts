@@ -6,7 +6,7 @@ export const scan = ({ shipId, token }: { shipId: string; token: string }) =>
 export const setHeading = ({
 	shipId,
 	heading,
-	token
+	token,
 }: {
 	shipId: string;
 	heading: number;
@@ -16,7 +16,7 @@ export const setHeading = ({
 export const setSpeed = ({
 	shipId,
 	speed,
-	token
+	token,
 }: {
 	shipId: string;
 	speed: number;

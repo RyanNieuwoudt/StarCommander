@@ -7,7 +7,7 @@ import createSagaMiddleware from "redux-saga";
 import { ApplicationState, reducers, sagas } from "store";
 import {
 	createChannelConnection,
-	createSignalRMiddleware
+	createSignalRMiddleware,
 } from "store/middleware";
 
 const getStateFromSessionStore = () => {
@@ -38,12 +38,12 @@ export default function configureStore(
 	const middleware = [
 		sagaMiddleware,
 		createSignalRMiddleware(connect, disconnect),
-		routerMiddleware(history)
+		routerMiddleware(history),
 	];
 
 	const rootReducer = combineReducers({
 		...reducers,
-		router: connectRouter(history)
+		router: connectRouter(history),
 	});
 
 	const enhancers = [];
@@ -61,7 +61,7 @@ export default function configureStore(
 	}
 
 	if (connection) {
-		connection.on("Message", message => {
+		connection.on("Message", (message) => {
 			store.dispatch(JSON.parse(message));
 		});
 	}
@@ -86,7 +86,7 @@ export default function configureStore(
 		);
 	}
 
-	R.forEach(saga => sagaMiddleware.run(saga), R.values(sagas));
+	R.forEach((saga) => sagaMiddleware.run(saga), R.values(sagas));
 
 	if (isDevelopment && connect) {
 		connect(store.getState().auth.token);

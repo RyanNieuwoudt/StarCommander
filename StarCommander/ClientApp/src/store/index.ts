@@ -14,14 +14,14 @@ export const reducers = {
 	acknowledgement: acknowledgement.reducer,
 	auth: auth.reducer,
 	scanner: scanner.reducer,
-	ship: ship.reducer
+	ship: ship.reducer,
 };
 
 export const sagas = {
 	acknowledgement: acknowledgement.rootSaga,
 	auth: auth.rootSaga,
 	scanner: scanner.rootSaga,
-	ship: ship.rootSaga
+	ship: ship.rootSaga,
 };
 
 export interface Action {

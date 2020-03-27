@@ -5,7 +5,7 @@ export default (token: string | undefined, config: object = {}) => {
 
 	const headers = {
 		"Content-Type": "application/json",
-		...(Authorization && { Authorization })
+		...(Authorization && { Authorization }),
 	};
 
 	const paramsSerializer = (params: object) => {

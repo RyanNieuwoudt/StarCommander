@@ -9,7 +9,7 @@ it("renders without crashing", () => {
 		default: () => {},
 		subscribe: () => {},
 		dispatch: () => {},
-		getState: () => ({ ...state })
+		getState: () => ({ ...state }),
 	});
 	const store = storeFake({}) as any;
 
