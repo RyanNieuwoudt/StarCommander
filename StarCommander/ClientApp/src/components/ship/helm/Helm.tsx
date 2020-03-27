@@ -42,7 +42,7 @@ export default function Helm() {
 		if (newSpeed !== speed) {
 			dispatch(actionCreators.setSpeed(shipId, newSpeed));
 		}
-	}, [dispatch, newHeading, newSpeed, shipId]);
+	}, [dispatch, heading, newHeading, newSpeed, shipId, speed]);
 
 	return (
 		<Box gap="medium" round="medium">
