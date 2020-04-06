@@ -67,7 +67,7 @@ export const rootSaga = function* root() {
 	]);
 };
 
-const defaultState: ShipState = {};
+export const defaultState: ShipState = {};
 
 export const reducer: Reducer<ShipState> = (
 	state: ShipState = defaultState,
