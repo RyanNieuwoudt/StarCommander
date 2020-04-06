@@ -1,3 +1,4 @@
+using AmbientDbContextConfigurator;
 using AutoMapper;
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
@@ -9,7 +10,6 @@ using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
-using StarCommander.Infrastructure.Persistence;
 using StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 using StarCommander.Infrastructure.Persistence.Aggregate.Players;
 using StarCommander.Infrastructure.Persistence.Aggregate.Ships;
@@ -32,7 +32,8 @@ namespace StarCommander.Application
 		{
 			services.AddAutoMapper(typeof(AutoMapperProfile));
 
-			services.AddScoped<IAmbientDbContextConfigurator, AmbientDbContextConfigurator>();
+			services
+				.AddScoped<IAmbientDbContextConfigurator, AmbientDbContextConfigurator.AmbientDbContextConfigurator>();
 			services.AddScoped<IAmbientDbContextLocator, AmbientDbContextLocator>();
 			services.AddScoped<IDbContextScopeFactory, DbContextScopeFactory>();
 

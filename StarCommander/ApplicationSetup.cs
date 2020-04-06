@@ -1,3 +1,4 @@
+using AmbientDbContextConfigurator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StarCommander.Application;

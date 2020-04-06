@@ -1,9 +1,10 @@
+using AmbientDbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
 using StarCommander.Infrastructure.Persistence.Projection.ShipLocations;
 
 namespace StarCommander.Infrastructure.Persistence.Projection
 {
-	public sealed class ProjectionDataContext : DataContextBase
+	public sealed class ProjectionDataContext : ConfiguringDbContext
 	{
 		public ProjectionDataContext()
 		{

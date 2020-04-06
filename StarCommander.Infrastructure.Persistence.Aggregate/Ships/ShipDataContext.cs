@@ -1,9 +1,10 @@
+using AmbientDbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
 using StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships
 {
-	public class ShipDataContext : DataContextBase
+	public class ShipDataContext : ConfiguringDbContext
 	{
 		public ShipDataContext()
 		{
