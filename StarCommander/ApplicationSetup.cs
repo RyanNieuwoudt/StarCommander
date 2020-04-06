@@ -52,12 +52,12 @@ namespace StarCommander
 			}
 
 			//Aggregates
-			AddDbContext<MessageDataContext>("MessageDataContextMigrations");
-			AddDbContext<PlayerDataContext>("PlayerDataContextMigrations");
-			AddDbContext<ShipDataContext>("ShipDataContextMigrations");
+			AddDbContext<MessageDataContext>("MessageMigrations");
+			AddDbContext<PlayerDataContext>("PlayerMigrations");
+			AddDbContext<ShipDataContext>("ShipMigrations");
 
 			//Projections
-			AddDbContext<ProjectionDataContext>("ProjectionDataContextMigrations");
+			AddDbContext<ProjectionDataContext>("ProjectionMigrations");
 		}
 	}
 }
