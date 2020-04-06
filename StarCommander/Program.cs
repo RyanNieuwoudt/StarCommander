@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace StarCommander
@@ -8,7 +9,7 @@ namespace StarCommander
 	{
 		public static async Task Main(string[] args)
 		{
-			await CreateHostBuilder(args).Build().RunAsync();
+			await CreateHostBuilder(args).Build().Migrate().RunAsync();
 		}
 
 		public static IHostBuilder CreateHostBuilder(string[] args)
@@ -16,7 +17,11 @@ namespace StarCommander
 			return Host.CreateDefaultBuilder(args)
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
-					webBuilder.UseDefaultServiceProvider((context, options) =>
+					webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+						{
+							config.AddEnvironmentVariables("StarCommander_");
+						})
+						.UseDefaultServiceProvider((context, options) =>
 						{
 							options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
 							options.ValidateOnBuild = true;
