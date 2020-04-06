@@ -165,7 +165,7 @@ export const rootSaga = function* root() {
 	]);
 };
 
-const defaultState: AuthState = {};
+export const defaultState: AuthState = {};
 
 export const reducer: Reducer<AuthState> = (
 	state: AuthState = defaultState,

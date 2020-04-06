@@ -29,7 +29,7 @@ export type KnownAction =
 
 export const rootSaga = function* root() {};
 
-const defaultState: AcknowledgementState = [];
+export const defaultState: AcknowledgementState = [];
 
 export const reducer: Reducer<AcknowledgementState> = (
 	state: AcknowledgementState = defaultState,

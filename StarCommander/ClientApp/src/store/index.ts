@@ -10,6 +10,13 @@ export interface ApplicationState {
 	ship: ship.ShipState;
 }
 
+export const defaultState = {
+	acknowledgement: acknowledgement.defaultState,
+	auth: auth.defaultState,
+	scanner: scanner.defaultState,
+	ship: ship.defaultState,
+};
+
 export const reducers = {
 	acknowledgement: acknowledgement.reducer,
 	auth: auth.reducer,

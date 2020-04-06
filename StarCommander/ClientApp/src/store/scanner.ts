@@ -58,7 +58,7 @@ export const rootSaga = function* root() {
 	]);
 };
 
-const defaultState: ScannerState = [];
+export const defaultState: ScannerState = [];
 
 export const reducer: Reducer<ScannerState> = (
 	state: ScannerState = defaultState,
