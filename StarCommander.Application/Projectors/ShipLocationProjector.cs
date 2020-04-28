@@ -45,7 +45,7 @@ namespace StarCommander.Application.Projectors
 
 			await Execute(shipLocationRepository, toDelete, toUpdate, toInsert);
 
-			dbContextScope.SaveChanges();
+			await dbContextScope.SaveChangesAsync();
 		}
 	}
 }
