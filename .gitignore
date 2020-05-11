@@ -232,3 +232,5 @@ _Pvt_Extensions
 .fake/
 .DS_Store
 contentModel.xml
+
+.ionide
