@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using AmbientDbContextConfigurator;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;

@@ -1,8 +1,9 @@
+import * as R from "ramda";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Text } from "grommet";
 import styled from "styled-components/macro";
 import { shipPosition } from "selectors";
+import { Coordinate } from ".";
 
 const Circle = styled.div`
 	background-color: lightgray;
@@ -10,31 +11,16 @@ const Circle = styled.div`
 	position: relative;
 `;
 
-const X = styled(Text)`
-	left: 80%;
-	position: absolute;
-	top: 50%;
-`;
-
-const Y = styled(Text)`
-	left: 50%;
-	position: absolute;
-	top: 10%;
-`;
-
 export default function Navigation() {
 	const position = useSelector(shipPosition);
 
-	if (!position) {
-		return null;
-	}
-
-	const { x, y } = position;
+	const x = R.prop("x", position as any);
+	const y = R.prop("y", position as any);
 
 	return (
 		<Circle>
-			<X>{x}</X>
-			<Y>{y}</Y>
+			<Coordinate axis="x" value={x} />
+			<Coordinate axis="y" value={y} />
 		</Circle>
 	);
 }

@@ -10,11 +10,18 @@
 		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="AmbientDbContextConfigurator" Version="0.0.1" />
 		<PackageReference Include="AutoMapper" Version="9.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="3.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="3.1.4" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		  <PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.4" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 	</ItemGroup>
 	<ItemGroup>

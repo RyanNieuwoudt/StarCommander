@@ -1,4 +1,5 @@
 using System;
+using AmbientDbContextConfigurator;
 using Microsoft.Extensions.DependencyInjection;
 using StarCommander.Infrastructure.Persistence;
 

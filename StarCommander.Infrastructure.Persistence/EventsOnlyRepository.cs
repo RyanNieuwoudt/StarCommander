@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AmbientDbContextConfigurator;
 using EntityFramework.DbContextScope.Interfaces;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;

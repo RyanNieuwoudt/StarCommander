@@ -15,5 +15,5 @@ export {
 	shipId,
 	shipHeading,
 	shipPosition,
-	shipSpeed
+	shipSpeed,
 };

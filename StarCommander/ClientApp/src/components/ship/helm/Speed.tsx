@@ -14,15 +14,17 @@ export default function Speed(props: SpeedProps) {
 			<Heading level={3} textAlign="center">
 				Speed
 			</Heading>
-			<Box direction="row">
-				<RangeInput
-					min={0}
-					max={25}
-					onChange={onChange}
-					value={value}
-				/>
-				<Text>{value.toString().padStart(2, "0")}</Text>
-			</Box>
+			{value !== undefined && (
+				<Box direction="row">
+					<RangeInput
+						min={0}
+						max={25}
+						onChange={onChange}
+						value={value}
+					/>
+					<Text>{value.toString().padStart(2, "0")}</Text>
+				</Box>
+			)}
 		</Box>
 	);
 }

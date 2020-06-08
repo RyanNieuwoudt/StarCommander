@@ -14,15 +14,17 @@ export default function Heading(props: HeadingProps) {
 			<HeadingText level={3} textAlign="center">
 				Heading
 			</HeadingText>
-			<Box direction="row">
-				<RangeInput
-					min={0}
-					max={359}
-					onChange={onChange}
-					value={value}
-				/>
-				<Text>{value.toString().padStart(2, "0")}</Text>
-			</Box>
+			{value !== undefined && (
+				<Box direction="row">
+					<RangeInput
+						min={0}
+						max={359}
+						onChange={onChange}
+						value={value}
+					/>
+					<Text>{value.toString().padStart(2, "0")}</Text>
+				</Box>
+			)}
 		</Box>
 	);
 }

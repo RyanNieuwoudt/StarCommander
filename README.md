@@ -3,7 +3,6 @@
 > Fun showcase of software architecture presented as a game yet inspired by domain driven design.
 
 ![GitHub](https://img.shields.io/github/license/RyanNieuwoudt/StarCommander?style=flat-square)
-![GitHub Release Date](https://img.shields.io/github/release-date/RyanNieuwoudt/StarCommander?style=flat-square)
 
 ---
 
@@ -73,7 +72,7 @@ Open [https://localhost:5001](https://localhost:5001;http://localhost:5000) in a
 
 > Is Star Commander a game?
 
-No, the game element provides an interesting and well known domain that has no bearing on any real projects I have ever worked on. Here, the problem space is...space!
+No, the game element provides an interesting and well known domain that has no bearing on any real project I have ever worked on. Here, the problem space is...space!
 
 ---
 

@@ -1,4 +1,5 @@
 using System;
+using AmbientDbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
 
 namespace StarCommander.Infrastructure.Persistence

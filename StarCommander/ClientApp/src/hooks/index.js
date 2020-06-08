@@ -1,4 +1,4 @@
 import usePrevious from "./usePrevious";
-import useRouter from "./useRouter";
+import usePropsSelector from "./usePropsSelector";
 
-export { usePrevious, useRouter };
+export { usePrevious, usePropsSelector };

@@ -47,27 +47,27 @@ export const actionCreators = {
 			type: "SET_HEADING",
 			payload: {
 				shipId,
-				heading
-			}
+				heading,
+			},
 		} as SetHeading),
 	setSpeed: (shipId: string, speed: number) =>
 		({
 			type: "SET_SPEED",
 			payload: {
 				shipId,
-				speed
-			}
-		} as SetSpeed)
+				speed,
+			},
+		} as SetSpeed),
 };
 
 export const rootSaga = function* root() {
 	yield all([
 		yield takeLeading("SET_HEADING", commandSaga, setHeading),
-		yield takeLeading("SET_SPEED", commandSaga, setSpeed)
+		yield takeLeading("SET_SPEED", commandSaga, setSpeed),
 	]);
 };
 
-const defaultState: ShipState = {};
+export const defaultState: ShipState = {};
 
 export const reducer: Reducer<ShipState> = (
 	state: ShipState = defaultState,

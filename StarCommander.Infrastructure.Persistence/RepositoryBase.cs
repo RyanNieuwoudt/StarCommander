@@ -1,3 +1,4 @@
+using AmbientDbContextConfigurator;
 using EntityFramework.DbContextScope.Interfaces;
 
 namespace StarCommander.Infrastructure.Persistence

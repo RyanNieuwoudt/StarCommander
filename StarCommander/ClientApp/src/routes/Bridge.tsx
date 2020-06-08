@@ -16,7 +16,7 @@ export default function Bridge() {
 				alignSelf="center"
 				columns={[
 					["medium", "full"],
-					["medium", "full"]
+					["medium", "full"],
 				]}
 				gap="medium"
 				rows="auto"

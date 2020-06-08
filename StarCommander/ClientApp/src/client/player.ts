@@ -2,7 +2,7 @@ import { http } from "client/api";
 
 export const signIn = ({
 	callSign,
-	password
+	password,
 }: {
 	callSign: string;
 	password: string;
@@ -12,7 +12,7 @@ export const signUp = ({
 	callSign,
 	firstName,
 	lastName,
-	password
+	password,
 }: {
 	callSign: string;
 	firstName: string;
@@ -24,7 +24,7 @@ export const signUp = ({
 export const updateName = ({
 	firstName,
 	lastName,
-	token
+	token,
 }: {
 	firstName: string;
 	lastName: string;

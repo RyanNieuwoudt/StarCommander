@@ -35,9 +35,14 @@ export default function Helm() {
 			return;
 		}
 
-		dispatch(actionCreators.setHeading(shipId, newHeading));
-		dispatch(actionCreators.setSpeed(shipId, newSpeed));
-	}, [newHeading, newSpeed]);
+		if (newHeading !== heading) {
+			dispatch(actionCreators.setHeading(shipId, newHeading));
+		}
+
+		if (newSpeed !== speed) {
+			dispatch(actionCreators.setSpeed(shipId, newSpeed));
+		}
+	}, [dispatch, heading, newHeading, newSpeed, shipId, speed]);
 
 	return (
 		<Box gap="medium" round="medium">

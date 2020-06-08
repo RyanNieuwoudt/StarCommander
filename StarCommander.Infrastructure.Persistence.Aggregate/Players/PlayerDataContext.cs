@@ -1,8 +1,9 @@
+using AmbientDbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Players
 {
-	public class PlayerDataContext : DataContextBase
+	public class PlayerDataContext : ConfiguringDbContext
 	{
 		public PlayerDataContext()
 		{

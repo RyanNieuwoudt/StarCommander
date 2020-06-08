@@ -1,7 +1,38 @@
 {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    }
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:prettier/recommended"
+	],
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"plugins": ["react"],
+	"rules": {
+		"react/jsx-no-bind": [
+			1,
+			{
+				"ignoreDOMComponents": false,
+				"ignoreRefs": false,
+				"allowArrowFunctions": false,
+				"allowFunctions": false,
+				"allowBind": false
+			}
+		],
+		"react/prop-types": [0]
+	}
 }

@@ -9,7 +9,7 @@ export default (
 
 	const connection = new signalR.HubConnectionBuilder()
 		.withUrl("/hubs/channel", {
-			accessTokenFactory: () => t
+			accessTokenFactory: () => t,
 		})
 		.withHubProtocol(new MessagePackHubProtocol())
 		.configureLogging(
@@ -34,10 +34,7 @@ export default (
 			return;
 		}
 
-		connection
-			.start()
-			.then(onReconnect)
-			.catch(scheduleReconnect);
+		connection.start().then(onReconnect).catch(scheduleReconnect);
 	};
 
 	const disconnect = () => {

@@ -8,7 +8,7 @@ export default function PublicRoute({ component: Component, ...rest }) {
 	const loggedIn = useSelector(isLoggedIn);
 
 	const render = useCallback(
-		props =>
+		(props) =>
 			!Component || loggedIn ? (
 				<RedirectOnce to="/" />
 			) : (

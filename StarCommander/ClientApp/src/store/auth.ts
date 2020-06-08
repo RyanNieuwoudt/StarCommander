@@ -147,13 +147,13 @@ export const actionCreators = {
 	) =>
 		({
 			type: "SIGN_UP",
-			payload: { callSign, firstName, lastName, password }
+			payload: { callSign, firstName, lastName, password },
 		} as SignUp),
 	updateName: (firstName: string, lastName: string) =>
 		({
 			type: "UPDATE_NAME",
-			payload: { firstName, lastName }
-		} as UpdateName)
+			payload: { firstName, lastName },
+		} as UpdateName),
 };
 
 export const rootSaga = function* root() {
@@ -161,11 +161,11 @@ export const rootSaga = function* root() {
 		yield takeLeading("SIGN_IN", querySaga, signIn),
 		yield takeLeading("SIGN_UP", querySaga, signUp),
 		yield takeLeading("UPDATE_NAME", commandSaga, updateName),
-		yield takeEvery("SIGN_UP_SUCCESS", forwardSaga, "SIGN_IN_SUCCESS")
+		yield takeEvery("SIGN_UP_SUCCESS", forwardSaga, "SIGN_IN_SUCCESS"),
 	]);
 };
 
-const defaultState: AuthState = {};
+export const defaultState: AuthState = {};
 
 export const reducer: Reducer<AuthState> = (
 	state: AuthState = defaultState,

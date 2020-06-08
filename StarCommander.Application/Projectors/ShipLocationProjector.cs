@@ -37,7 +37,7 @@ namespace StarCommander.Application.Projectors
 					Speed = speed,
 					X = position.X,
 					Y = position.Y,
-					Created = DateTimeOffset.Now,
+					Created = DateTimeOffset.Now
 				}
 			};
 
@@ -45,7 +45,7 @@ namespace StarCommander.Application.Projectors
 
 			await Execute(shipLocationRepository, toDelete, toUpdate, toInsert);
 
-			dbContextScope.SaveChanges();
+			await dbContextScope.SaveChangesAsync();
 		}
 	}
 }

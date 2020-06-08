@@ -1,3 +1,4 @@
+import Coordinate from "./Coordinate";
 import Navigation from "./Navigation";
 
-export { Navigation };
+export { Coordinate, Navigation };

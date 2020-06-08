@@ -1,8 +1,9 @@
+using AmbientDbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 {
-	public class MessageDataContext : DataContextBase
+	public class MessageDataContext : ConfiguringDbContext
 	{
 		public MessageDataContext()
 		{

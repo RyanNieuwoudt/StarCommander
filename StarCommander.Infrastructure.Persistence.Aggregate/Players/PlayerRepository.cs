@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AmbientDbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;

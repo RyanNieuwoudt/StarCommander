@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using AmbientDbContextConfigurator;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
