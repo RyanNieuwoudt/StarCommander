@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { useRouter } from "hooks";
+import { useHistory } from "react-router-dom";
 
 export default function RedirectOnce({ to }) {
-	const router = useRouter();
+	const history = useHistory();
 	useEffect(() => {
-		if (router.history.location.pathname !== to) {
-			router.history.push(to);
+		if (history.location.pathname !== to) {
+			history.push(to);
 		}
-	}, [router, to]);
+	}, [history, to]);
 
 	return null;
 }
