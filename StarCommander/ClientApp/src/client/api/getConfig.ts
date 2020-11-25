@@ -1,6 +1,6 @@
 import qs from "qs";
 
-export default (token: string | undefined, config: object = {}) => {
+export default (token: string | undefined, config = {}) => {
 	const Authorization = token ? "Bearer " + token : null;
 
 	const headers = {
@@ -8,7 +8,7 @@ export default (token: string | undefined, config: object = {}) => {
 		...(Authorization && { Authorization }),
 	};
 
-	const paramsSerializer = (params: object) => {
+	const paramsSerializer = (params: any) => {
 		return qs.stringify(params);
 	};
 
