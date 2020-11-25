@@ -8,7 +8,7 @@ const Bridge = lazy(() => import("./routes/Bridge"));
 const Fleet = lazy(() => import("./routes/Fleet"));
 const WelcomePage = lazy(() => import("./routes/WelcomePage"));
 
-export default () => (
+const App = () => (
 	<Grommet theme={grommet}>
 		<Suspense fallback={<div />}>
 			<Switch>
@@ -19,3 +19,5 @@ export default () => (
 		</Suspense>
 	</Grommet>
 );
+
+export default App;
