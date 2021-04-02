@@ -2,4 +2,4 @@ import * as R from "ramda";
 import { ApplicationState } from "store";
 
 export default (state: ApplicationState) =>
-	R.path(["ship", "shipId"], state) as string | undefined;
+	R.pathOr<string>("", ["ship", "shipId"], state);

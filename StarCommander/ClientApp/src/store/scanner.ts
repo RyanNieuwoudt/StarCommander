@@ -35,7 +35,7 @@ export interface ScanSuccess {
 export type KnownAction = ScanSuccess | SignIn | SignOut | SignUp;
 
 export const actionCreators = {
-	scan: (shipId: string) => ({ type: "SCAN", payload: { shipId } } as Scan),
+	scan: (shipId: string) => ({ type: "SCAN", payload: { shipId } }),
 };
 
 function* scanner(shipId: string) {
@@ -45,13 +45,13 @@ function* scanner(shipId: string) {
 	}
 }
 
-function* scanSaga(action: OnCaptainBoarded) {
+function* scanSaga(action: OnCaptainBoarded): any {
 	const scannerTask = yield fork(scanner, action.payload.shipId);
 	yield take("SIGN_OUT");
 	yield cancel(scannerTask);
 }
 
-export const rootSaga = function* root() {
+export const rootSaga = function* root(): any {
 	yield all([
 		yield takeEvery("ON_CAPTAIN_BOARDED", scanSaga),
 		yield takeLeading("SCAN", querySaga, scan),

@@ -42,25 +42,23 @@ export type KnownAction =
 	| SignUp;
 
 export const actionCreators = {
-	setHeading: (shipId: string, heading: number) =>
-		({
-			type: "SET_HEADING",
-			payload: {
-				shipId,
-				heading,
-			},
-		} as SetHeading),
-	setSpeed: (shipId: string, speed: number) =>
-		({
-			type: "SET_SPEED",
-			payload: {
-				shipId,
-				speed,
-			},
-		} as SetSpeed),
+	setHeading: (shipId: string, heading: number) => ({
+		type: "SET_HEADING",
+		payload: {
+			shipId,
+			heading,
+		},
+	}),
+	setSpeed: (shipId: string, speed: number) => ({
+		type: "SET_SPEED",
+		payload: {
+			shipId,
+			speed,
+		},
+	}),
 };
 
-export const rootSaga = function* root() {
+export const rootSaga = function* root(): any {
 	yield all([
 		yield takeLeading("SET_HEADING", commandSaga, setHeading),
 		yield takeLeading("SET_SPEED", commandSaga, setSpeed),

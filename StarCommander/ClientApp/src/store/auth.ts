@@ -136,27 +136,27 @@ export type KnownAction =
 	| UpdateNameSuccess;
 
 export const actionCreators = {
-	signIn: (callSign: string, password: string) =>
-		({ type: "SIGN_IN", payload: { callSign, password } } as SignIn),
+	signIn: (callSign: string, password: string) => ({
+		type: "SIGN_IN",
+		payload: { callSign, password },
+	}),
 	signOut: () => ({ type: "SIGN_OUT" }),
 	signUp: (
 		callSign: string,
 		firstName: string,
 		lastName: string,
 		password: string
-	) =>
-		({
-			type: "SIGN_UP",
-			payload: { callSign, firstName, lastName, password },
-		} as SignUp),
-	updateName: (firstName: string, lastName: string) =>
-		({
-			type: "UPDATE_NAME",
-			payload: { firstName, lastName },
-		} as UpdateName),
+	) => ({
+		type: "SIGN_UP",
+		payload: { callSign, firstName, lastName, password },
+	}),
+	updateName: (firstName: string, lastName: string) => ({
+		type: "UPDATE_NAME",
+		payload: { firstName, lastName },
+	}),
 };
 
-export const rootSaga = function* root() {
+export const rootSaga = function* root(): any {
 	yield all([
 		yield takeLeading("SIGN_IN", querySaga, signIn),
 		yield takeLeading("SIGN_UP", querySaga, signUp),
