@@ -1,4 +1,4 @@
-import { Action, Reducer } from "redux";
+import { Reducer } from "redux";
 import { all, takeLeading } from "redux-saga/effects";
 import { setHeading, setSpeed } from "client/ship";
 import { commandSaga } from "store/saga/templates";
@@ -71,9 +71,8 @@ export const defaultState: ShipState = {};
 
 export const reducer: Reducer<ShipState> = (
 	state: ShipState = defaultState,
-	incomingAction: Action
+	action: KnownAction
 ): ShipState => {
-	const action = incomingAction as KnownAction;
 	switch (action.type) {
 		case "SIGN_IN":
 		case "SIGN_OUT":

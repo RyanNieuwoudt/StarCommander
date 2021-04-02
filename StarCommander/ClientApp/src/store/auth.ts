@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { Action, Reducer } from "redux";
+import { Reducer } from "redux";
 import { all, takeEvery, takeLeading } from "redux-saga/effects";
 import { signIn, signUp, updateName } from "client/player";
 import { commandSaga, querySaga, forwardSaga } from "store/saga/templates";
@@ -169,9 +169,8 @@ export const defaultState: AuthState = {};
 
 export const reducer: Reducer<AuthState> = (
 	state: AuthState = defaultState,
-	incomingAction: Action
+	action: KnownAction
 ): AuthState => {
-	const action = incomingAction as KnownAction;
 	switch (action.type) {
 		case "SIGN_IN_FAILURE":
 		case "SIGN_UP_FAILURE":

@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { Action, Reducer } from "redux";
+import { Reducer } from "redux";
 import { SignIn, SignOut, SignUp } from "./auth";
 
 export type AcknowledgementState = string[];
@@ -33,9 +33,8 @@ export const defaultState: AcknowledgementState = [];
 
 export const reducer: Reducer<AcknowledgementState> = (
 	state: AcknowledgementState = defaultState,
-	incomingAction: Action
+	action: KnownAction
 ): AcknowledgementState => {
-	const action = incomingAction as KnownAction;
 	switch (action.type) {
 		case "SIGN_IN":
 		case "SIGN_OUT":

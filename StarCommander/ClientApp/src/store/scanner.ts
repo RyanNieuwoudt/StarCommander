@@ -1,4 +1,4 @@
-import { Action, Reducer } from "redux";
+import { Reducer } from "redux";
 import {
 	all,
 	cancel,
@@ -62,9 +62,8 @@ export const defaultState: ScannerState = [];
 
 export const reducer: Reducer<ScannerState> = (
 	state: ScannerState = defaultState,
-	incomingAction: Action
+	action: KnownAction
 ): ScannerState => {
-	const action = incomingAction as KnownAction;
 	switch (action.type) {
 		case "SIGN_IN":
 		case "SIGN_OUT":
