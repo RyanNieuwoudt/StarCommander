@@ -4,7 +4,10 @@ import { useSelector } from "react-redux";
 import { player } from "selectors";
 
 export default function Name() {
-	const { firstName, lastName } = useSelector(player);
+	const { firstName, lastName } = useSelector(player) || {
+		firstName: "",
+		lastName: "",
+	};
 
 	return (
 		<Text>
