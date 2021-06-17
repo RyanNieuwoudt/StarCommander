@@ -4,9 +4,7 @@ import { Box, Text } from "grommet";
 import { useSelector } from "react-redux";
 
 export default function Message() {
-	const message = useSelector(
-		R.path<string>(["auth", "message"])
-	);
+	const message = useSelector(R.path<string>(["auth", "message"]));
 
 	if (!message) {
 		return null;
