@@ -48,7 +48,7 @@ export default function configureStore(
 	});
 
 	if (isDevelopment) {
-		var savedState = getStateFromSessionStore();
+		const savedState = getStateFromSessionStore();
 		if (savedState !== null) {
 			initialState = savedState;
 		}

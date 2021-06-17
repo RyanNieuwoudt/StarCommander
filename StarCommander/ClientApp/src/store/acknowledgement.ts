@@ -27,7 +27,9 @@ export type KnownAction =
 	| SignOut
 	| SignUp;
 
-export const rootSaga = function* root(): any {};
+export const rootSaga = function* root(): any {
+	yield [];
+};
 
 export const defaultState: AcknowledgementState = [];
 
