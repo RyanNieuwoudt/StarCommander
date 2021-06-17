@@ -1,4 +1,4 @@
-import { Action, Reducer } from "redux";
+import { Reducer } from "redux";
 import { all, takeLeading } from "redux-saga/effects";
 import { setHeading, setSpeed } from "client/ship";
 import { commandSaga } from "store/saga/templates";
@@ -42,25 +42,23 @@ export type KnownAction =
 	| SignUp;
 
 export const actionCreators = {
-	setHeading: (shipId: string, heading: number) =>
-		({
-			type: "SET_HEADING",
-			payload: {
-				shipId,
-				heading,
-			},
-		} as SetHeading),
-	setSpeed: (shipId: string, speed: number) =>
-		({
-			type: "SET_SPEED",
-			payload: {
-				shipId,
-				speed,
-			},
-		} as SetSpeed),
+	setHeading: (shipId: string, heading: number) => ({
+		type: "SET_HEADING",
+		payload: {
+			shipId,
+			heading,
+		},
+	}),
+	setSpeed: (shipId: string, speed: number) => ({
+		type: "SET_SPEED",
+		payload: {
+			shipId,
+			speed,
+		},
+	}),
 };
 
-export const rootSaga = function* root() {
+export const rootSaga = function* root(): any {
 	yield all([
 		yield takeLeading("SET_HEADING", commandSaga, setHeading),
 		yield takeLeading("SET_SPEED", commandSaga, setSpeed),
@@ -71,9 +69,8 @@ export const defaultState: ShipState = {};
 
 export const reducer: Reducer<ShipState> = (
 	state: ShipState = defaultState,
-	incomingAction: Action
+	action: KnownAction
 ): ShipState => {
-	const action = incomingAction as KnownAction;
 	switch (action.type) {
 		case "SIGN_IN":
 		case "SIGN_OUT":

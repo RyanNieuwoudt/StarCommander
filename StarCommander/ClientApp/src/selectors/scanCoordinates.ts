@@ -1,9 +1,8 @@
 import * as R from "ramda";
+import { ScannerState } from "store/scanner";
 import { Position } from "store/ship";
 
-//TODO TypeScript vs Ramda
-
-export default R.compose(
-	R.map((p: Position) => R.append(-p.y, [p.x])) as any,
-	R.prop("scanner") as any
+export default R.pipe(
+	R.pathOr<ScannerState>([], ["scanner"]),
+	R.map((p: Position) => R.append(-p.y, [p.x]))
 );

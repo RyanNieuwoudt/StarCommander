@@ -2,7 +2,8 @@ import * as R from "ramda";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { History } from "history";
 import throttle from "lodash.throttle";
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import { ApplicationState, reducers, sagas } from "store";
 import {
@@ -46,15 +47,8 @@ export default function configureStore(
 		router: connectRouter(history),
 	});
 
-	const enhancers = [];
-	const windowIfDefined =
-		typeof window === "undefined" ? null : (window as any);
-	if (windowIfDefined && windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__) {
-		enhancers.push(windowIfDefined.__REDUX_DEVTOOLS_EXTENSION__());
-	}
-
 	if (isDevelopment) {
-		var savedState = getStateFromSessionStore();
+		const savedState = getStateFromSessionStore();
 		if (savedState !== null) {
 			initialState = savedState;
 		}
@@ -69,7 +63,7 @@ export default function configureStore(
 	const store = createStore(
 		rootReducer,
 		initialState,
-		compose(applyMiddleware(...middleware), ...enhancers)
+		composeWithDevTools(applyMiddleware(...middleware))
 	);
 
 	if (isDevelopment) {

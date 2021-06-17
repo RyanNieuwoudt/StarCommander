@@ -3,7 +3,7 @@ import { MessagePackHubProtocol } from "@aspnet/signalr-protocol-msgpack";
 
 export default (
 	isDevelopment: Boolean,
-	onReconnect: ((value: void) => void | PromiseLike<void>) | null | undefined
+	onReconnect: ((value: void) => void | Promise<void>) | null | undefined
 ) => {
 	let t: string = "";
 
@@ -19,7 +19,7 @@ export default (
 		)
 		.build();
 
-	connection.onclose((error: any) => {
+	connection.onclose(() => {
 		//TODO Random delay on reconnect, with back-off strategy?
 		//Alert users when bad/no connection
 		connect();
