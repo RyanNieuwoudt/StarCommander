@@ -30,7 +30,7 @@ const retry = (generator: any, maxAttempts: number) =>
 		}
 	};
 
-function* command(api: any, action: Action) {
+function* command(api: any, action: Action): any {
 	const { type, payload } = action;
 	const token = yield select(getToken);
 	yield call(api, { ...payload, token });
@@ -51,7 +51,7 @@ export function* putSaga(actionCreator: Function) {
 	yield put(actionCreator());
 }
 
-function* query(api: any, action: Action) {
+function* query(api: any, action: Action): any {
 	const { type, payload } = action;
 	const token = yield select(getToken);
 	const data = yield call(api, { ...payload, token });

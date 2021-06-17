@@ -16,7 +16,10 @@ export default function UpdateNameForm() {
 		[dispatch]
 	);
 
-	const { firstName, lastName } = useSelector(player);
+	const { firstName, lastName } = useSelector(player) || {
+		firstName: "",
+		lastName: "",
+	};
 
 	return (
 		<Form onSubmit={onSubmit}>

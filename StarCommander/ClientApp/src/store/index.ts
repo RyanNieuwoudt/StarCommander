@@ -33,7 +33,7 @@ export const sagas = {
 
 export interface Action {
 	type: string;
-	payload: object | undefined;
+	payload: Record<string, unknown> | undefined;
 }
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are
