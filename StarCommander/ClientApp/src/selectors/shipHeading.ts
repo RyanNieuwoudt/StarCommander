@@ -1,5 +1,3 @@
 import * as R from "ramda";
-import { ApplicationState } from "store";
 
-export default (state: ApplicationState) =>
-	R.pathOr<number>(0, ["ship", "heading"], state);
+export default R.pathOr<number>(0, ["ship", "heading"]);
