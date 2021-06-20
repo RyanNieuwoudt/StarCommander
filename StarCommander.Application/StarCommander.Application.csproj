@@ -11,8 +11,8 @@
 	  <PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-	  <PackageReference Include="Polly" Version="7.2.1" />
-	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.9.0" />
+	  <PackageReference Include="Polly" Version="7.2.2" />
+	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence.Aggregate\StarCommander.Infrastructure.Persistence.Aggregate.csproj" />
