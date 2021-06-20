@@ -21,7 +21,7 @@ namespace StarCommander.Shared
 		{
 			var token = JToken.Load(reader);
 			var actionType = token.Value<string>("type");
-			var payloadType = $"StarCommander.Shared.Model.Payload.{actionType.ToClassName()}";
+			var payloadType = $"StarCommander.Shared.Model.Payload.{actionType?.ToClassName()}";
 			try
 			{
 				var type = typeof(Model.Notifications.Action<>).MakeGenericType(Type.GetType(payloadType)!);

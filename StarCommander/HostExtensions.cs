@@ -19,7 +19,7 @@ namespace StarCommander
 				dbContext?.Database.Migrate();
 			}
 
-			using (var scope = host.Services.GetService<IServiceScopeFactory>().CreateScope())
+			using (var scope = host.Services.GetService<IServiceScopeFactory>()!.CreateScope())
 			{
 				Migrate<MessageDataContext>(scope);
 				Migrate<PlayerDataContext>(scope);

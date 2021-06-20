@@ -55,7 +55,7 @@ namespace StarCommander.Application.Messages
 		async Task<ICollection<Job>> FetchExistingJobs()
 		{
 			using var scope = serviceProvider.CreateScope();
-			return await scope.ServiceProvider.GetService<IJobService>().Fetch();
+			return await scope.ServiceProvider.GetService<IJobService>()!.Fetch();
 		}
 	}
 }

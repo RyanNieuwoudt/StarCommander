@@ -126,7 +126,7 @@ namespace StarCommander.Application.Messages
 			{
 				logger.LogInformation($"Running job {job.Id}.");
 				using var scope = serviceProvider.CreateScope();
-				await scope.ServiceProvider.GetService<IJobService>().Run(job, cancellationToken);
+				await scope.ServiceProvider.GetService<IJobService>()!.Run(job, cancellationToken);
 			}
 			catch (Exception e)
 			{

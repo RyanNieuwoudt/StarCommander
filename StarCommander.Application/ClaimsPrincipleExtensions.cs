@@ -10,12 +10,12 @@ namespace StarCommander.Application
 	{
 		public static Reference<Player> Id(this ClaimsPrincipal principal)
 		{
-			return To<Player>(Guid.Parse(principal.Identity.Name!));
+			return To<Player>(Guid.Parse(principal.Identity!.Name!));
 		}
 
 		public static string CallSign(this ClaimsPrincipal principal)
 		{
-			return principal?.Identity?.Name ?? string.Empty;
+			return principal.Identity?.Name ?? string.Empty;
 		}
 	}
 }

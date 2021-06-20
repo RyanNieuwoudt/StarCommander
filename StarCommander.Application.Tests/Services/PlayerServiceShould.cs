@@ -23,7 +23,7 @@ namespace StarCommander.Application.Tests.Services
 		public async Task PreventSignInForIncorrectPassword()
 		{
 			using var scope = servicesFixture.ServiceProvider.CreateScope();
-			var playerService = scope.ServiceProvider.GetService<IPlayerService>();
+			var playerService = scope.ServiceProvider.GetService<IPlayerService>()!;
 
 			var callSign = fixture.Create<string>();
 
@@ -38,7 +38,7 @@ namespace StarCommander.Application.Tests.Services
 		public async Task PreventSignInForUnknownCallSign()
 		{
 			using var scope = servicesFixture.ServiceProvider.CreateScope();
-			var playerService = scope.ServiceProvider.GetService<IPlayerService>();
+			var playerService = scope.ServiceProvider.GetService<IPlayerService>()!;
 
 			var callSign = fixture.Create<string>();
 			var password = fixture.Create<string>();
@@ -50,7 +50,7 @@ namespace StarCommander.Application.Tests.Services
 		public async Task PreventSignUpWhenCallSignExists()
 		{
 			using var scope = servicesFixture.ServiceProvider.CreateScope();
-			var playerService = scope.ServiceProvider.GetService<IPlayerService>();
+			var playerService = scope.ServiceProvider.GetService<IPlayerService>()!;
 
 			var callSign = fixture.Create<string>();
 
@@ -66,7 +66,7 @@ namespace StarCommander.Application.Tests.Services
 		public async Task SignInWithPassword()
 		{
 			using var scope = servicesFixture.ServiceProvider.CreateScope();
-			var playerService = scope.ServiceProvider.GetService<IPlayerService>();
+			var playerService = scope.ServiceProvider.GetService<IPlayerService>()!;
 
 			var callSign = fixture.Create<string>();
 			var firstName = fixture.Create<string>();
@@ -87,13 +87,13 @@ namespace StarCommander.Application.Tests.Services
 		public async Task SignUpNewPlayer()
 		{
 			using var scope = servicesFixture.ServiceProvider.CreateScope();
-			var playerService = scope.ServiceProvider.GetService<IPlayerService>();
+			var playerService = scope.ServiceProvider.GetService<IPlayerService>()!;
 
 			var callSign = fixture.Create<string>();
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var session = await playerService.SignUp(callSign, firstName, lastName, fixture.Create<string>());
+			var session = await playerService.SignUp(callSign, firstName, lastName, fixture.Create<string>())!;
 
 			Assert.False(string.IsNullOrWhiteSpace(session.Token));
 			Assert.Equal(callSign, session.Player.CallSign);

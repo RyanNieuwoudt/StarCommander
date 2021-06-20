@@ -25,10 +25,10 @@ namespace StarCommander.Infrastructure.Serialization
 		{
 			var token = JToken.Load(reader);
 			var name = token.Value<string>("Type") ?? token.Value<string>("type");
-			var type = typeof(T).Assembly.GetType(name);
+			var type = typeof(T).Assembly.GetType(name!)!;
 			var result = FormatterServices.GetUninitializedObject(type);
 
-			if (!(result is T))
+			if (result is not T)
 			{
 				throw new InvalidOperationException($"Invalid {typeof(T)}.");
 			}

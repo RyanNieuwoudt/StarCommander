@@ -25,7 +25,7 @@ namespace StarCommander.Hubs
 
 		string GetUserClaim(string type)
 		{
-			return Context.User.FindFirst(type)?.Value ?? string.Empty;
+			return Context.User?.FindFirst(type)?.Value ?? string.Empty;
 		}
 	}
 }
