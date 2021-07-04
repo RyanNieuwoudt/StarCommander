@@ -30,7 +30,7 @@ namespace StarCommander.Application.Projectors
 
 			var locations = new List<ShipLocation>
 			{
-				new ShipLocation
+				new ()
 				{
 					ShipId = ship,
 					Heading = heading,

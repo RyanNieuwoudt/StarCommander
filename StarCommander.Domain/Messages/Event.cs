@@ -15,7 +15,7 @@ namespace StarCommander.Domain.Messages
 
 		public static Event Wrap(in Reference<Message<IDomainEvent>> id, IDomainEvent payload)
 		{
-			return new Event(id, DateTimeOffset.Now, payload, null);
+			return new (id, DateTimeOffset.Now, payload, null);
 		}
 	}
 }

@@ -6,7 +6,7 @@ namespace StarCommander.Shared
 {
 	public static class SerializationSettings
 	{
-		public static readonly JsonSerializerSettings Javascript = new JsonSerializerSettings
+		public static readonly JsonSerializerSettings Javascript = new ()
 		{
 			Formatting = Formatting.Indented,
 			NullValueHandling = NullValueHandling.Include, //NB To reset existing state on client

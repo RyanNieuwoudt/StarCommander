@@ -7,7 +7,7 @@ namespace StarCommander.Domain.Ships
 	[JsonObject(MemberSerialization.OptIn)]
 	public readonly struct Heading : IEquatable<Heading>
 	{
-		public static readonly Heading Default = new Heading(default);
+		public static readonly Heading Default = new (default);
 
 		[JsonProperty]
 		internal double Value { get; }

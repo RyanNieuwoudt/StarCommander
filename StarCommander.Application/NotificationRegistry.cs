@@ -9,7 +9,7 @@ namespace StarCommander.Application
 {
 	public static class NotificationRegistry
 	{
-		static readonly Dictionary<Type, Type> P = new Dictionary<Type, Type>();
+		static readonly Dictionary<Type, Type> P = new ();
 		public static readonly IReadOnlyDictionary<Type, Type> Player = P;
 
 		static NotificationRegistry()

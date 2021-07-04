@@ -5,13 +5,13 @@ namespace StarCommander.Infrastructure.Serialization
 {
 	public static class SerializationSettings
 	{
-		public static readonly JsonSerializerSettings Middleware = new JsonSerializerSettings
+		public static readonly JsonSerializerSettings Middleware = new ()
 		{
 			Formatting = Formatting.Indented,
 			ReferenceLoopHandling = ReferenceLoopHandling.Ignore
 		};
 
-		public static readonly JsonSerializerSettings Persistence = new JsonSerializerSettings
+		public static readonly JsonSerializerSettings Persistence = new ()
 		{
 			Formatting = Formatting.None,
 			NullValueHandling = NullValueHandling.Ignore,

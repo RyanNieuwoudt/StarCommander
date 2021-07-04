@@ -10,7 +10,7 @@ namespace StarCommander.Infrastructure.Serialization
 {
 	public class SingleValueObjectConverter : JsonConverter
 	{
-		static readonly ConcurrentDictionary<Type, Type> ConstructFromTypes = new ConcurrentDictionary<Type, Type>();
+		static readonly ConcurrentDictionary<Type, Type> ConstructFromTypes = new ();
 
 		static readonly Type[] Supported = { typeof(Guid), typeof(decimal), typeof(double), typeof(int), typeof(long) };
 

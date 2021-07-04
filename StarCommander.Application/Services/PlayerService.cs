@@ -125,7 +125,7 @@ namespace StarCommander.Application.Services
 
 		Session GetSession(Player player)
 		{
-			return new Session { Token = GetToken(player), Player = mapper.Map<Shared.Model.Player>(player) };
+			return new () { Token = GetToken(player), Player = mapper.Map<Shared.Model.Player>(player) };
 		}
 
 		string GetToken(Player player)

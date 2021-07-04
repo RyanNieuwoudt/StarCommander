@@ -7,7 +7,7 @@ namespace StarCommander.Shared.Model.Notifications
 	{
 		public static Action<T> WithPayload<T>(T payload) where T : notnull
 		{
-			return new Action<T>(payload.GetType().Name.ToActionType(), payload);
+			return new (payload.GetType().Name.ToActionType(), payload);
 		}
 	}
 

@@ -7,7 +7,7 @@ namespace StarCommander.Domain.Ships
 	[JsonObject(MemberSerialization.OptIn)]
 	public readonly struct Speed : IEquatable<Speed>
 	{
-		public static readonly Speed Default = new Speed(default);
+		public static readonly Speed Default = new (default);
 
 		[JsonProperty]
 		readonly long value;
@@ -45,7 +45,7 @@ namespace StarCommander.Domain.Ships
 
 		public static Distance operator *(Speed speed, Time time)
 		{
-			return new Distance(speed.value * time);
+			return new (speed.value * time);
 		}
 
 		public static implicit operator long(Speed speed)

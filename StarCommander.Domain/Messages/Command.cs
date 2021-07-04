@@ -25,7 +25,7 @@ namespace StarCommander.Domain.Messages
 
 		public static Command Wrap(in Reference<Message<ICommand>> id, ICommand payload, DateTimeOffset? scheduledFor)
 		{
-			return new Command(id, ExtractTargetId(payload), DateTimeOffset.Now, payload, null, scheduledFor);
+			return new (id, ExtractTargetId(payload), DateTimeOffset.Now, payload, null, scheduledFor);
 		}
 
 		static Guid ExtractTargetId(ICommand command)

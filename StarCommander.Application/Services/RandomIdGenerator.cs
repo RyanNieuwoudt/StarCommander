@@ -7,7 +7,7 @@ namespace StarCommander.Application.Services
 	{
 		public Reference<T> NewReference<T>() where T : IAggregate
 		{
-			return new Reference<T>(Guid.NewGuid());
+			return new (Guid.NewGuid());
 		}
 	}
 }

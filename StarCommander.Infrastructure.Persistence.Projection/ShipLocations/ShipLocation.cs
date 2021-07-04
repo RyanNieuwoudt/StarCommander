@@ -46,7 +46,7 @@ namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations
 
 		public override ShipLocation WithPrimaryKeyFrom(ShipLocation other)
 		{
-			return new ShipLocation
+			return new ()
 			{
 				ShipLocationId = other.ShipLocationId,
 				ShipId = ShipId,

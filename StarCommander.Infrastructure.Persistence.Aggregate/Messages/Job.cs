@@ -26,7 +26,7 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages
 
 		public Domain.Messages.Job ToDomain()
 		{
-			return new Domain.Messages.Job(To<Domain.Messages.Job>(Id), Address, Handler, MessageId, QueueId, Created);
+			return new (To<Domain.Messages.Job>(Id), Address, Handler, MessageId, QueueId, Created);
 		}
 	}
 }

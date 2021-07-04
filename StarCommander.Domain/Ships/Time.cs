@@ -48,7 +48,7 @@ namespace StarCommander.Domain.Ships
 
 		public static Distance operator *(Time time, Speed speed)
 		{
-			return new Distance(time.value * speed);
+			return new (time.value * speed);
 		}
 	}
 }
