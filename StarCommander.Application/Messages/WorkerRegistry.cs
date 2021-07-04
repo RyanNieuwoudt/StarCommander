@@ -43,8 +43,8 @@ namespace StarCommander.Application.Messages
 			{
 				ICommand command => GetHandlersFor(command),
 				IDomainEvent @event => GetHandlersFor(@event),
-				_ => new string[0]
-			};
+				_ => System.Array.Empty<string>()
+            };
 		}
 	}
 }

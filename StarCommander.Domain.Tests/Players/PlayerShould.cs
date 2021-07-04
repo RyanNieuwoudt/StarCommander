@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using AutoFixture;
 using StarCommander.Domain.Players;
@@ -23,7 +24,7 @@ namespace StarCommander.Domain.Tests.Players
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
 			player.SignIn();
 
@@ -41,7 +42,7 @@ namespace StarCommander.Domain.Tests.Players
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
 			var playerSignedUp = player.Events.Single(e => e is PlayerSignedUp) as PlayerSignedUp;
 
@@ -57,7 +58,7 @@ namespace StarCommander.Domain.Tests.Players
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
 			var shipId = fixture.Create<Reference<Ship>>();
 
@@ -80,7 +81,7 @@ namespace StarCommander.Domain.Tests.Players
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
 			player.BoardShip();
 
@@ -98,7 +99,7 @@ namespace StarCommander.Domain.Tests.Players
 			var firstName = fixture.Create<string>();
 			var lastName = fixture.Create<string>();
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, new byte[0], new byte[0]);
+			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
 			Assert.Equal(id, player.Id);
 			Assert.Equal(callSign, player.CallSign);
@@ -113,7 +114,7 @@ namespace StarCommander.Domain.Tests.Players
 			var lastName = fixture.Create<string>();
 
 			var player = Player.SignUp(fixture.Create<Reference<Player>>(), fixture.Create<string>(), firstName,
-				lastName, new byte[0], new byte[0]);
+				lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
 			Assert.Equal(firstName, player.FirstName);
 			Assert.Equal(lastName, player.LastName);
