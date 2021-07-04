@@ -9,14 +9,11 @@ namespace StarCommander.Application.Services
 	public class ShipService : IShipService
 	{
 		readonly IDbContextScopeFactory dbContextScopeFactory;
-		readonly IReferenceGenerator generator;
 		readonly IShipRepository shipRepository;
 
-		public ShipService(IDbContextScopeFactory dbContextScopeFactory, IReferenceGenerator generator,
-			IShipRepository shipRepository)
+		public ShipService(IDbContextScopeFactory dbContextScopeFactory, IShipRepository shipRepository)
 		{
 			this.dbContextScopeFactory = dbContextScopeFactory;
-			this.generator = generator;
 			this.shipRepository = shipRepository;
 		}
 
