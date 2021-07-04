@@ -66,7 +66,7 @@ namespace StarCommander.Application.Services
 		}
 
 		async Task Handle<T>(Type handlerType, Message<T> message, CancellationToken cancellationToken)
-			where T : notnull, IHaveType
+			where T : IHaveType
 		{
 			using var scope = serviceProvider.CreateScope();
 			var handler = scope.ServiceProvider.GetService(handlerType);

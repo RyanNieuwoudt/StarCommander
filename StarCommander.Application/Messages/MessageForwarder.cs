@@ -49,8 +49,7 @@ namespace StarCommander.Application.Messages
 			return @event != null && await ForwardMessage(@event, cancellationToken);
 		}
 
-		async Task<bool> ForwardMessage<T>(Message<T> message, CancellationToken cancellationToken)
-			where T : notnull, IHaveType
+		async Task<bool> ForwardMessage<T>(Message<T> message, CancellationToken cancellationToken) where T :  IHaveType
 		{
 			var payload = message.Payload as IHaveType;
 
