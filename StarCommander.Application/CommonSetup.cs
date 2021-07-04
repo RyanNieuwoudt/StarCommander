@@ -1,5 +1,4 @@
 using AmbientDbContextConfigurator;
-using AutoMapper;
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

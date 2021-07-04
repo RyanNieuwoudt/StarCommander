@@ -10,14 +10,14 @@ namespace StarCommander.Application.Tests.Services
 {
 	public class PlayerServiceShould : IClassFixture<ServicesFixture>
 	{
+		readonly IFixture fixture;
+		readonly ServicesFixture servicesFixture;
+
 		public PlayerServiceShould(ServicesFixture servicesFixture)
 		{
 			fixture = new Fixture();
 			this.servicesFixture = servicesFixture;
 		}
-
-		readonly IFixture fixture;
-		readonly ServicesFixture servicesFixture;
 
 		[Fact]
 		public async Task PreventSignInForIncorrectPassword()

@@ -9,12 +9,12 @@ namespace StarCommander.Domain.Tests.Players
 {
 	public class PlayerShould
 	{
+		readonly IFixture fixture;
+
 		public PlayerShould()
 		{
 			fixture = new Fixture();
 		}
-
-		readonly IFixture fixture;
 
 		[Fact]
 		public void RaiseEventOnSignIn()

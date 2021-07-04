@@ -32,7 +32,7 @@ namespace StarCommander.Domain.Messages
 		{
 			return command switch
 			{
-				PlayerCommand playerCommand => (Guid)playerCommand.Player,
+				PlayerCommand playerCommand => playerCommand.Player,
 				ShipCommand shipCommand => shipCommand.Ship,
 				_ => throw new InvalidOperationException()
 			};

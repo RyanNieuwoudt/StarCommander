@@ -8,12 +8,12 @@ namespace StarCommander.Domain.Tests.Ships
 {
 	public class ShipShould
 	{
+		readonly IFixture fixture;
+
 		public ShipShould()
 		{
 			fixture = new Fixture();
 		}
-
-		readonly IFixture fixture;
 
 		[Fact]
 		public void LaunchWithCorrectValues()
