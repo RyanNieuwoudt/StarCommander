@@ -15,7 +15,6 @@ namespace StarCommander
 			static void Migrate<T>(IServiceScope scope) where T : DbContext
 			{
 				using var dbContext = scope.ServiceProvider.GetService<T>();
-
 				dbContext?.Database.Migrate();
 			}
 
