@@ -20,7 +20,7 @@ namespace StarCommander.Domain
 	[JsonObject(MemberSerialization.OptIn)]
 	public readonly struct Reference<T> : IEquatable<Reference<T>> where T : IAggregate
 	{
-		public static Reference<T> None = new Reference<T>(Guid.Empty);
+		public static readonly Reference<T> None = new Reference<T>(Guid.Empty);
 		
 		[JsonConstructor]
 		public Reference(Guid id)
