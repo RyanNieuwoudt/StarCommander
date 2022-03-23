@@ -24,8 +24,6 @@ public class Job
 		Created = job.Created;
 	}
 
-	public Domain.Messages.Job ToDomain()
-	{
-		return new (To<Domain.Messages.Job>(Id), Address, Handler, MessageId, QueueId, Created);
-	}
+	public Domain.Messages.Job ToDomain() =>
+		new (To<Domain.Messages.Job>(Id), Address, Handler, MessageId, QueueId, Created);
 }

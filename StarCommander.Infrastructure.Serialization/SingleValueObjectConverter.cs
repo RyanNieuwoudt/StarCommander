@@ -28,10 +28,8 @@ public class SingleValueObjectConverter : JsonConverter
 			.Any(m => m.GetParameters().FirstOrDefault()?.ParameterType == objectType);
 	}
 
-	static bool IsNullable(Type objectType)
-	{
-		return objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Nullable<>);
-	}
+	static bool IsNullable(Type objectType) =>
+		objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Nullable<>);
 
 	static Type TypeToUse(Type objectType)
 	{

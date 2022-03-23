@@ -17,8 +17,6 @@ public class ChannelService : IChannelService
 		this.channelHubContext = channelHubContext;
 	}
 
-	public async Task MessagePlayer(Reference<Player> player, string message)
-	{
+	public async Task MessagePlayer(Reference<Player> player, string message) =>
 		await channelHubContext.Clients.Group(GetPlayerChannel(player)).Message(message);
-	}
 }

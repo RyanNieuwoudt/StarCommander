@@ -21,33 +21,15 @@ public readonly struct Heading : IEquatable<Heading>
 		Radians = Math.PI * Value / 180.0;
 	}
 
-	public bool Equals(Heading other)
-	{
-		return Value.Equals(other.Value);
-	}
+	public bool Equals(Heading other) => Value.Equals(other.Value);
 
-	public override bool Equals(object? obj)
-	{
-		return obj is Heading other && Equals(other);
-	}
+	public override bool Equals(object? obj) => obj is Heading other && Equals(other);
 
-	public override int GetHashCode()
-	{
-		return Value.GetHashCode();
-	}
+	public override int GetHashCode() => Value.GetHashCode();
 
-	public static bool operator ==(Heading left, Heading right)
-	{
-		return left.Equals(right);
-	}
+	public static bool operator ==(Heading left, Heading right) => left.Equals(right);
 
-	public static bool operator !=(Heading left, Heading right)
-	{
-		return !left.Equals(right);
-	}
+	public static bool operator !=(Heading left, Heading right) => !left.Equals(right);
 
-	public static implicit operator double(Heading heading)
-	{
-		return heading.Value;
-	}
+	public static implicit operator double(Heading heading) => heading.Value;
 }

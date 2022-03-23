@@ -51,8 +51,5 @@ static class Password
 		return IsEqual(storedHash, hmac.ComputeHash(Encoding.UTF8.GetBytes(password)));
 	}
 
-	static bool IsEqual(ReadOnlySpan<byte> left, ReadOnlySpan<byte> right)
-	{
-		return left.SequenceEqual(right);
-	}
+	static bool IsEqual(ReadOnlySpan<byte> left, ReadOnlySpan<byte> right) => left.SequenceEqual(right);
 }

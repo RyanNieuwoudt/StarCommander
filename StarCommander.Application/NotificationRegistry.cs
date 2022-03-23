@@ -19,8 +19,5 @@ public static class NotificationRegistry
 		AddPlayer<ShipLocated, OnShipLocated>();
 	}
 
-	static void AddPlayer<TU, TV>() where TU : INotifyPlayer
-	{
-		P.Add(typeof(TU), typeof(TV));
-	}
+	static void AddPlayer<TU, TV>() where TU : INotifyPlayer => P.Add(typeof(TU), typeof(TV));
 }

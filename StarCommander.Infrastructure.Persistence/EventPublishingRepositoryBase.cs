@@ -14,10 +14,7 @@ public abstract class EventPublishingRepositoryBase<T, TU, TV> : JsonRepositoryB
 	readonly IEventPublisher eventPublisher;
 
 	protected EventPublishingRepositoryBase(IAmbientDbContextConfigurator ambientDbContextConfigurator,
-		IEventPublisher eventPublisher) : base(ambientDbContextConfigurator)
-	{
-		this.eventPublisher = eventPublisher;
-	}
+		IEventPublisher eventPublisher) : base(ambientDbContextConfigurator) => this.eventPublisher = eventPublisher;
 
 	public override async Task Save(T aggregate)
 	{

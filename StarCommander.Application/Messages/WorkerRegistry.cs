@@ -9,15 +9,10 @@ public class WorkerRegistry : IWorkerRegistry
 {
 	readonly ILookup<string, string> handlers;
 
-	public WorkerRegistry(ILookup<string, string> handlers)
-	{
-		this.handlers = handlers;
-	}
+	public WorkerRegistry(ILookup<string, string> handlers) => this.handlers = handlers;
 
-	public IEnumerable<string> GetHandlersFor(ICommand command)
-	{
-		return handlers.Contains(command.Type) ? handlers[command.Type].Distinct() : new List<string>();
-	}
+	public IEnumerable<string> GetHandlersFor(ICommand command) =>
+		handlers.Contains(command.Type) ? handlers[command.Type].Distinct() : new List<string>();
 
 	public IEnumerable<string> GetHandlersFor(IDomainEvent @event)
 	{
@@ -38,13 +33,10 @@ public class WorkerRegistry : IWorkerRegistry
 		return result.Distinct();
 	}
 
-	public IEnumerable<string> GetHandlersFor(IHaveType payload)
+	public IEnumerable<string> GetHandlersFor(IHaveType payload) => payload switch
 	{
-		return payload switch
-		{
-			ICommand command => GetHandlersFor(command),
-			IDomainEvent @event => GetHandlersFor(@event),
-			_ => Array.Empty<string>()
-		};
-	}
+		ICommand command => GetHandlersFor(command),
+		IDomainEvent @event => GetHandlersFor(@event),
+		_ => Array.Empty<string>()
+	};
 }

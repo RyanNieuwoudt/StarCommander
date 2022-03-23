@@ -12,10 +12,7 @@ public abstract class EventsOnlyRepository<T, TV> : RepositoryBase<TV>
 	readonly IEventPublisher eventPublisher;
 
 	protected EventsOnlyRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator,
-		IEventPublisher eventPublisher) : base(ambientDbContextConfigurator)
-	{
-		this.eventPublisher = eventPublisher;
-	}
+		IEventPublisher eventPublisher) : base(ambientDbContextConfigurator) => this.eventPublisher = eventPublisher;
 
 	public async Task Save(T aggregate)
 	{

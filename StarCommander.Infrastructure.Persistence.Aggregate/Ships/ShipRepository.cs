@@ -21,10 +21,7 @@ public class ShipRepository : EventsOnlyRepository<Ship, ShipDataContext>, IShip
 		this.commandRepository = commandRepository;
 	}
 
-	public Task<ICollection<Ship>> All()
-	{
-		throw new NotImplementedException();
-	}
+	public Task<ICollection<Ship>> All() => throw new NotImplementedException();
 
 	public async Task<Ship> Fetch(Reference<Ship> reference)
 	{

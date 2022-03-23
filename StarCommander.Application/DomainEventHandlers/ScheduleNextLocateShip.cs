@@ -20,10 +20,8 @@ public class ScheduleNextLocateShip : IWhen<CaptainBoarded>, IWhen<ShipLocated>
 		this.commandService = commandService;
 	}
 
-	public async Task Handle(CaptainBoarded @event, CancellationToken cancellationToken)
-	{
+	public async Task Handle(CaptainBoarded @event, CancellationToken cancellationToken) =>
 		await commandService.Issue(new LocateShip(@event.Ship));
-	}
 
 	public async Task Handle(ShipLocated @event, CancellationToken cancellationToken)
 	{

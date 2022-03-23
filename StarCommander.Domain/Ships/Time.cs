@@ -11,43 +11,19 @@ public readonly struct Time : IEquatable<Time>
 	readonly long value;
 
 	[JsonConstructor]
-	public Time(long value)
-	{
-		this.value = value;
-	}
+	public Time(long value) => this.value = value;
 
-	public bool Equals(Time other)
-	{
-		return value == other.value;
-	}
+	public bool Equals(Time other) => value == other.value;
 
-	public override bool Equals(object? obj)
-	{
-		return obj is Time other && Equals(other);
-	}
+	public override bool Equals(object? obj) => obj is Time other && Equals(other);
 
-	public override int GetHashCode()
-	{
-		return value.GetHashCode();
-	}
+	public override int GetHashCode() => value.GetHashCode();
 
-	public static bool operator ==(Time left, Time right)
-	{
-		return left.Equals(right);
-	}
+	public static bool operator ==(Time left, Time right) => left.Equals(right);
 
-	public static bool operator !=(Time left, Time right)
-	{
-		return !left.Equals(right);
-	}
+	public static bool operator !=(Time left, Time right) => !left.Equals(right);
 
-	public static implicit operator long(Time time)
-	{
-		return time.value;
-	}
+	public static implicit operator long(Time time) => time.value;
 
-	public static Distance operator *(Time time, Speed speed)
-	{
-		return new (time.value * speed);
-	}
+	public static Distance operator *(Time time, Speed speed) => new (time.value * speed);
 }

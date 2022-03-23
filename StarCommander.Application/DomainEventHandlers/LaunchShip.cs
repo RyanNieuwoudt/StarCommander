@@ -17,8 +17,6 @@ public class LaunchShip : IWhen<PlayerSignedUp>
 		this.generator = generator;
 	}
 
-	public async Task Handle(PlayerSignedUp @event, CancellationToken cancellationToken)
-	{
+	public async Task Handle(PlayerSignedUp @event, CancellationToken cancellationToken) =>
 		await commandService.Issue(new Domain.Ships.LaunchShip(generator.NewReference<Ship>(), @event.Player));
-	}
 }

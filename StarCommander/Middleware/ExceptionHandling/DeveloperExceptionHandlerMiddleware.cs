@@ -11,9 +11,6 @@ public class DeveloperExceptionHandlerMiddleware : ExceptionHandlerMiddleware
 	{
 	}
 
-	protected override string Serialize(Exception ex)
-	{
-		return JsonConvert.SerializeObject(new { message = ex.Message, exception = ex },
-			SerializationSettings.Middleware);
-	}
+	protected override string Serialize(Exception ex) =>
+		JsonConvert.SerializeObject(new { message = ex.Message, exception = ex }, SerializationSettings.Middleware);
 }

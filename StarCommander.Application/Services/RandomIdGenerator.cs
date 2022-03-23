@@ -5,8 +5,5 @@ namespace StarCommander.Application.Services;
 
 public class RandomIdGenerator : IReferenceGenerator
 {
-	public Reference<T> NewReference<T>() where T : IAggregate
-	{
-		return new (Guid.NewGuid());
-	}
+	public Reference<T> NewReference<T>() where T : IAggregate => new (Guid.NewGuid());
 }

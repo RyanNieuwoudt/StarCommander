@@ -9,13 +9,8 @@ public class AssignShip : IWhen<ShipLaunched>
 {
 	readonly IPlayerService playerService;
 
-	public AssignShip(IPlayerService playerService)
-	{
-		this.playerService = playerService;
-	}
+	public AssignShip(IPlayerService playerService) => this.playerService = playerService;
 
-	public async Task Handle(ShipLaunched @event, CancellationToken cancellationToken)
-	{
+	public async Task Handle(ShipLaunched @event, CancellationToken cancellationToken) =>
 		await playerService.AssignShip(@event.Player, @event.Ship);
-	}
 }

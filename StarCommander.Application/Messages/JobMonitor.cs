@@ -47,10 +47,7 @@ public class JobMonitor : BackgroundService
 		await jobScheduler.Stop();
 	}
 
-	void Stop()
-	{
-		logger.LogInformation("Stopping job runner.");
-	}
+	void Stop() => logger.LogInformation("Stopping job runner.");
 
 	async Task<ICollection<Job>> FetchExistingJobs()
 	{

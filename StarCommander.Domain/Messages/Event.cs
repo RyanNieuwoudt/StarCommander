@@ -13,8 +13,6 @@ public class Event : Message<IDomainEvent>
 	{
 	}
 
-	public static Event Wrap(in Reference<Message<IDomainEvent>> id, IDomainEvent payload)
-	{
-		return new (id, DateTimeOffset.Now, payload, null);
-	}
+	public static Event Wrap(in Reference<Message<IDomainEvent>> id, IDomainEvent payload) =>
+		new (id, DateTimeOffset.Now, payload, null);
 }

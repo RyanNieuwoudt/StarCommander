@@ -7,8 +7,7 @@ public class Job : IAggregate
 	public const string Commands = "Commands";
 	public const string DomainEvents = "DomainEvents";
 
-	public Job(Reference<Job> id, string address, string handler, Guid messageId, Guid queueId,
-		DateTimeOffset created)
+	public Job(Reference<Job> id, string address, string handler, Guid messageId, Guid queueId, DateTimeOffset created)
 	{
 		Id = id;
 

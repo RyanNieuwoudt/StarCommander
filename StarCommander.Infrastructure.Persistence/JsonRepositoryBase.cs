@@ -18,21 +18,12 @@ public abstract class JsonRepositoryBase<T, TU, TV> : RepositoryBase<TV>, IRepos
 	{
 	}
 
-	public async Task<ICollection<T>> All()
-	{
-		return await GetDbSet().AsNoTracking().Select(a => a.ToDomain()).ToListAsync();
-	}
+	public async Task<ICollection<T>> All() => await GetDbSet().AsNoTracking().Select(a => a.ToDomain()).ToListAsync();
 
-	public async Task<T> Fetch(Reference<T> aggregate)
-	{
-		return (await GetDbSet().AsNoTracking().Where(a => a.Id == aggregate.Id).SingleAsync()).ToDomain();
-	}
+	public async Task<T> Fetch(Reference<T> aggregate) =>
+		(await GetDbSet().AsNoTracking().Where(a => a.Id == aggregate.Id).SingleAsync()).ToDomain();
 
-	public virtual async Task Save(T aggregate)
-	{
-		var entity = await GetEntityWithTracking(aggregate);
-		entity.SetValuesFrom(aggregate);
-	}
+	public virtual async Task Save(T aggregate) => (await GetEntityWithTracking(aggregate)).SetValuesFrom(aggregate);
 
 	public async Task SaveAll(ICollection<T> aggregates)
 	{
@@ -63,10 +54,8 @@ public abstract class JsonRepositoryBase<T, TU, TV> : RepositoryBase<TV>, IRepos
 
 	protected abstract DbSet<TU> GetDbSet();
 
-	protected virtual async Task<TU> GetEntityWithTracking(T aggregate)
-	{
-		return await GetDbSet().SingleOrDefaultAsync(a => a.Id == aggregate.Id) ?? AddEntity();
-	}
+	protected virtual async Task<TU> GetEntityWithTracking(T aggregate) =>
+		await GetDbSet().SingleOrDefaultAsync(a => a.Id == aggregate.Id) ?? AddEntity();
 
 	protected abstract void RemoveEntity(TU entity);
 }

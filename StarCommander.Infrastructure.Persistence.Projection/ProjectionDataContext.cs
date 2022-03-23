@@ -19,19 +19,14 @@ public sealed class ProjectionDataContext : ConfiguringDbContext
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
-
 		BuildShipLocation(modelBuilder);
 	}
 
 	static void BuildShipLocation(ModelBuilder modelBuilder)
 	{
-		modelBuilder.Entity<ShipLocation>()
-			.Property(a => a.ShipLocationId)
-			.IsRequired()
-			.ValueGeneratedOnAdd();
+		modelBuilder.Entity<ShipLocation>().Property(a => a.ShipLocationId).IsRequired().ValueGeneratedOnAdd();
 
-		modelBuilder.Entity<ShipLocation>()
-			.HasKey(a => a.ShipLocationId);
+		modelBuilder.Entity<ShipLocation>().HasKey(a => a.ShipLocationId);
 
 		modelBuilder.Entity<ShipLocation>().Property(a => a.Heading).IsRequired();
 

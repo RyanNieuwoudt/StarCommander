@@ -11,10 +11,7 @@ public class PlayerShould
 {
 	readonly IFixture fixture;
 
-	public PlayerShould()
-	{
-		fixture = new Fixture();
-	}
+	public PlayerShould() => fixture = new Fixture();
 
 	[Fact]
 	public void RaiseEventOnSignIn()

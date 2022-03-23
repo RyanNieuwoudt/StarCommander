@@ -123,10 +123,8 @@ public class PlayerService : IPlayerService
 		await dbContextScope.SaveChangesAsync();
 	}
 
-	Session GetSession(Player player)
-	{
-		return new () { Token = GetToken(player), Player = mapper.Map<Shared.Model.Player>(player) };
-	}
+	Session GetSession(Player player) => new ()
+		{ Token = GetToken(player), Player = mapper.Map<Shared.Model.Player>(player) };
 
 	string GetToken(Player player)
 	{

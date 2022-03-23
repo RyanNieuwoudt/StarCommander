@@ -28,15 +28,12 @@ public class CommandRepository : JsonRepositoryBase<Domain.Messages.Command, Com
 			.FirstOrDefaultAsync())?.ToDomain();
 	}
 
-	public async Task<IEnumerable<Domain.Messages.Command>> FetchForTarget(Guid targetId)
-	{
-		return await GetDbSet()
-			.AsNoTracking()
-			.Where(c => c.TargetId == targetId)
-			.OrderBy(c => c.Created)
-			.Select(c => c.ToDomain())
-			.ToListAsync();
-	}
+	public async Task<IEnumerable<Domain.Messages.Command>> FetchForTarget(Guid targetId) => await GetDbSet()
+		.AsNoTracking()
+		.Where(c => c.TargetId == targetId)
+		.OrderBy(c => c.Created)
+		.Select(c => c.ToDomain())
+		.ToListAsync();
 
 	public async Task<IEnumerable<Domain.Messages.Command>> FetchScheduledForTarget(Guid targetId)
 	{
@@ -59,13 +56,7 @@ public class CommandRepository : JsonRepositoryBase<Domain.Messages.Command, Com
 		return entity;
 	}
 
-	protected override DbSet<Command> GetDbSet()
-	{
-		return DataContext.Commands;
-	}
+	protected override DbSet<Command> GetDbSet() => DataContext.Commands;
 
-	protected override void RemoveEntity(Command entity)
-	{
-		DataContext.Remove(entity);
-	}
+	protected override void RemoveEntity(Command entity) => DataContext.Remove(entity);
 }

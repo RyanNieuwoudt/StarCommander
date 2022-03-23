@@ -23,9 +23,6 @@ public abstract class JsonEntity<T> where T : class, IAggregate
 	{
 	}
 
-	public T ToDomain()
-	{
-		return JsonConvert.DeserializeObject<T>(Json, SerializationSettings.Persistence) ??
-		       throw new DataException($"Unable to deserialize entity {Id}.");
-	}
+	public T ToDomain() => JsonConvert.DeserializeObject<T>(Json, SerializationSettings.Persistence) ??
+	                       throw new DataException($"Unable to deserialize entity {Id}.");
 }

@@ -42,8 +42,6 @@ public class ExceptionHandlerMiddleware
 		await httpContext.Response.WriteAsync(Serialize(ex));
 	}
 
-	protected virtual string Serialize(Exception ex)
-	{
-		return JsonConvert.SerializeObject(new { message = ex.Message }, SerializationSettings.Middleware);
-	}
+	protected virtual string Serialize(Exception ex) =>
+		JsonConvert.SerializeObject(new { message = ex.Message }, SerializationSettings.Middleware);
 }

@@ -60,15 +60,9 @@ public class Player : EventPublisherBase, IAggregate
 		RaiseEvent(new ShipAssigned(Reference, Ship));
 	}
 
-	public void BoardShip()
-	{
-		RaiseEvent(new CaptainBoarded(Reference, Ship));
-	}
+	public void BoardShip() => RaiseEvent(new CaptainBoarded(Reference, Ship));
 
-	public void SignIn()
-	{
-		RaiseEvent(new PlayerSignedIn(Reference));
-	}
+	public void SignIn() => RaiseEvent(new PlayerSignedIn(Reference));
 
 	public void UpdateName(string firstName, string lastName)
 	{

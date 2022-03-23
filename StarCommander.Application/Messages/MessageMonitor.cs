@@ -49,8 +49,5 @@ public class MessageMonitor : BackgroundService
 		}
 	}
 
-	void Stop()
-	{
-		logger.LogInformation("Stopping message monitor.");
-	}
+	void Stop() => logger.LogInformation("Stopping message monitor.");
 }

@@ -15,10 +15,7 @@ namespace StarCommander;
 
 public class ApplicationSetup : CommonSetup
 {
-	public ApplicationSetup(IConfiguration configuration)
-	{
-		Configuration = configuration;
-	}
+	public ApplicationSetup(IConfiguration configuration) => Configuration = configuration;
 
 	IConfiguration Configuration { get; }
 
@@ -26,15 +23,9 @@ public class ApplicationSetup : CommonSetup
 
 	protected override void ConfigureContextualServices(IServiceCollection services)
 	{
-		if (string.IsNullOrWhiteSpace(ConnectionString))
-		{
-			services.AddSingleton<IDbContextConfiguration>(new InMemoryConfiguration("StarCommander"));
-		}
-		else
-		{
-			services.AddSingleton<IDbContextConfiguration>(new PostgresConfiguration(ConnectionString));
-		}
-
+		services.AddSingleton<IDbContextConfiguration>(string.IsNullOrWhiteSpace(ConnectionString)
+			? new InMemoryConfiguration("StarCommander")
+			: new PostgresConfiguration(ConnectionString));
 		services.AddScoped<IChannelService, ChannelService>();
 	}
 

@@ -7,10 +7,8 @@ public abstract class RepositoryBase<T> where T : class, IDbContext
 {
 	readonly IAmbientDbContextConfigurator ambientDbContextConfigurator;
 
-	protected RepositoryBase(IAmbientDbContextConfigurator ambientDbContextConfigurator)
-	{
+	protected RepositoryBase(IAmbientDbContextConfigurator ambientDbContextConfigurator) =>
 		this.ambientDbContextConfigurator = ambientDbContextConfigurator;
-	}
 
 	protected T DataContext => ambientDbContextConfigurator.Get<T>();
 }

@@ -12,7 +12,7 @@ static class HostExtensions
 {
 	internal static IHost Migrate(this IHost host)
 	{
-		static void Migrate<T>(IServiceScope scope) where T : DbContext
+		static void MigrateContext<T>(IServiceScope scope) where T : DbContext
 		{
 			using var dbContext = scope.ServiceProvider.GetService<T>();
 			dbContext?.Database.Migrate();
@@ -20,11 +20,11 @@ static class HostExtensions
 
 		using (var scope = host.Services.GetService<IServiceScopeFactory>()!.CreateScope())
 		{
-			Migrate<MessageDataContext>(scope);
-			Migrate<PlayerDataContext>(scope);
-			Migrate<ShipDataContext>(scope);
+			MigrateContext<MessageDataContext>(scope);
+			MigrateContext<PlayerDataContext>(scope);
+			MigrateContext<ShipDataContext>(scope);
 
-			Migrate<ProjectionDataContext>(scope);
+			MigrateContext<ProjectionDataContext>(scope);
 		}
 
 		return host;

@@ -14,15 +14,11 @@ public class PlayerRepository :
 	{
 	}
 
-	public async Task<bool> Exists(string callSign)
-	{
-		return await GetDbSet().SingleOrDefaultAsync(u => u.CallSign == callSign) != null;
-	}
+	public async Task<bool> Exists(string callSign) =>
+		await GetDbSet().SingleOrDefaultAsync(u => u.CallSign == callSign) != null;
 
-	public async Task<Domain.Players.Player> Fetch(string callSign)
-	{
-		return (await GetDbSet().SingleAsync(u => u.CallSign == callSign)).ToDomain();
-	}
+	public async Task<Domain.Players.Player> Fetch(string callSign) =>
+		(await GetDbSet().SingleAsync(u => u.CallSign == callSign)).ToDomain();
 
 	protected override Player AddEntity()
 	{
@@ -31,13 +27,7 @@ public class PlayerRepository :
 		return entity;
 	}
 
-	protected override DbSet<Player> GetDbSet()
-	{
-		return DataContext.Players;
-	}
+	protected override DbSet<Player> GetDbSet() => DataContext.Players;
 
-	protected override void RemoveEntity(Player entity)
-	{
-		DataContext.Remove(entity);
-	}
+	protected override void RemoveEntity(Player entity) => DataContext.Remove(entity);
 }

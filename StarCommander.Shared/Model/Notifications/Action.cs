@@ -5,10 +5,8 @@ namespace StarCommander.Shared.Model.Notifications;
 
 public static class Action
 {
-	public static Action<T> WithPayload<T>(T payload) where T : notnull
-	{
-		return new (payload.GetType().Name.ToActionType(), payload);
-	}
+	public static Action<T> WithPayload<T>(T payload) where T : notnull =>
+		new (payload.GetType().Name.ToActionType(), payload);
 }
 
 [Serializable]
@@ -28,13 +26,7 @@ public class Action<T> : IAction where T : notnull
 	[JsonProperty]
 	public string Type { get; private set; }
 
-	public static implicit operator string(Action<T> action)
-	{
-		return action.ToString();
-	}
+	public static implicit operator string(Action<T> action) => action.ToString();
 
-	public override string ToString()
-	{
-		return JsonConvert.SerializeObject(this, SerializationSettings.Javascript);
-	}
+	public override string ToString() => JsonConvert.SerializeObject(this, SerializationSettings.Javascript);
 }

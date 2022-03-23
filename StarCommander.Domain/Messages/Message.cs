@@ -5,7 +5,7 @@ namespace StarCommander.Domain.Messages;
 
 [Serializable]
 [JsonObject(MemberSerialization.OptIn)]
-public abstract class Message<T> : IAggregate where T : notnull, IHaveType
+public abstract class Message<T> : IAggregate where T :  IHaveType
 {
 	[JsonConstructor]
 	protected Message(in Reference<Message<T>> id, DateTimeOffset created, T payload, DateTimeOffset? processed)
@@ -30,8 +30,5 @@ public abstract class Message<T> : IAggregate where T : notnull, IHaveType
 	[JsonProperty]
 	public Guid Id { get; }
 
-	public void MarkAsProcessed()
-	{
-		Processed = DateTimeOffset.Now;
-	}
+	public void MarkAsProcessed() => Processed = DateTimeOffset.Now;
 }

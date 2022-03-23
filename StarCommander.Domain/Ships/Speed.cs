@@ -13,43 +13,19 @@ public readonly struct Speed : IEquatable<Speed>
 	readonly long value;
 
 	[JsonConstructor]
-	public Speed(long value)
-	{
-		this.value = value;
-	}
+	public Speed(long value) => this.value = value;
 
-	public bool Equals(Speed other)
-	{
-		return value == other.value;
-	}
+	public bool Equals(Speed other) => value == other.value;
 
-	public override bool Equals(object? obj)
-	{
-		return obj is Speed other && Equals(other);
-	}
+	public override bool Equals(object? obj) => obj is Speed other && Equals(other);
 
-	public override int GetHashCode()
-	{
-		return value.GetHashCode();
-	}
+	public override int GetHashCode() => value.GetHashCode();
 
-	public static bool operator ==(Speed left, Speed right)
-	{
-		return left.Equals(right);
-	}
+	public static bool operator ==(Speed left, Speed right) => left.Equals(right);
 
-	public static bool operator !=(Speed left, Speed right)
-	{
-		return !left.Equals(right);
-	}
+	public static bool operator !=(Speed left, Speed right) => !left.Equals(right);
 
-	public static Distance operator *(Speed speed, Time time)
-	{
-		return new (speed.value * time);
-	}
+	public static Distance operator *(Speed speed, Time time) => new (speed.value * time);
 
-	public static implicit operator long(Speed speed)
-	{
-		return speed.value;
-	}
+	public static implicit operator long(Speed speed) => speed.value;
 }

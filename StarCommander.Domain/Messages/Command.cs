@@ -23,18 +23,13 @@ public class Command : Message<ICommand>
 	[JsonProperty]
 	public Guid TargetId { get; private set; }
 
-	public static Command Wrap(in Reference<Message<ICommand>> id, ICommand payload, DateTimeOffset? scheduledFor)
-	{
-		return new (id, ExtractTargetId(payload), DateTimeOffset.Now, payload, null, scheduledFor);
-	}
+	public static Command Wrap(in Reference<Message<ICommand>> id, ICommand payload, DateTimeOffset? scheduledFor) =>
+		new (id, ExtractTargetId(payload), DateTimeOffset.Now, payload, null, scheduledFor);
 
-	static Guid ExtractTargetId(ICommand command)
+	static Guid ExtractTargetId(ICommand command) => command switch
 	{
-		return command switch
-		{
-			PlayerCommand playerCommand => playerCommand.Player,
-			ShipCommand shipCommand => shipCommand.Ship,
-			_ => throw new InvalidOperationException()
-		};
-	}
+		PlayerCommand playerCommand => playerCommand.Player,
+		ShipCommand shipCommand => shipCommand.Ship,
+		_ => throw new InvalidOperationException()
+	};
 }

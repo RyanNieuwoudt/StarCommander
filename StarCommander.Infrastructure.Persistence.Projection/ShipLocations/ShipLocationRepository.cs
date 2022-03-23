@@ -15,30 +15,20 @@ public class ShipLocationRepository : RepositoryBase<ProjectionDataContext>, ISh
 	readonly IMapper mapper;
 
 	public ShipLocationRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator, IMapper mapper) :
-		base(ambientDbContextConfigurator)
-	{
-		this.mapper = mapper;
-	}
+		base(ambientDbContextConfigurator) => this.mapper = mapper;
 
-	public async Task Delete(List<ShipLocation> shipLocations)
-	{
-		DataContext.RemoveRange(
-			(await DataContext.ShipLocations.ToListAsync()).Where(a =>
-				shipLocations.Any(b => b.HasSamePrimaryKeyAs(a))));
-	}
+	public async Task Delete(List<ShipLocation> shipLocations) => DataContext.RemoveRange(
+		(await DataContext.ShipLocations.ToListAsync()).Where(a => shipLocations.Any(b => b.HasSamePrimaryKeyAs(a))));
 
-	public async Task Insert(List<ShipLocation> shipLocations)
-	{
-		await DataContext.AddRangeAsync(shipLocations);
-	}
+	public async Task Insert(List<ShipLocation> shipLocations) => await DataContext.AddRangeAsync(shipLocations);
 
 	public async Task Update(List<ShipLocation> shipLocations)
 	{
 		foreach (var shipLocation in shipLocations)
 		{
 			var entity =
-				(await DataContext.ShipLocations.ToListAsync()).SingleOrDefault(a =>
-					a.HasSamePrimaryKeyAs(shipLocation));
+				(await DataContext.ShipLocations.ToListAsync()).SingleOrDefault(
+					a => a.HasSamePrimaryKeyAs(shipLocation));
 
 			if (entity == null)
 			{
@@ -52,13 +42,11 @@ public class ShipLocationRepository : RepositoryBase<ProjectionDataContext>, ISh
 		await Task.CompletedTask;
 	}
 
-	public async Task<IEnumerable<ShipLocation>> Fetch(Reference<Ship> ship)
-	{
-		return await DataContext.ShipLocations.AsNoTracking()
-			.Where(s => s.ShipId == ship.Id)
-			.OrderBy(s => s.ShipLocationId)
-			.ToListAsync();
-	}
+	public async Task<IEnumerable<ShipLocation>> Fetch(Reference<Ship> ship) => await DataContext.ShipLocations
+		.AsNoTracking()
+		.Where(s => s.ShipId == ship.Id)
+		.OrderBy(s => s.ShipLocationId)
+		.ToListAsync();
 
 	public async Task<IEnumerable<ScanResult>> ScanForNearbyShips(Reference<Ship> ship)
 	{

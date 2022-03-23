@@ -14,14 +14,11 @@ public class EventRepository : JsonRepositoryBase<Domain.Messages.Event, Event, 
 	{
 	}
 
-	public async Task<Domain.Messages.Event?> FetchNextUnprocessed()
-	{
-		return (await GetDbSet()
-			.AsNoTracking()
-			.Where(e => e.Processed == null)
-			.OrderBy(e => e.Created)
-			.FirstOrDefaultAsync())?.ToDomain();
-	}
+	public async Task<Domain.Messages.Event?> FetchNextUnprocessed() => (await GetDbSet()
+		.AsNoTracking()
+		.Where(e => e.Processed == null)
+		.OrderBy(e => e.Created)
+		.FirstOrDefaultAsync())?.ToDomain();
 
 	protected override Event AddEntity()
 	{
@@ -30,13 +27,7 @@ public class EventRepository : JsonRepositoryBase<Domain.Messages.Event, Event, 
 		return entity;
 	}
 
-	protected override DbSet<Event> GetDbSet()
-	{
-		return DataContext.Events;
-	}
+	protected override DbSet<Event> GetDbSet() => DataContext.Events;
 
-	protected override void RemoveEntity(Event entity)
-	{
-		DataContext.Remove(entity);
-	}
+	protected override void RemoveEntity(Event entity) => DataContext.Remove(entity);
 }

@@ -19,15 +19,9 @@ public abstract class EventPublisherBase : IRaiseDomainEvents
 
 	public IEnumerable<IDomainEvent> Events => events;
 
-	public void ClearEvents()
-	{
-		events.Clear();
-	}
+	public void ClearEvents() => events.Clear();
 
-	protected void EnableEventPublishing()
-	{
-		enableEventPublishing = true;
-	}
+	protected void EnableEventPublishing() => enableEventPublishing = true;
 
 	internal void RaiseEvent(IDomainEvent @event)
 	{

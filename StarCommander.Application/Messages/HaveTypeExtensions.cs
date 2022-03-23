@@ -8,25 +8,17 @@ namespace StarCommander.Application.Messages;
 
 static class HaveTypeExtensions
 {
-	internal static string GetAddress(this IHaveType payload)
+	internal static string GetAddress(this IHaveType payload) => payload switch
 	{
-		return payload switch
-		{
-			ICommand c => Commands,
-			IDomainEvent e => DomainEvents,
-			_ => throw new InvalidOperationException()
-		};
-	}
+		ICommand => Commands, IDomainEvent => DomainEvents, _ => throw new InvalidOperationException()
+	};
 
-	internal static Guid GetQueueId(this IHaveType payload)
+	internal static Guid GetQueueId(this IHaveType payload) => payload switch
 	{
-		return payload switch
-		{
-			PlayerCommand playerCommand => playerCommand.Player,
-			PlayerEvent playerEvent => playerEvent.Player,
-			ShipCommand shipCommand => shipCommand.Ship,
-			ShipEvent shipEvent => shipEvent.Ship,
-			_ => Guid.Empty
-		};
-	}
+		PlayerCommand playerCommand => playerCommand.Player,
+		PlayerEvent playerEvent => playerEvent.Player,
+		ShipCommand shipCommand => shipCommand.Ship,
+		ShipEvent shipEvent => shipEvent.Ship,
+		_ => Guid.Empty
+	};
 }

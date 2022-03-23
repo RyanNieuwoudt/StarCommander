@@ -23,10 +23,7 @@ public class ShipController : ControllerBase
 	}
 
 	[HttpGet("scan")]
-	public async Task<IActionResult> Scan(Guid shipId)
-	{
-		return Ok(await shipQuery.ScanForNearbyShips(new (shipId)));
-	}
+	public async Task<IActionResult> Scan(Guid shipId) => Ok(await shipQuery.ScanForNearbyShips(new (shipId)));
 
 	[HttpPost("heading/{heading:int}")]
 	public async Task<IActionResult> SetHeading(Guid shipId, int heading)

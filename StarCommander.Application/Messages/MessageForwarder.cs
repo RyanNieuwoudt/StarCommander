@@ -32,10 +32,8 @@ public sealed class MessageForwarder : IMessageForwarder
 		this.workerRegistry = workerRegistry;
 	}
 
-	public async Task<bool> ForwardNextMessage(CancellationToken cancellationToken)
-	{
-		return await ForwardNextCommand(cancellationToken) || await ForwardNextEvent(cancellationToken);
-	}
+	public async Task<bool> ForwardNextMessage(CancellationToken cancellationToken) =>
+		await ForwardNextCommand(cancellationToken) || await ForwardNextEvent(cancellationToken);
 
 	async Task<bool> ForwardNextCommand(CancellationToken cancellationToken)
 	{

@@ -15,25 +15,16 @@ public class JobRepository : RepositoryBase<MessageDataContext>, IJobRepository
 	{
 	}
 
-	public async Task<ICollection<Domain.Messages.Job>> All()
-	{
-		return await DataContext.Jobs.AsNoTracking()
-			.OrderBy(j => j.Created)
-			.Select(a => a.ToDomain())
-			.ToListAsync();
-	}
+	public async Task<ICollection<Domain.Messages.Job>> All() => await DataContext.Jobs.AsNoTracking()
+		.OrderBy(j => j.Created)
+		.Select(a => a.ToDomain())
+		.ToListAsync();
 
-	public async Task<Domain.Messages.Job> Fetch(Reference<Domain.Messages.Job> job)
-	{
-		var query = DataContext.Jobs.AsNoTracking().Where(j => j.Id == job.Id);
-		return (await query.SingleAsync()).ToDomain();
-	}
+	public async Task<Domain.Messages.Job> Fetch(Reference<Domain.Messages.Job> job) =>
+		(await DataContext.Jobs.AsNoTracking().Where(j => j.Id == job.Id).SingleAsync()).ToDomain();
 
-	public async Task Save(Domain.Messages.Job job)
-	{
-		var entity = await DataContext.Jobs.SingleOrDefaultAsync(j => j.Id == job.Id) ?? AddEntity(job);
-		entity.SetValuesFrom(job);
-	}
+	public async Task Save(Domain.Messages.Job job) =>
+		(await DataContext.Jobs.SingleOrDefaultAsync(j => j.Id == job.Id) ?? AddEntity(job)).SetValuesFrom(job);
 
 	public async Task SaveAll(ICollection<Domain.Messages.Job> jobs)
 	{

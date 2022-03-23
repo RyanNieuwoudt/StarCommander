@@ -8,10 +8,7 @@ public class InMemoryConfiguration : IDbContextConfiguration
 {
 	readonly string databaseName;
 
-	public InMemoryConfiguration(string databaseName)
-	{
-		this.databaseName = databaseName;
-	}
+	public InMemoryConfiguration(string databaseName) => this.databaseName = databaseName;
 
 	public Action<DbContextOptionsBuilder> Configure => builder => builder.UseInMemoryDatabase(databaseName);
 }

@@ -9,10 +9,7 @@ namespace StarCommander.Application.Projectors;
 
 public abstract class ProjectorBase
 {
-	protected static bool AllEmpty(params ICollection[] collections)
-	{
-		return !collections.Any(collection => collection.Count > 0);
-	}
+	static bool AllEmpty(params ICollection[] collections) => !collections.Any(collection => collection.Count > 0);
 
 	protected static async Task Execute<T>(IProjectionRepository<T> repository, List<T> toDelete, List<T> toUpdate,
 		List<T> toInsert) where T : IProjectWithKey<T>

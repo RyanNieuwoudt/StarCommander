@@ -24,17 +24,13 @@ public class PlayerController : ControllerBase
 
 	[AllowAnonymous]
 	[HttpPost("session")]
-	public async Task<IActionResult> SignIn([FromBody] SignIn signIn)
-	{
-		return Ok(await playerService.SignIn(signIn.CallSign, signIn.Password));
-	}
+	public async Task<IActionResult> SignIn([FromBody] SignIn signIn) =>
+		Ok(await playerService.SignIn(signIn.CallSign, signIn.Password));
 
 	[AllowAnonymous]
 	[HttpPost("player")]
-	public async Task<IActionResult> SignUp([FromBody] SignUp signUp)
-	{
-		return Ok(await playerService.SignUp(signUp.CallSign, signUp.FirstName, signUp.LastName, signUp.Password));
-	}
+	public async Task<IActionResult> SignUp([FromBody] SignUp signUp) =>
+		Ok(await playerService.SignUp(signUp.CallSign, signUp.FirstName, signUp.LastName, signUp.Password));
 
 	[HttpPost("name")]
 	public async Task<IActionResult> UpdateName([FromBody] PlayerName player)
