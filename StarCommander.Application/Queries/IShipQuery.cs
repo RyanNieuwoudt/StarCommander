@@ -4,10 +4,9 @@ using StarCommander.Domain;
 using StarCommander.Domain.Ships;
 using StarCommander.Shared.Model.Query;
 
-namespace StarCommander.Application.Queries
+namespace StarCommander.Application.Queries;
+
+public interface IShipQuery
 {
-	public interface IShipQuery
-	{
-		Task<IEnumerable<ScanResult>> ScanForNearbyShips(Reference<Ship> ship);
-	}
+	Task<IEnumerable<ScanResult>> ScanForNearbyShips(Reference<Ship> ship);
 }

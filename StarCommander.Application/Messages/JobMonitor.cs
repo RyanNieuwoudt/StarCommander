@@ -8,54 +8,53 @@ using Microsoft.Extensions.Logging;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 
-namespace StarCommander.Application.Messages
+namespace StarCommander.Application.Messages;
+
+public class JobMonitor : BackgroundService
 {
-	public class JobMonitor : BackgroundService
+	readonly IJobScheduler jobScheduler;
+	readonly ILogger<JobMonitor> logger;
+	readonly IServiceProvider serviceProvider;
+
+	public JobMonitor(IJobScheduler jobScheduler, ILogger<JobMonitor> logger, IServiceProvider serviceProvider)
 	{
-		readonly IJobScheduler jobScheduler;
-		readonly ILogger<JobMonitor> logger;
-		readonly IServiceProvider serviceProvider;
+		this.jobScheduler = jobScheduler;
+		this.logger = logger;
+		this.serviceProvider = serviceProvider;
+	}
 
-		public JobMonitor(IJobScheduler jobScheduler, ILogger<JobMonitor> logger, IServiceProvider serviceProvider)
+	protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+	{
+		logger.LogInformation("Starting job runner.");
+
+		cancellationToken.Register(Stop);
+
+		var existingJobs = await FetchExistingJobs();
+
+		//TODO Way to ensure that new jobs cannot arrive ahead of existing jobs
+		//as we start up.
+		foreach (var job in existingJobs)
 		{
-			this.jobScheduler = jobScheduler;
-			this.logger = logger;
-			this.serviceProvider = serviceProvider;
+			logger.LogInformation("Adding job.");
+			jobScheduler.Add(job);
 		}
 
-		protected override async Task ExecuteAsync(CancellationToken cancellationToken)
-		{
-			logger.LogInformation("Starting job runner.");
+		logger.LogInformation("Starting job scheduler");
+		await jobScheduler.Start(cancellationToken);
 
-			cancellationToken.Register(Stop);
+		logger.LogInformation("No more work!");
 
-			var existingJobs = await FetchExistingJobs();
+		await jobScheduler.Stop();
+	}
 
-			//TODO Way to ensure that new jobs cannot arrive ahead of existing jobs
-			//as we start up.
-			foreach (var job in existingJobs)
-			{
-				logger.LogInformation("Adding job.");
-				jobScheduler.Add(job);
-			}
+	void Stop()
+	{
+		logger.LogInformation("Stopping job runner.");
+	}
 
-			logger.LogInformation("Starting job scheduler");
-			await jobScheduler.Start(cancellationToken);
-
-			logger.LogInformation("No more work!");
-
-			await jobScheduler.Stop();
-		}
-
-		void Stop()
-		{
-			logger.LogInformation("Stopping job runner.");
-		}
-
-		async Task<ICollection<Job>> FetchExistingJobs()
-		{
-			using var scope = serviceProvider.CreateScope();
-			return await scope.ServiceProvider.GetService<IJobService>()!.Fetch();
-		}
+	async Task<ICollection<Job>> FetchExistingJobs()
+	{
+		using var scope = serviceProvider.CreateScope();
+		return await scope.ServiceProvider.GetService<IJobService>()!.Fetch();
 	}
 }

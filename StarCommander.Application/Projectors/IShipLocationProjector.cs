@@ -3,10 +3,9 @@ using System.Threading.Tasks;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
 
-namespace StarCommander.Application.Projectors
+namespace StarCommander.Application.Projectors;
+
+public interface IShipLocationProjector
 {
-	public interface IShipLocationProjector
-	{
-		Task Project(Reference<Ship> ship, DateTimeOffset date, Heading heading, Position position, Speed speed);
-	}
+	Task Project(Reference<Ship> ship, DateTimeOffset date, Heading heading, Position position, Speed speed);
 }

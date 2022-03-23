@@ -1,6 +1,5 @@
-namespace StarCommander.Shared.Communication
+namespace StarCommander.Shared.Communication;
+
+public interface IChannelServer
 {
-	public interface IChannelServer
-	{
-	}
 }

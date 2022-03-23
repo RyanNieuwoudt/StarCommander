@@ -1,10 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace StarCommander.Application.Messages
+namespace StarCommander.Application.Messages;
+
+public interface IMessageForwarder
 {
-	public interface IMessageForwarder
-	{
-		Task<bool> ForwardNextMessage(CancellationToken cancellationToken);
-	}
+	Task<bool> ForwardNextMessage(CancellationToken cancellationToken);
 }

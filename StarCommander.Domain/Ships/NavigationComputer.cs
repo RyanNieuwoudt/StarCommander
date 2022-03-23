@@ -1,85 +1,84 @@
 using System;
 using System.Collections.Generic;
 
-namespace StarCommander.Domain.Ships
+namespace StarCommander.Domain.Ships;
+
+public class NavigationComputer
 {
-	public class NavigationComputer
+	readonly Dictionary<DateTimeOffset, KeyValuePair<Heading, Speed>> navigation;
+	readonly Position startingPosition;
+
+	Heading lastHeading;
+	Speed lastSpeed;
+	DateTimeOffset startDate;
+
+	internal NavigationComputer(Position startingPosition)
 	{
-		readonly Dictionary<DateTimeOffset, KeyValuePair<Heading, Speed>> navigation;
-		readonly Position startingPosition;
+		this.startingPosition = startingPosition;
 
-		Heading lastHeading;
-		Speed lastSpeed;
-		DateTimeOffset startDate;
+		startDate = DateTimeOffset.MaxValue;
+		navigation = new ();
+	}
 
-		internal NavigationComputer(Position startingPosition)
+	public void SetHeading(DateTimeOffset date, Heading heading)
+	{
+		if (date < startDate)
 		{
-			this.startingPosition = startingPosition;
-
-			startDate = DateTimeOffset.MaxValue;
-			navigation = new Dictionary<DateTimeOffset, KeyValuePair<Heading, Speed>>();
+			startDate = date;
 		}
 
-		public void SetHeading(DateTimeOffset date, Heading heading)
+		if (navigation.ContainsKey(date))
 		{
-			if (date < startDate)
-			{
-				startDate = date;
-			}
-
-			if (navigation.ContainsKey(date))
-			{
-				navigation[date] = new KeyValuePair<Heading, Speed>(heading, lastSpeed);
-			}
-			else
-			{
-				navigation.Add(date, new KeyValuePair<Heading, Speed>(heading, lastSpeed));
-			}
-
-			lastHeading = heading;
+			navigation[date] = new (heading, lastSpeed);
+		}
+		else
+		{
+			navigation.Add(date, new (heading, lastSpeed));
 		}
 
-		public void SetSpeed(DateTimeOffset date, Speed speed)
+		lastHeading = heading;
+	}
+
+	public void SetSpeed(DateTimeOffset date, Speed speed)
+	{
+		if (date < startDate)
 		{
-			if (date < startDate)
-			{
-				startDate = date;
-			}
-
-			if (navigation.ContainsKey(date))
-			{
-				navigation[date] = new KeyValuePair<Heading, Speed>(lastHeading, speed);
-			}
-			else
-			{
-				navigation.Add(date, new KeyValuePair<Heading, Speed>(lastHeading, speed));
-			}
-
-			lastSpeed = speed;
+			startDate = date;
 		}
 
-		public (DateTimeOffset, Heading, Position, Speed) Locate()
+		if (navigation.ContainsKey(date))
 		{
-			var currentDate = startDate;
-			var currentHeading = Heading.Default;
-			var currentPosition = startingPosition;
-			var currentSpeed = Speed.Default;
-
-			foreach (var (date, (heading, speed)) in navigation)
-			{
-				currentPosition = currentPosition.Apply(heading, new Distance((date - currentDate).Seconds * speed));
-
-				currentDate = date;
-				currentHeading = heading;
-				currentSpeed = speed;
-			}
-
-			var lastDate = DateTimeOffset.Now;
-
-			currentPosition = currentPosition.Apply(currentHeading,
-				new Distance((long)(lastDate - currentDate).TotalSeconds * currentSpeed));
-
-			return (lastDate, currentHeading, currentPosition, currentSpeed);
+			navigation[date] = new (lastHeading, speed);
 		}
+		else
+		{
+			navigation.Add(date, new (lastHeading, speed));
+		}
+
+		lastSpeed = speed;
+	}
+
+	public (DateTimeOffset, Heading, Position, Speed) Locate()
+	{
+		var currentDate = startDate;
+		var currentHeading = Heading.Default;
+		var currentPosition = startingPosition;
+		var currentSpeed = Speed.Default;
+
+		foreach (var (date, (heading, speed)) in navigation)
+		{
+			currentPosition = currentPosition.Apply(heading, new ((date - currentDate).Seconds * speed));
+
+			currentDate = date;
+			currentHeading = heading;
+			currentSpeed = speed;
+		}
+
+		var lastDate = DateTimeOffset.Now;
+
+		currentPosition = currentPosition.Apply(currentHeading,
+			new ((long)(lastDate - currentDate).TotalSeconds * currentSpeed));
+
+		return (lastDate, currentHeading, currentPosition, currentSpeed);
 	}
 }

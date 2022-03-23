@@ -1,8 +1,7 @@
-namespace StarCommander.Shared.Model
+namespace StarCommander.Shared.Model;
+
+public class Session
 {
-	public class Session
-	{
-		public string Token { get; set; } = string.Empty;
-		public Player Player { get; set; } = new ();
-	}
+	public string Token { get; set; } = string.Empty;
+	public Player Player { get; set; } = new ();
 }

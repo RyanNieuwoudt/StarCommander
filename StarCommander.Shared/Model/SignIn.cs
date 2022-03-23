@@ -1,8 +1,7 @@
-namespace StarCommander.Shared.Model
+namespace StarCommander.Shared.Model;
+
+public class SignIn
 {
-	public class SignIn
-	{
-		public string CallSign { get; set; } = string.Empty;
-		public string Password { get; set; } = string.Empty;
-	}
+	public string CallSign { get; set; } = string.Empty;
+	public string Password { get; set; } = string.Empty;
 }

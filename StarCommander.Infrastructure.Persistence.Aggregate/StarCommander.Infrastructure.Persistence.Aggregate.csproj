@@ -5,6 +5,6 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj" />
+		<ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj"/>
 	</ItemGroup>
 </Project>

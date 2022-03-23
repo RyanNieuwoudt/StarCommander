@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 
-namespace StarCommander.Domain
+namespace StarCommander.Domain;
+
+public interface IRaiseDomainEvents
 {
-	public interface IRaiseDomainEvents
-	{
-		IEnumerable<IDomainEvent> Events { get; }
-		void ClearEvents();
-	}
+	IEnumerable<IDomainEvent> Events { get; }
+	void ClearEvents();
 }

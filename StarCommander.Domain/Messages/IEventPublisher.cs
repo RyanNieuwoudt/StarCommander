@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 
-namespace StarCommander.Domain.Messages
+namespace StarCommander.Domain.Messages;
+
+public interface IEventPublisher
 {
-	public interface IEventPublisher
-	{
-		Task Publish(params IRaiseDomainEvents[] aggregates);
-	}
+	Task Publish(params IRaiseDomainEvents[] aggregates);
 }

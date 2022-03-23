@@ -3,18 +3,17 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using StarCommander.Infrastructure.Serialization;
 
-namespace StarCommander.Middleware.ExceptionHandling
-{
-	public class DeveloperExceptionHandlerMiddleware : ExceptionHandlerMiddleware
-	{
-		public DeveloperExceptionHandlerMiddleware(RequestDelegate next) : base(next)
-		{
-		}
+namespace StarCommander.Middleware.ExceptionHandling;
 
-		protected override string Serialize(Exception ex)
-		{
-			return JsonConvert.SerializeObject(new { message = ex.Message, exception = ex },
-				SerializationSettings.Middleware);
-		}
+public class DeveloperExceptionHandlerMiddleware : ExceptionHandlerMiddleware
+{
+	public DeveloperExceptionHandlerMiddleware(RequestDelegate next) : base(next)
+	{
+	}
+
+	protected override string Serialize(Exception ex)
+	{
+		return JsonConvert.SerializeObject(new { message = ex.Message, exception = ex },
+			SerializationSettings.Middleware);
 	}
 }

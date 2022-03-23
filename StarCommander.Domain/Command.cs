@@ -1,13 +1,12 @@
 using System;
 using Newtonsoft.Json;
 
-namespace StarCommander.Domain
+namespace StarCommander.Domain;
+
+[Serializable]
+[JsonObject(MemberSerialization.OptIn)]
+public abstract class Command : ICommand
 {
-	[Serializable]
-	[JsonObject(MemberSerialization.OptIn)]
-	public abstract class Command : ICommand
-	{
-		[JsonProperty]
-		public string Type => GetType().FullName!;
-	}
+	[JsonProperty]
+	public string Type => GetType().FullName!;
 }

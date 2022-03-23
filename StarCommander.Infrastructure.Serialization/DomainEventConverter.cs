@@ -1,8 +1,7 @@
 using StarCommander.Domain;
 
-namespace StarCommander.Infrastructure.Serialization
+namespace StarCommander.Infrastructure.Serialization;
+
+public class DomainEventConverter : TypeConverter<IDomainEvent>
 {
-	public class DomainEventConverter : TypeConverter<IDomainEvent>
-	{
-	}
 }

@@ -5,23 +5,22 @@ using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
 using StarCommander.Shared.Model.Payload;
 
-namespace StarCommander.Application
+namespace StarCommander.Application;
+
+public static class NotificationRegistry
 {
-	public static class NotificationRegistry
+	static readonly Dictionary<Type, Type> P = new ();
+	public static readonly IReadOnlyDictionary<Type, Type> Player = P;
+
+	static NotificationRegistry()
 	{
-		static readonly Dictionary<Type, Type> P = new ();
-		public static readonly IReadOnlyDictionary<Type, Type> Player = P;
+		AddPlayer<CaptainBoarded, OnCaptainBoarded>();
+		AddPlayer<PlayerNameChanged, OnPlayerNameChanged>();
+		AddPlayer<ShipLocated, OnShipLocated>();
+	}
 
-		static NotificationRegistry()
-		{
-			AddPlayer<CaptainBoarded, OnCaptainBoarded>();
-			AddPlayer<PlayerNameChanged, OnPlayerNameChanged>();
-			AddPlayer<ShipLocated, OnShipLocated>();
-		}
-
-		static void AddPlayer<TU, TV>() where TU : INotifyPlayer
-		{
-			P.Add(typeof(TU), typeof(TV));
-		}
+	static void AddPlayer<TU, TV>() where TU : INotifyPlayer
+	{
+		P.Add(typeof(TU), typeof(TV));
 	}
 }

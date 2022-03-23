@@ -1,7 +1,6 @@
-namespace StarCommander.Domain
+namespace StarCommander.Domain;
+
+public interface IHaveIdentity<out T>
 {
-	public interface IHaveIdentity<out T>
-	{
-		T Id { get; }
-	}
+	T Id { get; }
 }

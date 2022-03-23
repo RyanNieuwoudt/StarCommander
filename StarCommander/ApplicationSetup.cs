@@ -11,53 +11,52 @@ using StarCommander.Infrastructure.Persistence.Aggregate.Players;
 using StarCommander.Infrastructure.Persistence.Aggregate.Ships;
 using StarCommander.Infrastructure.Persistence.Projection;
 
-namespace StarCommander
+namespace StarCommander;
+
+public class ApplicationSetup : CommonSetup
 {
-	public class ApplicationSetup : CommonSetup
+	public ApplicationSetup(IConfiguration configuration)
 	{
-		public ApplicationSetup(IConfiguration configuration)
+		Configuration = configuration;
+	}
+
+	IConfiguration Configuration { get; }
+
+	string ConnectionString => Configuration.GetConnectionString("StarCommander");
+
+	protected override void ConfigureContextualServices(IServiceCollection services)
+	{
+		if (string.IsNullOrWhiteSpace(ConnectionString))
 		{
-			Configuration = configuration;
+			services.AddSingleton<IDbContextConfiguration>(new InMemoryConfiguration("StarCommander"));
+		}
+		else
+		{
+			services.AddSingleton<IDbContextConfiguration>(new PostgresConfiguration(ConnectionString));
 		}
 
-		IConfiguration Configuration { get; }
+		services.AddScoped<IChannelService, ChannelService>();
+	}
 
-		string ConnectionString => Configuration.GetConnectionString("StarCommander");
-
-		protected override void ConfigureContextualServices(IServiceCollection services)
+	protected override void ConfigureDbContexts(IServiceCollection services)
+	{
+		if (string.IsNullOrWhiteSpace(ConnectionString))
 		{
-			if (string.IsNullOrWhiteSpace(ConnectionString))
-			{
-				services.AddSingleton<IDbContextConfiguration>(new InMemoryConfiguration("StarCommander"));
-			}
-			else
-			{
-				services.AddSingleton<IDbContextConfiguration>(new PostgresConfiguration(ConnectionString));
-			}
-
-			services.AddScoped<IChannelService, ChannelService>();
+			return;
 		}
 
-		protected override void ConfigureDbContexts(IServiceCollection services)
+		void AddDbContext<T>(string migrationsHistoryTable) where T : DbContext
 		{
-			if (string.IsNullOrWhiteSpace(ConnectionString))
-			{
-				return;
-			}
-
-			void AddDbContext<T>(string migrationsHistoryTable) where T : DbContext
-			{
-				services.AddDbContext<T>(opt => opt.UseNpgsql(ConnectionString,
-					b => { b.MigrationsHistoryTable(migrationsHistoryTable).MigrationsAssembly("StarCommander"); }));
-			}
-
-			//Aggregates
-			AddDbContext<MessageDataContext>("MessageMigrations");
-			AddDbContext<PlayerDataContext>("PlayerMigrations");
-			AddDbContext<ShipDataContext>("ShipMigrations");
-
-			//Projections
-			AddDbContext<ProjectionDataContext>("ProjectionMigrations");
+			services.AddDbContext<T>(opt => opt.UseNpgsql(ConnectionString,
+				b => { b.MigrationsHistoryTable(migrationsHistoryTable).MigrationsAssembly("StarCommander"); }));
 		}
+
+		//Aggregates
+		AddDbContext<MessageDataContext>("MessageMigrations");
+		AddDbContext<PlayerDataContext>("PlayerMigrations");
+		AddDbContext<ShipDataContext>("ShipMigrations");
+
+		//Projections
+		AddDbContext<ProjectionDataContext>("ProjectionMigrations");
 	}
 }

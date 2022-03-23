@@ -4,14 +4,13 @@ using StarCommander.Domain.Ships;
 using StarCommander.Shared.Model;
 using Player = StarCommander.Domain.Players.Player;
 
-namespace StarCommander.Application.Services
+namespace StarCommander.Application.Services;
+
+public interface IPlayerService
 {
-	public interface IPlayerService
-	{
-		Task AssignShip(Reference<Player> player, Reference<Ship> ship);
-		Task BoardShip(Reference<Player> player);
-		Task<Session> SignIn(string callSign, string password);
-		Task<Session> SignUp(string callSign, string firstName, string lastName, string password);
-		Task UpdateName(Reference<Player> player, string firstName, string lastName);
-	}
+	Task AssignShip(Reference<Player> player, Reference<Ship> ship);
+	Task BoardShip(Reference<Player> player);
+	Task<Session> SignIn(string callSign, string password);
+	Task<Session> SignUp(string callSign, string firstName, string lastName, string password);
+	Task UpdateName(Reference<Player> player, string firstName, string lastName);
 }

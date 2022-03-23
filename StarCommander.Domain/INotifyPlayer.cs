@@ -1,9 +1,8 @@
 using StarCommander.Domain.Players;
 
-namespace StarCommander.Domain
+namespace StarCommander.Domain;
+
+public interface INotifyPlayer : IDomainEvent
 {
-	public interface INotifyPlayer : IDomainEvent
-	{
-		Reference<Player> Player { get; }
-	}
+	Reference<Player> Player { get; }
 }

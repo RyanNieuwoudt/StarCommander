@@ -1,8 +1,7 @@
 using System;
 
-namespace StarCommander.Domain
+namespace StarCommander.Domain;
+
+public interface IAggregate : IHaveIdentity<Guid>
 {
-	public interface IAggregate : IHaveIdentity<Guid>
-	{
-	}
 }

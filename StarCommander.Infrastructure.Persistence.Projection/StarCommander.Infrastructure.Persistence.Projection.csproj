@@ -5,12 +5,12 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj" />
-	  <ProjectReference Include="..\StarCommander.Shared\StarCommander.Shared.csproj" />
+		<ProjectReference Include="..\StarCommander.Infrastructure.Persistence\StarCommander.Infrastructure.Persistence.csproj"/>
+		<ProjectReference Include="..\StarCommander.Shared\StarCommander.Shared.csproj"/>
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="AmbientDbContextConfigurator" Version="0.0.1" />
-	  <PackageReference Include="AutoMapper" Version="10.1.1" />
-	  <PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0" />
+		<PackageReference Include="AmbientDbContextConfigurator" Version="0.0.1"/>
+		<PackageReference Include="AutoMapper" Version="10.1.1"/>
+		<PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0"/>
 	</ItemGroup>
 </Project>

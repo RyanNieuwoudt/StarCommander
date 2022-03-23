@@ -1,9 +1,8 @@
 using System;
 
-namespace StarCommander.Shared.Model.Payload
+namespace StarCommander.Shared.Model.Payload;
+
+public abstract class OnShip
 {
-	public abstract class OnShip
-	{
-		public Guid ShipId { get; set; }
-	}
+	public Guid ShipId { get; set; }
 }

@@ -1,7 +1,6 @@
-namespace StarCommander.Application
+namespace StarCommander.Application;
+
+public class AppSettings
 {
-	public class AppSettings
-	{
-		public string Secret { get; set; } = string.Empty;
-	}
+	public string Secret { get; set; } = string.Empty;
 }

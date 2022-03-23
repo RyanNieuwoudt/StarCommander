@@ -1,8 +1,7 @@
 using StarCommander.Domain;
 
-namespace StarCommander.Infrastructure.Serialization
+namespace StarCommander.Infrastructure.Serialization;
+
+public class CommandConverter : TypeConverter<ICommand>
 {
-	public class CommandConverter : TypeConverter<ICommand>
-	{
-	}
 }

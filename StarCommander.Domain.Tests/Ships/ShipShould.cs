@@ -4,42 +4,41 @@ using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
 using Xunit;
 
-namespace StarCommander.Domain.Tests.Ships
+namespace StarCommander.Domain.Tests.Ships;
+
+public class ShipShould
 {
-	public class ShipShould
+	readonly IFixture fixture;
+
+	public ShipShould()
 	{
-		readonly IFixture fixture;
+		fixture = new Fixture();
+	}
 
-		public ShipShould()
-		{
-			fixture = new Fixture();
-		}
+	[Fact]
+	public void LaunchWithCorrectValues()
+	{
+		var id = fixture.Create<Reference<Ship>>();
+		var player = fixture.Create<Reference<Player>>();
 
-		[Fact]
-		public void LaunchWithCorrectValues()
-		{
-			var id = fixture.Create<Reference<Ship>>();
-			var player = fixture.Create<Reference<Player>>();
+		var ship = Ship.Launch(id, player);
 
-			var ship = Ship.Launch(id, player);
+		Assert.Equal(ship.Reference, id);
+		Assert.Equal(ship.Captain, player);
+	}
 
-			Assert.Equal(ship.Reference, id);
-			Assert.Equal(ship.Captain, player);
-		}
+	[Fact]
+	public void RaiseEventOnLaunch()
+	{
+		var id = fixture.Create<Reference<Ship>>();
+		var player = fixture.Create<Reference<Player>>();
 
-		[Fact]
-		public void RaiseEventOnLaunch()
-		{
-			var id = fixture.Create<Reference<Ship>>();
-			var player = fixture.Create<Reference<Player>>();
+		var ship = Ship.Launch(id, player);
 
-			var ship = Ship.Launch(id, player);
+		var shipLaunched = ship.Events.Single(e => e is ShipLaunched) as ShipLaunched;
 
-			var shipLaunched = ship.Events.Single(e => e is ShipLaunched) as ShipLaunched;
-
-			Assert.NotNull(shipLaunched);
-			Assert.Equal(ship.Reference, shipLaunched!.Ship);
-			Assert.Equal(ship.Captain, shipLaunched!.Player);
-		}
+		Assert.NotNull(shipLaunched);
+		Assert.Equal(ship.Reference, shipLaunched!.Ship);
+		Assert.Equal(ship.Captain, shipLaunched!.Player);
 	}
 }

@@ -6,20 +6,19 @@ using StarCommander.Domain.Players;
 using StarCommander.Shared.Communication;
 using static StarCommander.Hubs.Channels;
 
-namespace StarCommander.Hubs
+namespace StarCommander.Hubs;
+
+public class ChannelService : IChannelService
 {
-	public class ChannelService : IChannelService
+	readonly IHubContext<ChannelHub, IChannelClient> channelHubContext;
+
+	public ChannelService(IHubContext<ChannelHub, IChannelClient> channelHubContext)
 	{
-		readonly IHubContext<ChannelHub, IChannelClient> channelHubContext;
+		this.channelHubContext = channelHubContext;
+	}
 
-		public ChannelService(IHubContext<ChannelHub, IChannelClient> channelHubContext)
-		{
-			this.channelHubContext = channelHubContext;
-		}
-
-		public async Task MessagePlayer(Reference<Player> player, string message)
-		{
-			await channelHubContext.Clients.Group(GetPlayerChannel(player)).Message(message);
-		}
+	public async Task MessagePlayer(Reference<Player> player, string message)
+	{
+		await channelHubContext.Clients.Group(GetPlayerChannel(player)).Message(message);
 	}
 }

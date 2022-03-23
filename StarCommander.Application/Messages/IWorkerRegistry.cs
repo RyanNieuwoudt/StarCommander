@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using StarCommander.Domain;
 
-namespace StarCommander.Application.Messages
+namespace StarCommander.Application.Messages;
+
+public interface IWorkerRegistry
 {
-	public interface IWorkerRegistry
-	{
-		IEnumerable<string> GetHandlersFor(ICommand command);
-		IEnumerable<string> GetHandlersFor(IDomainEvent @event);
-		IEnumerable<string> GetHandlersFor(IHaveType payload);
-	}
+	IEnumerable<string> GetHandlersFor(ICommand command);
+	IEnumerable<string> GetHandlersFor(IDomainEvent @event);
+	IEnumerable<string> GetHandlersFor(IHaveType payload);
 }

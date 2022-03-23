@@ -5,137 +5,136 @@ using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
 using Xunit;
 
-namespace StarCommander.Domain.Tests.Players
+namespace StarCommander.Domain.Tests.Players;
+
+public class PlayerShould
 {
-	public class PlayerShould
+	readonly IFixture fixture;
+
+	public PlayerShould()
 	{
-		readonly IFixture fixture;
+		fixture = new Fixture();
+	}
 
-		public PlayerShould()
-		{
-			fixture = new Fixture();
-		}
+	[Fact]
+	public void RaiseEventOnSignIn()
+	{
+		var id = fixture.Create<Reference<Player>>();
+		var callSign = fixture.Create<string>();
+		var firstName = fixture.Create<string>();
+		var lastName = fixture.Create<string>();
 
-		[Fact]
-		public void RaiseEventOnSignIn()
-		{
-			var id = fixture.Create<Reference<Player>>();
-			var callSign = fixture.Create<string>();
-			var firstName = fixture.Create<string>();
-			var lastName = fixture.Create<string>();
+		var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
+		player.SignIn();
 
-			player.SignIn();
+		var playerSignedIn = player.Events.Single(e => e is PlayerSignedIn) as PlayerSignedIn;
 
-			var playerSignedIn = player.Events.Single(e => e is PlayerSignedIn) as PlayerSignedIn;
+		Assert.NotNull(playerSignedIn);
+		Assert.Equal(player.Reference, playerSignedIn!.Player);
+	}
 
-			Assert.NotNull(playerSignedIn);
-			Assert.Equal(player.Reference, playerSignedIn!.Player);
-		}
+	[Fact]
+	public void RaiseEventOnSignUp()
+	{
+		var id = fixture.Create<Reference<Player>>();
+		var callSign = fixture.Create<string>();
+		var firstName = fixture.Create<string>();
+		var lastName = fixture.Create<string>();
 
-		[Fact]
-		public void RaiseEventOnSignUp()
-		{
-			var id = fixture.Create<Reference<Player>>();
-			var callSign = fixture.Create<string>();
-			var firstName = fixture.Create<string>();
-			var lastName = fixture.Create<string>();
+		var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
+		var playerSignedUp = player.Events.Single(e => e is PlayerSignedUp) as PlayerSignedUp;
 
-			var playerSignedUp = player.Events.Single(e => e is PlayerSignedUp) as PlayerSignedUp;
+		Assert.NotNull(playerSignedUp);
+		Assert.Equal(player.Reference, playerSignedUp!.Player);
+	}
 
-			Assert.NotNull(playerSignedUp);
-			Assert.Equal(player.Reference, playerSignedUp!.Player);
-		}
+	[Fact]
+	public void RaiseEventWhenAssigningShip()
+	{
+		var id = fixture.Create<Reference<Player>>();
+		var callSign = fixture.Create<string>();
+		var firstName = fixture.Create<string>();
+		var lastName = fixture.Create<string>();
 
-		[Fact]
-		public void RaiseEventWhenAssigningShip()
-		{
-			var id = fixture.Create<Reference<Player>>();
-			var callSign = fixture.Create<string>();
-			var firstName = fixture.Create<string>();
-			var lastName = fixture.Create<string>();
+		var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
+		var shipId = fixture.Create<Reference<Ship>>();
 
-			var shipId = fixture.Create<Reference<Ship>>();
+		player.AssignShip(shipId);
 
-			player.AssignShip(shipId);
+		Assert.Equal(shipId, player.Ship);
 
-			Assert.Equal(shipId, player.Ship);
+		var shipAssigned = player.Events.Single(e => e is ShipAssigned) as ShipAssigned;
 
-			var shipAssigned = player.Events.Single(e => e is ShipAssigned) as ShipAssigned;
+		Assert.NotNull(shipAssigned);
+		Assert.Equal(player.Reference, shipAssigned!.Player);
+		Assert.Equal(player.Ship, shipAssigned.Ship);
+	}
 
-			Assert.NotNull(shipAssigned);
-			Assert.Equal(player.Reference, shipAssigned!.Player);
-			Assert.Equal(player.Ship, shipAssigned.Ship);
-		}
+	[Fact]
+	public void RaiseEventWhenBoardingShip()
+	{
+		var id = fixture.Create<Reference<Player>>();
+		var callSign = fixture.Create<string>();
+		var firstName = fixture.Create<string>();
+		var lastName = fixture.Create<string>();
 
-		[Fact]
-		public void RaiseEventWhenBoardingShip()
-		{
-			var id = fixture.Create<Reference<Player>>();
-			var callSign = fixture.Create<string>();
-			var firstName = fixture.Create<string>();
-			var lastName = fixture.Create<string>();
+		var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
+		player.BoardShip();
 
-			player.BoardShip();
+		var captainBoarded = player.Events.Single(e => e is CaptainBoarded) as CaptainBoarded;
 
-			var captainBoarded = player.Events.Single(e => e is CaptainBoarded) as CaptainBoarded;
+		Assert.NotNull(captainBoarded);
+		Assert.Equal(player.Reference, captainBoarded!.Player);
+	}
 
-			Assert.NotNull(captainBoarded);
-			Assert.Equal(player.Reference, captainBoarded!.Player);
-		}
+	[Fact]
+	public void SignUpWithCorrectValues()
+	{
+		var id = fixture.Create<Reference<Player>>();
+		var callSign = fixture.Create<string>();
+		var firstName = fixture.Create<string>();
+		var lastName = fixture.Create<string>();
 
-		[Fact]
-		public void SignUpWithCorrectValues()
-		{
-			var id = fixture.Create<Reference<Player>>();
-			var callSign = fixture.Create<string>();
-			var firstName = fixture.Create<string>();
-			var lastName = fixture.Create<string>();
+		var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
-			var player = Player.SignUp(id, callSign, firstName, lastName, Array.Empty<byte>(), Array.Empty<byte>());
+		Assert.Equal(id, player.Id);
+		Assert.Equal(callSign, player.CallSign);
+		Assert.Equal(firstName, player.FirstName);
+		Assert.Equal(lastName, player.LastName);
+	}
 
-			Assert.Equal(id, player.Id);
-			Assert.Equal(callSign, player.CallSign);
-			Assert.Equal(firstName, player.FirstName);
-			Assert.Equal(lastName, player.LastName);
-		}
+	[Fact]
+	public void UpdateName()
+	{
+		var firstName = fixture.Create<string>();
+		var lastName = fixture.Create<string>();
 
-		[Fact]
-		public void UpdateName()
-		{
-			var firstName = fixture.Create<string>();
-			var lastName = fixture.Create<string>();
+		var player = Player.SignUp(fixture.Create<Reference<Player>>(), fixture.Create<string>(), firstName,
+			lastName, Array.Empty<byte>(), Array.Empty<byte>());
 
-			var player = Player.SignUp(fixture.Create<Reference<Player>>(), fixture.Create<string>(), firstName,
-				lastName, Array.Empty<byte>(), Array.Empty<byte>());
+		Assert.Equal(firstName, player.FirstName);
+		Assert.Equal(lastName, player.LastName);
 
-			Assert.Equal(firstName, player.FirstName);
-			Assert.Equal(lastName, player.LastName);
+		var newFirstName = fixture.Create<string>();
+		var newLastName = fixture.Create<string>();
 
-			var newFirstName = fixture.Create<string>();
-			var newLastName = fixture.Create<string>();
+		Assert.NotEqual(firstName, newFirstName);
+		Assert.NotEqual(lastName, newLastName);
 
-			Assert.NotEqual(firstName, newFirstName);
-			Assert.NotEqual(lastName, newLastName);
+		player.UpdateName(newFirstName, newLastName);
 
-			player.UpdateName(newFirstName, newLastName);
+		Assert.Equal(newFirstName, player.FirstName);
+		Assert.Equal(newLastName, player.LastName);
 
-			Assert.Equal(newFirstName, player.FirstName);
-			Assert.Equal(newLastName, player.LastName);
+		var playerNameChanged = player.Events.Single(e => e is PlayerNameChanged) as PlayerNameChanged;
 
-			var playerNameChanged = player.Events.Single(e => e is PlayerNameChanged) as PlayerNameChanged;
-
-			Assert.NotNull(playerNameChanged);
-			Assert.Equal(player.Reference, playerNameChanged!.Player);
-			Assert.Equal(player.FirstName, playerNameChanged.FirstName);
-			Assert.Equal(player.LastName, playerNameChanged.LastName);
-		}
+		Assert.NotNull(playerNameChanged);
+		Assert.Equal(player.Reference, playerNameChanged!.Player);
+		Assert.Equal(player.FirstName, playerNameChanged.FirstName);
+		Assert.Equal(player.LastName, playerNameChanged.LastName);
 	}
 }

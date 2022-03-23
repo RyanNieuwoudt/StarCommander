@@ -1,14 +1,13 @@
 using StarCommander.Domain.Ships;
 using Xunit;
 
-namespace StarCommander.Domain.Tests.Ships
+namespace StarCommander.Domain.Tests.Ships;
+
+public class TimeShould
 {
-	public class TimeShould
+	[Fact]
+	public void MultiplyWithSpeedToCalculateDistance()
 	{
-		[Fact]
-		public void MultiplyWithSpeedToCalculateDistance()
-		{
-			Assert.Equal(new Distance(100), new Time(10) * new Speed(10));
-		}
+		Assert.Equal(new (100), new Time(10) * new Speed(10));
 	}
 }

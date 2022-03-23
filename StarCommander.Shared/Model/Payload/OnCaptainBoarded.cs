@@ -1,6 +1,5 @@
-namespace StarCommander.Shared.Model.Payload
+namespace StarCommander.Shared.Model.Payload;
+
+public class OnCaptainBoarded : OnShip
 {
-	public class OnCaptainBoarded : OnShip
-	{
-	}
 }

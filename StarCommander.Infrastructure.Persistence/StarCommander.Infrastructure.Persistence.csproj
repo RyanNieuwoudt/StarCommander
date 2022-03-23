@@ -5,15 +5,15 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="AmbientDbContextConfigurator" Version="0.0.1" />
-	  <PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.11" />
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+		<PackageReference Include="AmbientDbContextConfigurator" Version="0.0.1"/>
+		<PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11"/>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.11"/>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10"/>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\StarCommander.Domain\StarCommander.Domain.csproj" />
-	  <ProjectReference Include="..\StarCommander.Infrastructure.Serialization\StarCommander.Infrastructure.Serialization.csproj" />
+		<ProjectReference Include="..\StarCommander.Domain\StarCommander.Domain.csproj"/>
+		<ProjectReference Include="..\StarCommander.Infrastructure.Serialization\StarCommander.Infrastructure.Serialization.csproj"/>
 	</ItemGroup>
 </Project>

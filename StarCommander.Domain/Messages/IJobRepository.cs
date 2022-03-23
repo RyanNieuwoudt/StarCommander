@@ -1,6 +1,5 @@
-namespace StarCommander.Domain.Messages
+namespace StarCommander.Domain.Messages;
+
+public interface IJobRepository : IRepository<Job>
 {
-	public interface IJobRepository : IRepository<Job>
-	{
-	}
 }

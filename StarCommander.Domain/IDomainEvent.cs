@@ -1,6 +1,5 @@
-namespace StarCommander.Domain
+namespace StarCommander.Domain;
+
+public interface IDomainEvent : IHaveType
 {
-	public interface IDomainEvent : IHaveType
-	{
-	}
 }

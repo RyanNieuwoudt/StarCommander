@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 
-namespace StarCommander.Shared.Communication
+namespace StarCommander.Shared.Communication;
+
+public interface IChannelClient
 {
-	public interface IChannelClient
-	{
-		Task Message(string message);
-	}
+	Task Message(string message);
 }

@@ -1,7 +1,6 @@
-namespace StarCommander.Shared.Model.Notifications
+namespace StarCommander.Shared.Model.Notifications;
+
+public interface IAction
 {
-	public interface IAction
-	{
-		string Type { get; }
-	}
+	string Type { get; }
 }

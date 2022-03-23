@@ -6,45 +6,44 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using StarCommander.Infrastructure.Serialization;
 
-namespace StarCommander.Middleware.ExceptionHandling
+namespace StarCommander.Middleware.ExceptionHandling;
+
+public class ExceptionHandlerMiddleware
 {
-	public class ExceptionHandlerMiddleware
+	readonly RequestDelegate next;
+
+	public ExceptionHandlerMiddleware(RequestDelegate next)
 	{
-		readonly RequestDelegate next;
+		this.next = next;
+	}
 
-		public ExceptionHandlerMiddleware(RequestDelegate next)
+	public async Task Invoke(HttpContext httpContext)
+	{
+		try
 		{
-			this.next = next;
+			await next(httpContext);
 		}
-
-		public async Task Invoke(HttpContext httpContext)
+		catch (SecurityException ex) when (!httpContext.Response.HasStarted)
 		{
-			try
-			{
-				await next(httpContext);
-			}
-			catch (SecurityException ex) when (!httpContext.Response.HasStarted)
-			{
-				await Handle(ex, httpContext, HttpStatusCode.Forbidden);
-			}
-			catch (Exception ex) when (!httpContext.Response.HasStarted)
-			{
-				await Handle(ex, httpContext, HttpStatusCode.BadRequest);
-			}
+			await Handle(ex, httpContext, HttpStatusCode.Forbidden);
 		}
-
-		async Task Handle(Exception ex, HttpContext httpContext, HttpStatusCode httpStatusCode)
+		catch (Exception ex) when (!httpContext.Response.HasStarted)
 		{
-			httpContext.Response.Clear();
-			httpContext.Response.StatusCode = (int)httpStatusCode;
-			httpContext.Response.ContentType = @"application/json";
-
-			await httpContext.Response.WriteAsync(Serialize(ex));
+			await Handle(ex, httpContext, HttpStatusCode.BadRequest);
 		}
+	}
 
-		protected virtual string Serialize(Exception ex)
-		{
-			return JsonConvert.SerializeObject(new { message = ex.Message }, SerializationSettings.Middleware);
-		}
+	async Task Handle(Exception ex, HttpContext httpContext, HttpStatusCode httpStatusCode)
+	{
+		httpContext.Response.Clear();
+		httpContext.Response.StatusCode = (int)httpStatusCode;
+		httpContext.Response.ContentType = @"application/json";
+
+		await httpContext.Response.WriteAsync(Serialize(ex));
+	}
+
+	protected virtual string Serialize(Exception ex)
+	{
+		return JsonConvert.SerializeObject(new { message = ex.Message }, SerializationSettings.Middleware);
 	}
 }

@@ -1,6 +1,5 @@
-namespace StarCommander.Domain
+namespace StarCommander.Domain;
+
+public interface IEntity : IHaveIdentity<long>
 {
-	public interface IEntity : IHaveIdentity<long>
-	{
-	}
 }

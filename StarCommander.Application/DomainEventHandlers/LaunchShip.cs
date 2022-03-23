@@ -4,22 +4,21 @@ using StarCommander.Application.Services;
 using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
 
-namespace StarCommander.Application.DomainEventHandlers
+namespace StarCommander.Application.DomainEventHandlers;
+
+public class LaunchShip : IWhen<PlayerSignedUp>
 {
-	public class LaunchShip : IWhen<PlayerSignedUp>
+	readonly ICommandService commandService;
+	readonly IReferenceGenerator generator;
+
+	public LaunchShip(ICommandService commandService, IReferenceGenerator generator)
 	{
-		readonly ICommandService commandService;
-		readonly IReferenceGenerator generator;
+		this.commandService = commandService;
+		this.generator = generator;
+	}
 
-		public LaunchShip(ICommandService commandService, IReferenceGenerator generator)
-		{
-			this.commandService = commandService;
-			this.generator = generator;
-		}
-
-		public async Task Handle(PlayerSignedUp @event, CancellationToken cancellationToken)
-		{
-			await commandService.Issue(new Domain.Ships.LaunchShip(generator.NewReference<Ship>(), @event.Player));
-		}
+	public async Task Handle(PlayerSignedUp @event, CancellationToken cancellationToken)
+	{
+		await commandService.Issue(new Domain.Ships.LaunchShip(generator.NewReference<Ship>(), @event.Player));
 	}
 }

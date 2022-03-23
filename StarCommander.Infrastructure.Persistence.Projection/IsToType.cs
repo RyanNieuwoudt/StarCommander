@@ -1,9 +1,8 @@
-namespace StarCommander.Infrastructure.Persistence.Projection
+namespace StarCommander.Infrastructure.Persistence.Projection;
+
+public enum IsToType
 {
-	public enum IsToType
-	{
-		Nothing = 0,
-		IsUpdateFor = 1,
-		RepresentsSameData = 2
-	}
+	Nothing = 0,
+	IsUpdateFor = 1,
+	RepresentsSameData = 2
 }

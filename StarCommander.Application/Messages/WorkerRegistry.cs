@@ -3,49 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using StarCommander.Domain;
 
-namespace StarCommander.Application.Messages
+namespace StarCommander.Application.Messages;
+
+public class WorkerRegistry : IWorkerRegistry
 {
-	public class WorkerRegistry : IWorkerRegistry
+	readonly ILookup<string, string> handlers;
+
+	public WorkerRegistry(ILookup<string, string> handlers)
 	{
-		readonly ILookup<string, string> handlers;
+		this.handlers = handlers;
+	}
 
-		public WorkerRegistry(ILookup<string, string> handlers)
+	public IEnumerable<string> GetHandlersFor(ICommand command)
+	{
+		return handlers.Contains(command.Type) ? handlers[command.Type].Distinct() : new List<string>();
+	}
+
+	public IEnumerable<string> GetHandlersFor(IDomainEvent @event)
+	{
+		var result = new List<string>();
+
+		if (handlers.Contains(@event.Type))
 		{
-			this.handlers = handlers;
+			result.AddRange(handlers[@event.Type]);
 		}
 
-		public IEnumerable<string> GetHandlersFor(ICommand command)
+		switch (@event)
 		{
-			return handlers.Contains(command.Type) ? handlers[command.Type].Distinct() : new List<string>();
+			case INotifyPlayer _:
+				result.AddRange(handlers[typeof(INotifyPlayer).FullName!]);
+				break;
 		}
 
-		public IEnumerable<string> GetHandlersFor(IDomainEvent @event)
+		return result.Distinct();
+	}
+
+	public IEnumerable<string> GetHandlersFor(IHaveType payload)
+	{
+		return payload switch
 		{
-			var result = new List<string>();
-
-			if (handlers.Contains(@event.Type))
-			{
-				result.AddRange(handlers[@event.Type]);
-			}
-
-			switch (@event)
-			{
-				case INotifyPlayer _:
-					result.AddRange(handlers[typeof(INotifyPlayer).FullName!]);
-					break;
-			}
-
-			return result.Distinct();
-		}
-
-		public IEnumerable<string> GetHandlersFor(IHaveType payload)
-		{
-			return payload switch
-			{
-				ICommand command => GetHandlersFor(command),
-				IDomainEvent @event => GetHandlersFor(@event),
-				_ => Array.Empty<string>()
-			};
-		}
+			ICommand command => GetHandlersFor(command),
+			IDomainEvent @event => GetHandlersFor(@event),
+			_ => Array.Empty<string>()
+		};
 	}
 }

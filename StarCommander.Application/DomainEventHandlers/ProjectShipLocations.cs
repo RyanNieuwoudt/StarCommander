@@ -3,21 +3,20 @@ using System.Threading.Tasks;
 using StarCommander.Application.Projectors;
 using StarCommander.Domain.Ships;
 
-namespace StarCommander.Application.DomainEventHandlers
+namespace StarCommander.Application.DomainEventHandlers;
+
+public class ProjectShipLocations : IWhen<ShipLocated>
 {
-	public class ProjectShipLocations : IWhen<ShipLocated>
+	readonly IShipLocationProjector shipLocationProjector;
+
+	public ProjectShipLocations(IShipLocationProjector shipLocationProjector)
 	{
-		readonly IShipLocationProjector shipLocationProjector;
+		this.shipLocationProjector = shipLocationProjector;
+	}
 
-		public ProjectShipLocations(IShipLocationProjector shipLocationProjector)
-		{
-			this.shipLocationProjector = shipLocationProjector;
-		}
-
-		public async Task Handle(ShipLocated @event, CancellationToken cancellationToken)
-		{
-			await shipLocationProjector.Project(@event.Ship, @event.Date, @event.Heading, @event.Position,
-				@event.Speed);
-		}
+	public async Task Handle(ShipLocated @event, CancellationToken cancellationToken)
+	{
+		await shipLocationProjector.Project(@event.Ship, @event.Date, @event.Heading, @event.Position,
+			@event.Speed);
 	}
 }

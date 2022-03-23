@@ -1,8 +1,7 @@
-namespace StarCommander.Shared.Communication
+namespace StarCommander.Shared.Communication;
+
+public static class Hubs
 {
-	public static class Hubs
-	{
-		public const string HubRoot = "/hubs";
-		public const string ChannelHubPath = HubRoot + "/channel";
-	}
+	public const string HubRoot = "/hubs";
+	public const string ChannelHubPath = HubRoot + "/channel";
 }

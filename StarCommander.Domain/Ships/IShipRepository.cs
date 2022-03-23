@@ -1,6 +1,5 @@
-namespace StarCommander.Domain.Ships
+namespace StarCommander.Domain.Ships;
+
+public interface IShipRepository : IRepository<Ship>
 {
-	public interface IShipRepository : IRepository<Ship>
-	{
-	}
 }

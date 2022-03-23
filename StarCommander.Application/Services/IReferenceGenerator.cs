@@ -1,9 +1,8 @@
 using StarCommander.Domain;
 
-namespace StarCommander.Application.Services
+namespace StarCommander.Application.Services;
+
+public interface IReferenceGenerator
 {
-	public interface IReferenceGenerator
-	{
-		Reference<T> NewReference<T>() where T : IAggregate;
-	}
+	Reference<T> NewReference<T>() where T : IAggregate;
 }

@@ -1,7 +1,6 @@
-namespace StarCommander.Shared.Model
+namespace StarCommander.Shared.Model;
+
+public class SignUp : Player
 {
-	public class SignUp : Player
-	{
-		public string Password { get; set; } = string.Empty;
-	}
+	public string Password { get; set; } = string.Empty;
 }
