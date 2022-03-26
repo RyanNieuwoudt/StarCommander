@@ -187,7 +187,7 @@ export const reducer: Reducer<AuthState> = (
 			const lens = R.lensPath(["player"]);
 			return R.set(
 				lens,
-				R.merge(R.view(lens, state), action.payload),
+				R.mergeRight(R.view(lens, state), action.payload),
 				state
 			);
 		}
