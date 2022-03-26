@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AmbientDbContextConfigurator;
 using Microsoft.EntityFrameworkCore;
+using NodaTime;
 using StarCommander.Domain.Messages;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages;
@@ -11,14 +12,17 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 public class CommandRepository : JsonRepositoryBase<Domain.Messages.Command, Command, MessageDataContext>,
 	ICommandRepository
 {
-	public CommandRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator) : base(
-		ambientDbContextConfigurator)
+	readonly IClock clock;
+
+	public CommandRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator, IClock clock)
+		: base(ambientDbContextConfigurator)
 	{
+		this.clock = clock;
 	}
 
 	public async Task<Domain.Messages.Command?> FetchNextUnprocessed()
 	{
-		var now = DateTimeOffset.Now;
+		var now = clock.GetCurrentInstant();
 
 		return (await GetDbSet()
 			.AsNoTracking()
@@ -37,7 +41,7 @@ public class CommandRepository : JsonRepositoryBase<Domain.Messages.Command, Com
 
 	public async Task<IEnumerable<Domain.Messages.Command>> FetchScheduledForTarget(Guid targetId)
 	{
-		var now = DateTimeOffset.Now;
+		var now = clock.GetCurrentInstant();
 
 		return await GetDbSet()
 			.AsNoTracking()

@@ -1,4 +1,5 @@
 using System;
+using NodaTime;
 using static StarCommander.Domain.Reference;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages;
@@ -10,7 +11,7 @@ public class Job
 	public Guid MessageId { get; set; }
 	public string Address { get; set; } = string.Empty;
 	public string Handler { get; set; } = string.Empty;
-	public DateTimeOffset Created { get; set; }
+	public Instant Created { get; set; }
 
 	public void SetValuesFrom(Domain.Messages.Job job)
 	{

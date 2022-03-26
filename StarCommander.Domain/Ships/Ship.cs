@@ -1,4 +1,5 @@
 using System;
+using NodaTime;
 using StarCommander.Domain.Players;
 using static StarCommander.Domain.Reference;
 
@@ -6,11 +7,11 @@ namespace StarCommander.Domain.Ships;
 
 public class Ship : EventPublisherBase, IAggregate
 {
-	Ship(Reference<Ship> id, Reference<Player> captain)
+	Ship(IClock clock, Reference<Ship> id, Reference<Player> captain)
 	{
 		Id = id;
 		Captain = captain;
-		NavigationComputer = new (new ());
+		NavigationComputer = new (clock, new ());
 	}
 
 	public NavigationComputer NavigationComputer { get; }
@@ -21,16 +22,16 @@ public class Ship : EventPublisherBase, IAggregate
 
 	public Guid Id { get; }
 
-	public static Ship Launch(Reference<Ship> id, Reference<Player> captain)
+	public static Ship Launch(IClock clock, Reference<Ship> id, Reference<Player> captain)
 	{
-		var ship = new Ship(id, captain);
+		var ship = new Ship(clock, id, captain);
 		ship.RaiseEvent(new ShipLaunched(id, captain));
 		return ship;
 	}
 
 	public void Locate()
 	{
-		var (date, heading, position, speed) = NavigationComputer.Locate();
-		RaiseEvent(new ShipLocated(Reference, Captain, date, heading, position, speed));
+		var (instant, heading, position, speed) = NavigationComputer.Locate();
+		RaiseEvent(new ShipLocated(Reference, Captain, instant, heading, position, speed));
 	}
 }

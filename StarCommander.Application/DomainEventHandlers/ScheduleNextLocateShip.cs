@@ -1,7 +1,7 @@
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NodaTime;
 using StarCommander.Application.Services;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
@@ -11,11 +11,13 @@ namespace StarCommander.Application.DomainEventHandlers;
 
 public class ScheduleNextLocateShip : IWhen<CaptainBoarded>, IWhen<ShipLocated>
 {
+	readonly IClock clock;
 	readonly ICommandRepository commandRepository;
 	readonly ICommandService commandService;
 
-	public ScheduleNextLocateShip(ICommandRepository commandRepository, ICommandService commandService)
+	public ScheduleNextLocateShip(IClock clock, ICommandRepository commandRepository, ICommandService commandService)
 	{
+		this.clock = clock;
 		this.commandRepository = commandRepository;
 		this.commandService = commandService;
 	}
@@ -36,6 +38,7 @@ public class ScheduleNextLocateShip : IWhen<CaptainBoarded>, IWhen<ShipLocated>
 			return;
 		}
 
-		await commandService.Issue(new LocateShip(@event.Ship), DateTimeOffset.Now.AddSeconds(3));
+		await commandService.Issue(new LocateShip(@event.Ship),
+			clock.GetCurrentInstant().Plus(Duration.FromSeconds(3)));
 	}
 }

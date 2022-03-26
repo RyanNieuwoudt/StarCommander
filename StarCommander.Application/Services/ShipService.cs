@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
+using NodaTime;
 using StarCommander.Domain;
 using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
@@ -8,11 +9,13 @@ namespace StarCommander.Application.Services;
 
 public class ShipService : IShipService
 {
+	readonly IClock clock;
 	readonly IDbContextScopeFactory dbContextScopeFactory;
 	readonly IShipRepository shipRepository;
 
-	public ShipService(IDbContextScopeFactory dbContextScopeFactory, IShipRepository shipRepository)
+	public ShipService(IClock clock, IDbContextScopeFactory dbContextScopeFactory, IShipRepository shipRepository)
 	{
+		this.clock = clock;
 		this.dbContextScopeFactory = dbContextScopeFactory;
 		this.shipRepository = shipRepository;
 	}
@@ -21,7 +24,7 @@ public class ShipService : IShipService
 	{
 		using var dbContextScope = dbContextScopeFactory.Create();
 
-		var s = Ship.Launch(ship, player);
+		var s = Ship.Launch(clock, ship, player);
 
 		await shipRepository.Save(s);
 		await dbContextScope.SaveChangesAsync();

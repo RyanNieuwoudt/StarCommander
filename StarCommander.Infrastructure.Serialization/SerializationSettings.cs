@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using NodaTime;
+using NodaTime.Serialization.JsonNet;
 
 namespace StarCommander.Infrastructure.Serialization;
 
@@ -23,5 +25,9 @@ public static class SerializationSettings
 	static SerializationSettings()
 	{
 		//TypeDescriptor.AddAttributes(typeof(SomeType), new TypeConverterAttribute(typeof(SomeTypeConverter)));
+		
+		//NodaTime does not support NewtonSoft directly, but this works.
+		Middleware.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
+		Persistence.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb);
 	}
 }

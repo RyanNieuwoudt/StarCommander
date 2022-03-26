@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AmbientDbContextConfigurator;
+using NodaTime;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
 using StarCommander.Domain.Players;
@@ -12,12 +13,14 @@ namespace StarCommander.Infrastructure.Persistence.Aggregate.Ships;
 
 public class ShipRepository : EventsOnlyRepository<Ship, ShipDataContext>, IShipRepository
 {
+	readonly IClock clock;
 	readonly ICommandRepository commandRepository;
 
-	public ShipRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator,
+	public ShipRepository(IAmbientDbContextConfigurator ambientDbContextConfigurator, IClock clock,
 		ICommandRepository commandRepository, IEventPublisher eventPublisher) : base(ambientDbContextConfigurator,
 		eventPublisher)
 	{
+		this.clock = clock;
 		this.commandRepository = commandRepository;
 	}
 
@@ -25,14 +28,14 @@ public class ShipRepository : EventsOnlyRepository<Ship, ShipDataContext>, IShip
 
 	public async Task<Ship> Fetch(Reference<Ship> reference)
 	{
-		var ship = Ship.Launch(Reference<Ship>.None, Reference<Player>.None);
+		var ship = Ship.Launch(clock, Reference<Ship>.None, Reference<Player>.None);
 
 		foreach (var command in await commandRepository.FetchForTarget(reference))
 		{
 			switch (command.Payload)
 			{
 				case LaunchShip launchShip:
-					ship = Ship.Launch(launchShip.Ship, launchShip.Captain);
+					ship = Ship.Launch(clock, launchShip.Ship, launchShip.Captain);
 					break;
 				case SetHeading setHeading:
 					ship.NavigationComputer.SetHeading(command.Created, setHeading.Heading);

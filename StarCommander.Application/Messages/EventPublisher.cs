@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
+using NodaTime;
 using StarCommander.Application.Services;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
@@ -8,13 +9,15 @@ namespace StarCommander.Application.Messages;
 
 public class EventPublisher : IEventPublisher
 {
+	readonly IClock clock;
 	readonly IDbContextScopeFactory dbContextScopeFactory;
 	readonly IEventRepository eventRepository;
 	readonly IReferenceGenerator generator;
 
-	public EventPublisher(IDbContextScopeFactory dbContextScopeFactory, IEventRepository eventRepository,
+	public EventPublisher(IClock clock, IDbContextScopeFactory dbContextScopeFactory, IEventRepository eventRepository,
 		IReferenceGenerator generator)
 	{
+		this.clock = clock;
 		this.dbContextScopeFactory = dbContextScopeFactory;
 		this.eventRepository = eventRepository;
 		this.generator = generator;
@@ -28,7 +31,7 @@ public class EventPublisher : IEventPublisher
 			foreach (var domainEvent in aggregate.Events)
 			{
 				await eventRepository.Save(Event.Wrap(generator.NewReference<Message<IDomainEvent>>(),
-					domainEvent));
+					clock.GetCurrentInstant(), domainEvent));
 			}
 		}
 

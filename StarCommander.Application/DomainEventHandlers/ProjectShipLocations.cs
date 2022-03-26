@@ -16,7 +16,6 @@ public class ProjectShipLocations : IWhen<ShipLocated>
 
 	public async Task Handle(ShipLocated @event, CancellationToken cancellationToken)
 	{
-		await shipLocationProjector.Project(@event.Ship, @event.Date, @event.Heading, @event.Position,
-			@event.Speed);
+		await shipLocationProjector.Project(@event.Ship, @event.Instant, @event.Heading, @event.Position, @event.Speed);
 	}
 }

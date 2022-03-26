@@ -9,6 +9,7 @@ using AutoMapper;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NodaTime;
 using StarCommander.Domain;
 using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
@@ -20,15 +21,17 @@ namespace StarCommander.Application.Services;
 public class PlayerService : IPlayerService
 {
 	readonly AppSettings appSettings;
+	readonly IClock clock;
 	readonly IDbContextScopeFactory dbContextScopeFactory;
 	readonly IReferenceGenerator generator;
 	readonly IMapper mapper;
 	readonly IPlayerRepository playerRepository;
 
-	public PlayerService(IOptions<AppSettings> appSettings, IDbContextScopeFactory dbContextScopeFactory,
+	public PlayerService(IOptions<AppSettings> appSettings, IClock clock, IDbContextScopeFactory dbContextScopeFactory,
 		IReferenceGenerator generator, IMapper mapper, IPlayerRepository playerRepository)
 	{
 		this.appSettings = appSettings.Value;
+		this.clock = clock;
 		this.dbContextScopeFactory = dbContextScopeFactory;
 		this.generator = generator;
 		this.mapper = mapper;
@@ -133,9 +136,8 @@ public class PlayerService : IPlayerService
 		var tokenDescriptor = new SecurityTokenDescriptor
 		{
 			Subject = new (GetClaims(player)),
-			Expires = DateTime.UtcNow.AddDays(2),
-			SigningCredentials = new (new SymmetricSecurityKey(key),
-				SecurityAlgorithms.HmacSha256Signature)
+			Expires = clock.GetCurrentInstant().Plus(Duration.FromDays(2)).ToDateTimeOffset().LocalDateTime,
+			SigningCredentials = new (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 		};
 		var token = tokenHandler.CreateToken(tokenDescriptor);
 		return tokenHandler.WriteToken(token);

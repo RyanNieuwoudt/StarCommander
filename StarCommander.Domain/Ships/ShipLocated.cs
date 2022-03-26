@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using NodaTime;
 using StarCommander.Domain.Players;
 
 namespace StarCommander.Domain.Ships;
@@ -9,17 +10,17 @@ namespace StarCommander.Domain.Ships;
 public class ShipLocated : ShipEvent, INotifyPlayer
 {
 	[JsonConstructor]
-	public ShipLocated(Reference<Ship> ship, Reference<Player> player, DateTimeOffset date, Heading heading,
+	public ShipLocated(Reference<Ship> ship, Reference<Player> player, Instant instant, Heading heading,
 		Position position, Speed speed) : base(ship, player)
 	{
-		Date = date;
+		Instant = instant;
 		Heading = heading;
 		Position = position;
 		Speed = speed;
 	}
 
 	[JsonProperty]
-	public DateTimeOffset Date { get; private set; }
+	public Instant Instant { get; private set; }
 
 	[JsonProperty]
 	public Heading Heading { get; private set; }

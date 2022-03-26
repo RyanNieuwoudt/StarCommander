@@ -39,7 +39,11 @@ public class ApplicationSetup : CommonSetup
 		void AddDbContext<T>(string migrationsHistoryTable) where T : DbContext
 		{
 			services.AddDbContext<T>(opt => opt.UseNpgsql(ConnectionString,
-				b => { b.MigrationsHistoryTable(migrationsHistoryTable).MigrationsAssembly("StarCommander"); }));
+				o =>
+				{
+					o.UseNodaTime();
+					o.MigrationsHistoryTable(migrationsHistoryTable).MigrationsAssembly("StarCommander");
+				}));
 		}
 
 		//Aggregates

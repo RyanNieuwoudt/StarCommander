@@ -1,4 +1,5 @@
 using System;
+using NodaTime;
 
 namespace StarCommander.Infrastructure.Persistence.Projection.ShipLocations;
 
@@ -10,7 +11,7 @@ public class ShipLocation : ProjectWithKeyBase<ShipLocation>, IEquatable<ShipLoc
 	public long Speed { get; init; }
 	public long X { get; init; }
 	public long Y { get; init; }
-	public DateTimeOffset Created { get; init; }
+	public Instant Created { get; init; }
 
 	public bool Equals(ShipLocation? other) => !ReferenceEquals(null, other) && (ReferenceEquals(this, other) ||
 		ShipLocationId == other.ShipLocationId && ShipId.Equals(other.ShipId) && Heading.Equals(other.Heading) &&

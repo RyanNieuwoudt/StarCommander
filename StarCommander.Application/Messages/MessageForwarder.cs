@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
+using NodaTime;
 using StarCommander.Application.Services;
 using StarCommander.Domain;
 using StarCommander.Domain.Messages;
@@ -11,6 +12,7 @@ namespace StarCommander.Application.Messages;
 
 public sealed class MessageForwarder : IMessageForwarder
 {
+	readonly IClock clock;
 	readonly ICommandRepository commandRepository;
 	readonly IDbContextScopeFactory dbContextScopeFactory;
 	readonly IEventRepository eventRepository;
@@ -19,10 +21,11 @@ public sealed class MessageForwarder : IMessageForwarder
 	readonly IJobScheduler jobScheduler;
 	readonly IWorkerRegistry workerRegistry;
 
-	public MessageForwarder(ICommandRepository commandRepository, IDbContextScopeFactory dbContextScopeFactory,
-		IEventRepository eventRepository, IJobRepository jobRepository, IJobScheduler jobScheduler,
-		IReferenceGenerator generator, IWorkerRegistry workerRegistry)
+	public MessageForwarder(IClock clock, ICommandRepository commandRepository,
+		IDbContextScopeFactory dbContextScopeFactory, IEventRepository eventRepository, IJobRepository jobRepository,
+		IJobScheduler jobScheduler, IReferenceGenerator generator, IWorkerRegistry workerRegistry)
 	{
+		this.clock = clock;
 		this.commandRepository = commandRepository;
 		this.dbContextScopeFactory = dbContextScopeFactory;
 		this.eventRepository = eventRepository;
@@ -60,7 +63,7 @@ public sealed class MessageForwarder : IMessageForwarder
 		{
 			await jobRepository.SaveAll(jobs);
 
-			message.MarkAsProcessed();
+			message.MarkAsProcessed(clock.GetCurrentInstant());
 
 			switch (message)
 			{

@@ -1,83 +1,87 @@
 using System;
 using System.Collections.Generic;
+using NodaTime;
 
 namespace StarCommander.Domain.Ships;
 
 public class NavigationComputer
 {
-	readonly Dictionary<DateTimeOffset, KeyValuePair<Heading, Speed>> navigation;
+	readonly IClock clock;
 	readonly Position startingPosition;
+
+	readonly Dictionary<Instant, KeyValuePair<Heading, Speed>> navigation;
 
 	Heading lastHeading;
 	Speed lastSpeed;
-	DateTimeOffset startDate;
+	Instant start;
 
-	internal NavigationComputer(Position startingPosition)
+	internal NavigationComputer(IClock clock, Position startingPosition)
 	{
+		this.clock = clock;
 		this.startingPosition = startingPosition;
 
-		startDate = DateTimeOffset.MaxValue;
+		start = Instant.MaxValue;
 		navigation = new ();
 	}
 
-	public void SetHeading(DateTimeOffset date, Heading heading)
+	public void SetHeading(Instant instant, Heading heading)
 	{
-		if (date < startDate)
+		if (instant < start)
 		{
-			startDate = date;
+			start = instant;
 		}
 
-		if (navigation.ContainsKey(date))
+		if (navigation.ContainsKey(instant))
 		{
-			navigation[date] = new (heading, lastSpeed);
+			navigation[instant] = new (heading, lastSpeed);
 		}
 		else
 		{
-			navigation.Add(date, new (heading, lastSpeed));
+			navigation.Add(instant, new (heading, lastSpeed));
 		}
 
 		lastHeading = heading;
 	}
 
-	public void SetSpeed(DateTimeOffset date, Speed speed)
+	public void SetSpeed(Instant instant, Speed speed)
 	{
-		if (date < startDate)
+		if (instant < start)
 		{
-			startDate = date;
+			start = instant;
 		}
 
-		if (navigation.ContainsKey(date))
+		if (navigation.ContainsKey(instant))
 		{
-			navigation[date] = new (lastHeading, speed);
+			navigation[instant] = new (lastHeading, speed);
 		}
 		else
 		{
-			navigation.Add(date, new (lastHeading, speed));
+			navigation.Add(instant, new (lastHeading, speed));
 		}
 
 		lastSpeed = speed;
 	}
 
-	public (DateTimeOffset, Heading, Position, Speed) Locate()
+	public (Instant, Heading, Position, Speed) Locate()
 	{
-		var currentDate = startDate;
+		var currentInstant = start;
 		var currentHeading = Heading.Default;
 		var currentPosition = startingPosition;
 		var currentSpeed = Speed.Default;
 
-		foreach (var (date, (heading, speed)) in navigation)
+		foreach (var (instant, (heading, speed)) in navigation)
 		{
-			currentPosition = currentPosition.Apply(heading, new ((date - currentDate).Seconds * speed));
+			currentPosition = currentPosition.Apply(heading, new ((instant - currentInstant).Seconds * speed));
 
-			currentDate = date;
+			currentInstant = instant;
 			currentHeading = heading;
 			currentSpeed = speed;
 		}
 
-		var lastDate = DateTimeOffset.Now;
+		var lastDate = clock.GetCurrentInstant();
 
 		currentPosition = currentPosition.Apply(currentHeading,
-			new ((long)(lastDate - currentDate).TotalSeconds * currentSpeed));
+			new ((long)(lastDate - currentInstant).TotalSeconds * currentSpeed));
 
 		return (lastDate, currentHeading, currentPosition, currentSpeed);
 	}

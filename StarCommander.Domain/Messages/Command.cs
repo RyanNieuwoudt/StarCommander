@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using NodaTime;
 using StarCommander.Domain.Players;
 using StarCommander.Domain.Ships;
 
@@ -10,21 +11,22 @@ namespace StarCommander.Domain.Messages;
 public class Command : Message<ICommand>
 {
 	[JsonConstructor]
-	public Command(Reference<Message<ICommand>> id, Guid targetId, DateTimeOffset created, ICommand payload,
-		DateTimeOffset? processed, DateTimeOffset? scheduledFor) : base(id, created, payload, processed)
+	public Command(Reference<Message<ICommand>> id, Guid targetId, Instant created, ICommand payload,
+		Instant? processed, Instant? scheduledFor) : base(id, created, payload, processed)
 	{
 		TargetId = targetId;
 		ScheduledFor = scheduledFor;
 	}
 
 	[JsonProperty]
-	public DateTimeOffset? ScheduledFor { get; private set; }
+	public Instant? ScheduledFor { get; private set; }
 
 	[JsonProperty]
 	public Guid TargetId { get; private set; }
 
-	public static Command Wrap(in Reference<Message<ICommand>> id, ICommand payload, DateTimeOffset? scheduledFor) =>
-		new (id, ExtractTargetId(payload), DateTimeOffset.Now, payload, null, scheduledFor);
+	public static Command
+		Wrap(in Reference<Message<ICommand>> id, ICommand payload, Instant now, Instant? scheduledFor) =>
+		new (id, ExtractTargetId(payload), now, payload, null, scheduledFor);
 
 	static Guid ExtractTargetId(ICommand command) => command switch
 	{

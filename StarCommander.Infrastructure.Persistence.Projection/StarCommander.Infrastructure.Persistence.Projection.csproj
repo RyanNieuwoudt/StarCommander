@@ -12,5 +12,6 @@
 	  <PackageReference Include="AmbientDbContextConfigurator" Version="0.0.1" />
 	  <PackageReference Include="AutoMapper" Version="11.0.1" />
 	  <PackageReference Include="EntityFramework.DbContextScope" Version="1.0.0" />
+	  <PackageReference Include="NodaTime" Version="3.0.10" />
 	</ItemGroup>
 </Project>

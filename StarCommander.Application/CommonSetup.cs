@@ -2,6 +2,7 @@ using AmbientDbContextConfigurator;
 using EntityFramework.DbContextScope;
 using EntityFramework.DbContextScope.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using NodaTime;
 using StarCommander.Application.Messages;
 using StarCommander.Application.Projectors;
 using StarCommander.Application.Queries;
@@ -29,6 +30,8 @@ public abstract class CommonSetup
 
 	static void ConfigureCommonServices(IServiceCollection services)
 	{
+		services.AddSingleton<IClock>(SystemClock.Instance);
+
 		services.AddAutoMapper(typeof(AutoMapperProfile));
 
 		services

@@ -5,10 +5,12 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
-		<PackageReference Include="UniversalTypeConverter" Version="2.0.0"/>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NodaTime" Version="3.0.10" />
+		<PackageReference Include="NodaTime.Serialization.JsonNet" Version="3.0.0" />
+		<PackageReference Include="UniversalTypeConverter" Version="2.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\StarCommander.Domain\StarCommander.Domain.csproj"/>
+		<ProjectReference Include="..\StarCommander.Domain\StarCommander.Domain.csproj" />
 	</ItemGroup>
 </Project>

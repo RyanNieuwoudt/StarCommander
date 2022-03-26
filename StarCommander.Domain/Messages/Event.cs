@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using NodaTime;
 
 namespace StarCommander.Domain.Messages;
 
@@ -8,11 +9,11 @@ namespace StarCommander.Domain.Messages;
 public class Event : Message<IDomainEvent>
 {
 	[JsonConstructor]
-	public Event(Reference<Message<IDomainEvent>> id, DateTimeOffset created, IDomainEvent payload,
-		DateTimeOffset? processed) : base(id, created, payload, processed)
+	public Event(Reference<Message<IDomainEvent>> id, Instant created, IDomainEvent payload, Instant? processed)
+		: base(id, created, payload, processed)
 	{
 	}
 
-	public static Event Wrap(in Reference<Message<IDomainEvent>> id, IDomainEvent payload) =>
-		new (id, DateTimeOffset.Now, payload, null);
+	public static Event Wrap(in Reference<Message<IDomainEvent>> id, Instant now, IDomainEvent payload) =>
+		new (id, now, payload, null);
 }

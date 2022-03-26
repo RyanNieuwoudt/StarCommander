@@ -10,5 +10,6 @@ public sealed class PostgresConfiguration : IDbContextConfiguration
 
 	public PostgresConfiguration(string connectionString) => this.connectionString = connectionString;
 
-	public Action<DbContextOptionsBuilder> Configure => builder => builder.UseNpgsql(connectionString);
+	public Action<DbContextOptionsBuilder> Configure =>
+		builder => builder.UseNpgsql(connectionString, o => o.UseNodaTime());
 }

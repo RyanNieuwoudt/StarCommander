@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using NodaTime;
 
 namespace StarCommander.Domain.Messages;
 
@@ -8,7 +9,7 @@ namespace StarCommander.Domain.Messages;
 public abstract class Message<T> : IAggregate where T :  IHaveType
 {
 	[JsonConstructor]
-	protected Message(in Reference<Message<T>> id, DateTimeOffset created, T payload, DateTimeOffset? processed)
+	protected Message(in Reference<Message<T>> id, Instant created, T payload, Instant? processed)
 	{
 		Id = id;
 		Created = created;
@@ -17,7 +18,7 @@ public abstract class Message<T> : IAggregate where T :  IHaveType
 	}
 
 	[JsonProperty]
-	public DateTimeOffset Created { get; private set; }
+	public Instant Created { get; private set; }
 
 	public bool IsProcessed => Processed.HasValue;
 
@@ -25,10 +26,10 @@ public abstract class Message<T> : IAggregate where T :  IHaveType
 	public T Payload { get; private set; }
 
 	[JsonProperty]
-	public DateTimeOffset? Processed { get; private set; }
+	public Instant? Processed { get; private set; }
 
 	[JsonProperty]
 	public Guid Id { get; }
 
-	public void MarkAsProcessed() => Processed = DateTimeOffset.Now;
+	public void MarkAsProcessed(Instant now) => Processed = now;
 }

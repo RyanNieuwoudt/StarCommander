@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EntityFramework.DbContextScope.Interfaces;
+using NodaTime;
 using StarCommander.Domain;
 using StarCommander.Domain.Ships;
 using StarCommander.Infrastructure.Persistence.Projection.ShipLocations;
@@ -21,8 +22,7 @@ public class ShipLocationProjector : ProjectorBase, IShipLocationProjector
 		this.shipLocationRepository = shipLocationRepository;
 	}
 
-	public async Task Project(Reference<Ship> ship, DateTimeOffset date, Heading heading, Position position,
-		Speed speed)
+	public async Task Project(Reference<Ship> ship, Instant instant, Heading heading, Position position, Speed speed)
 	{
 		using var dbContextScope = dbContextScopeFactory.Create();
 
@@ -37,7 +37,7 @@ public class ShipLocationProjector : ProjectorBase, IShipLocationProjector
 				Speed = speed,
 				X = position.X,
 				Y = position.Y,
-				Created = DateTimeOffset.Now
+				Created = instant
 			}
 		};
 

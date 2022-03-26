@@ -1,11 +1,11 @@
-using System;
+using NodaTime;
 
 namespace StarCommander.Infrastructure.Persistence.Aggregate.Messages;
 
 public class Event : JsonEntity<Domain.Messages.Event>
 {
-	public DateTimeOffset Created { get; set; }
-	public DateTimeOffset? Processed { get; set; }
+	public Instant Created { get; set; }
+	public Instant? Processed { get; set; }
 
 	protected override void ProjectValues(Domain.Messages.Event @event)
 	{
