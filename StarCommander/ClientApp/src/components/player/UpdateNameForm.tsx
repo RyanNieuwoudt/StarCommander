@@ -9,7 +9,7 @@ export default function UpdateNameForm() {
 	const dispatch = useDispatch();
 
 	const onSubmit = useCallback(
-		(event) => {
+		(event: any) => {
 			const { firstName, lastName } = event.value;
 			dispatch(actionCreators.updateName(firstName, lastName));
 		},
