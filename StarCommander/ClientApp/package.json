@@ -23,8 +23,7 @@
 		"redux": "^4.2.0",
 		"redux-saga": "^1.2.1",
 		"redux-views": "^1.0.3",
-		"styled-components": "^5.3.6",
-		"svgo": "^2.8.0"
+		"styled-components": "^5.3.6"
 	},
 	"devDependencies": {
 		"@types/history": "^4.7.11",
