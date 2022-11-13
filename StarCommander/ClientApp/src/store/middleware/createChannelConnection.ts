@@ -2,10 +2,10 @@ import * as signalR from "@microsoft/signalr";
 import { MessagePackHubProtocol } from "@microsoft/signalr-protocol-msgpack";
 
 export default (
-	isDevelopment: Boolean,
+	isDevelopment: boolean,
 	onReconnect: ((value: void) => void | Promise<void>) | null | undefined
 ) => {
-	let t: string = "";
+	let t = "";
 
 	const connection = new signalR.HubConnectionBuilder()
 		.withUrl("/hubs/channel", {

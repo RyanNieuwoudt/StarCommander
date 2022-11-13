@@ -47,7 +47,7 @@ export function* mutateSaga(newValues: any, action: Action) {
 	yield put(R.mergeDeepLeft(newValues, action));
 }
 
-export function* putSaga(actionCreator: Function) {
+export function* putSaga(actionCreator: () => Action) {
 	yield put(actionCreator());
 }
 
