@@ -6936,6 +6936,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"grommet-icons@npm:^4.10.0":
+  version: 4.10.0
+  resolution: "grommet-icons@npm:4.10.0"
+  dependencies:
+    grommet-styles: ^0.2.0
+  peerDependencies:
+    react: ^16.6.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
+    styled-components: ">= 5.x"
+  checksum: 69745341a65f4e4d05bd5b207f7243b5ffa54d13a8195093cae7fb32d57b38ab55ed30cfee341b9f1f659b99743f721ee04c7ab9decd7dd7f171fcc4947af048
+  languageName: node
+  linkType: hard
+
 "grommet-icons@npm:^4.8.0":
   version: 4.8.0
   resolution: "grommet-icons@npm:4.8.0"
@@ -6960,19 +6973,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"grommet@npm:^2.28.0":
-  version: 2.28.0
-  resolution: "grommet@npm:2.28.0"
+"grommet@npm:^2.30.0":
+  version: 2.31.0
+  resolution: "grommet@npm:2.31.0"
   dependencies:
-    grommet-icons: ^4.8.0
+    grommet-icons: ^4.10.0
     hoist-non-react-statics: ^3.2.0
-    markdown-to-jsx: ^7.1.5
+    markdown-to-jsx: ^7.2.0
     prop-types: ^15.8.1
   peerDependencies:
     react: ^16.6.1 || ^17.0.0 || ^18.0.0
     react-dom: ^16.6.1 || ^17.0.0 || ^18.0.0
     styled-components: ">= 5.1"
-  checksum: 5def847ca4b722b397e9084f6dbdced9875a4cff54f34629b8258be5c697feb97d1f1bf1ff3ae47342affd592e7269a137bb8e494ab85b9ee647c7cb0125b3c3
+  checksum: a15b8834ecd352713a1a4ad997f210db21f5eac2b9ba0917f8f7a14d9f0efaaac8e35e539694efba1c656fb775f4ab52c7f464d640fd0272fe8e1d0131537a29
   languageName: node
   linkType: hard
 
@@ -8904,12 +8917,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown-to-jsx@npm:^7.1.5":
-  version: 7.1.7
-  resolution: "markdown-to-jsx@npm:7.1.7"
+"markdown-to-jsx@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "markdown-to-jsx@npm:7.2.0"
   peerDependencies:
     react: ">= 0.14.0"
-  checksum: b2c0ea7d0988fad0c709989b3b1b3a5600d1e80b60266f9618386f7afead4a6b5eba9ee1a3943df6a3dcb1599ea89e58467d1b17b6dd3af3c60984c60a85d06d
+  checksum: ea417e684d7eec9f1beebc9423aba377116ef77c3cd83a2d622df1b9030ffef99aa9b3f431192b94f3237943a33560e6dda9be8a4c1d25187518d09986dad22f
   languageName: node
   linkType: hard
 
@@ -12048,7 +12061,7 @@ __metadata:
     eslint-plugin-jsx-a11y: ^6.6.1
     eslint-plugin-prettier: ^4.2.1
     eslint-plugin-react: ^7.31.11
-    grommet: ^2.28.0
+    grommet: ^2.30.0
     grommet-icons: ^4.8.0
     history: 4.10.1
     lodash.throttle: ^4.1.1
