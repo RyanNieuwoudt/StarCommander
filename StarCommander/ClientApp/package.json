@@ -24,7 +24,7 @@
 		"redux": "^4.2.0",
 		"redux-saga": "^1.2.2",
 		"redux-views": "^1.0.3",
-		"styled-components": "^5.3.6"
+		"styled-components": "^5.3.9"
 	},
 	"devDependencies": {
 		"@types/history": "^4.7.11",
