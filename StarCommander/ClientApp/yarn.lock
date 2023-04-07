@@ -2140,7 +2140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/signalr@npm:>=7.0.0, @microsoft/signalr@npm:^7.0.0":
+"@microsoft/signalr@npm:>=7.0.0":
   version: 7.0.0
   resolution: "@microsoft/signalr@npm:7.0.0"
   dependencies:
@@ -2150,6 +2150,19 @@ __metadata:
     node-fetch: ^2.6.7
     ws: ^7.4.5
   checksum: 15e678d8f914e774107d8463900ec9a233af4dce057bb2feda7920f22353608d4f88b68394570767012860258c49ed644c71e3fcafe487f418f8218ae956d3ad
+  languageName: node
+  linkType: hard
+
+"@microsoft/signalr@npm:^7.0.4":
+  version: 7.0.4
+  resolution: "@microsoft/signalr@npm:7.0.4"
+  dependencies:
+    abort-controller: ^3.0.0
+    eventsource: ^2.0.2
+    fetch-cookie: ^2.0.3
+    node-fetch: ^2.6.7
+    ws: ^7.4.5
+  checksum: 461e9779c12784f63e26eb83ed77920e4cae70dba76d7198e530afe911ff90c8901b4d494401775fa7c9d67e5f0ec0ef4d41f41a85795d0a7a18760eb7d3db87
   languageName: node
   linkType: hard
 
@@ -12024,7 +12037,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "starcommander@workspace:."
   dependencies:
-    "@microsoft/signalr": ^7.0.0
+    "@microsoft/signalr": ^7.0.4
     "@microsoft/signalr-protocol-msgpack": ^7.0.0
     "@types/history": ^4.7.11
     "@types/jest": ^29.2.5
