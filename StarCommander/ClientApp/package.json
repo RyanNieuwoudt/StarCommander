@@ -21,7 +21,7 @@
 		"react-router": "^5.3.4",
 		"react-router-dom": "^5.3.4",
 		"react-scripts": "5.0.1",
-		"redux": "^4.2.0",
+		"redux": "^4.2.1",
 		"redux-saga": "^1.2.2",
 		"redux-views": "^1.0.3",
 		"styled-components": "^5.3.9"
