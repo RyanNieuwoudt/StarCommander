@@ -6986,9 +6986,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"grommet@npm:^2.32.0":
-  version: 2.32.0
-  resolution: "grommet@npm:2.32.0"
+"grommet@npm:^2.32.1":
+  version: 2.32.2
+  resolution: "grommet@npm:2.32.2"
   dependencies:
     grommet-icons: ^4.10.0
     hoist-non-react-statics: ^3.2.0
@@ -6998,7 +6998,7 @@ __metadata:
     react: ^16.6.1 || ^17.0.0 || ^18.0.0
     react-dom: ^16.6.1 || ^17.0.0 || ^18.0.0
     styled-components: ">= 5.1"
-  checksum: fee92ebf862a379c8abf7ce97518da26ac90d554b363daa34faba11e4a164615fd380620e7b4926337cc1bd2a6dd6faba053a3069db7bfddedf264c7c6ae9881
+  checksum: 28186d45c59e58065afde55ac0220aadb595f3bcb12acbacd87c79df229401b8911e46e77284146beec736a95b5555c809ec686ba4e31b22262e5838aee67fa3
   languageName: node
   linkType: hard
 
@@ -12083,7 +12083,7 @@ __metadata:
     eslint-plugin-jsx-a11y: ^6.6.1
     eslint-plugin-prettier: ^4.2.1
     eslint-plugin-react: ^7.31.11
-    grommet: ^2.32.0
+    grommet: ^2.32.1
     grommet-icons: ^4.8.0
     history: 4.10.1
     lodash.throttle: ^4.1.1
