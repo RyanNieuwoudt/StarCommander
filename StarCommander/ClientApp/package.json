@@ -5,7 +5,7 @@
 	"dependencies": {
 		"@microsoft/signalr": "^7.0.0",
 		"@microsoft/signalr-protocol-msgpack": "^7.0.5",
-		"axios": "^0.27.2",
+		"axios": "^1.6.3",
 		"connected-react-router": "^6.9.3",
 		"grommet": "^2.32.0",
 		"grommet-icons": "^4.8.0",
